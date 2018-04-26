@@ -20,7 +20,7 @@ navbar:
 rmd_subdir: yes
 output:
   html_document:
-    css: alans.css
+    css: Kory.css
     lib_dir: site_libs
     self_contained: no
 
