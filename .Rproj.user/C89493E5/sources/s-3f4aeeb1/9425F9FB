@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2007787192",
+    "hash" : "0",
     "id" : "9425F9FB",
-    "lastKnownWriteTime" : 1524705458,
-    "last_content_update" : 1524705458,
+    "lastKnownWriteTime" : 1524705988,
+    "last_content_update" : 1524705988,
     "path" : "~/koryillenye.github.io/_site.yml",
     "project_path" : "_site.yml",
     "properties" : {
+        "cursorPosition" : "0,0",
+        "scrollLine" : "0"
     },
     "relative_order" : 1,
     "source_on_save" : false,
