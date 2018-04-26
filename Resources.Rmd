@@ -1,0 +1,39 @@
+---
+title: "Kory Illenye - Home"
+output: html_document
+---
+
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+<BR>
+
+# STT 2810
+
+* **[syllabus](./Resources/stt2810sprsyl.pdf)**
+
+
+
+
+<footer, style="padding-top : 40px;">
+<center>
+
+-------
+Appalachian State University
+
+Walker Hall --- 121 Bodenheimer Drive --- Boone, NC 28608
+
+
+
+
+
+
+</center>
+</footer>

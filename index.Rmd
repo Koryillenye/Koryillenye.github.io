@@ -1,0 +1,76 @@
+---
+title: "Kory Illenye - Home"
+output: html_document
+---
+
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+</style>
+
+<figure>
+<div class="row-sm-6">
+### **KORY ILLENYE**
+</div>
+
+<img src="./images/illenyekd.jpg" alt="Kory" align="left" hspace="20">
+</figure>
+
+<div class="row-sm-6">
+
+### **Contact Information:**
+Office: Walker Hall, RM 307A <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M--W--F from 11:30 - 12:30 <br>
+Phone: (828) 262-2864<br>
+Email: [illenyekd@appstate.edu](mailto:illenyekd@appstate.edu)<br>
+
+
+</div>
+<br><br><br><br>
+<div class="row-sm-6">
+
+### **Spring 2018**
+
+Currently, I am instructing STT 2810 - Introduction to Statistics and and Graduate Assisting with MAT 1110 - Calculus I. 
+
+You can find me in Walker Hall, Monday and Wednesday, in room 307A from 1 pm until 2 pm.
+
+### **Summer I & II 2018**
+
+During this time frame I will be found at Appalachain State University (ASU)or McDowell Technical Community College (MTCC).
+
+While at ASU, My personal goals are to finish my directed research with Dr. Katrina Palmer. 
+
+While at MTCC I will be Teaching Math 171 - precalculus. If you are in need of assistance you can contact me at [illenyekd@gmail.com](mailto:illenyekd@gmail.com)
+
+
+
+
+
+
+
+</div>
+
+<footer, style="padding-top : 40px;">
+<center>
+
+-------
+
+
+[Department of Mathematics](http://mathsci.appstate.edu)
+
+Walker Hall --- 121 Bodenheimer Drive --- Boone, NC 28608
+
+[Appalachian State University](http://www.appstate.edu)
+
+
+
+
+</center>
+</footer>
+

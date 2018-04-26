@@ -1,0 +1,29 @@
+---
+title: ""
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+<BR>
+
+# MAT 1110 -   Calculus With Analytic Geometry I 
+
+Calculus With Analytic Geometry I 
+
+When Offered: Fall; Spring
+
+GEN ED: Quantitative Literacy
+
+A study of limits, continuity, differentiation, applications of the derivative, the differential, the definite integral, the fundamental theorem, and applications of the definite integral. 

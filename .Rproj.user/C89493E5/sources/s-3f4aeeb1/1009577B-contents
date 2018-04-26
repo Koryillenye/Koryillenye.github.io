@@ -1,0 +1,26 @@
+name: my-website
+
+navbar:
+  title: Kory Illenye
+  left:
+  - text: Home
+    href: index.html
+  - text: Teaching
+    menu:
+    - text: STT 2810
+      href: Class_2.html
+    - text: MAT 1110
+      href: Class_1.html
+    - text: Resources
+      href: Resources.html
+  - text: Contact
+    href: Contact.html
+  - text: Department of Mathematical Sciences
+    href: http://mathsci.appstate.edu
+rmd_subdir: yes
+output:
+  html_document:
+    css: alans.css
+    lib_dir: site_libs
+    self_contained: no
+

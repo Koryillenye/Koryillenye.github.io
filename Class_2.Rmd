@@ -1,0 +1,30 @@
+---
+title: ""
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+
+<BR>
+
+# STATS 2810 - Introduction to Statistics
+
+STT 2810 - Introduction to Statistics (3)
+
+When Offered: Fall; Spring
+
+GEN ED: Quantitative Literacy
+
+An introduction to statistical problem solving and methodology. Topics include tabulation and graphical representations of univariate and bivariate data; probability, statistical distributions, confidence intervals and hypothesis testing. Emphasis will be on conceptual understanding and interpretation of results rather than theoretical development. Statistical software will be utilized in the analysis of data and in the development of statistical and probabilistic concepts. STT 2810 is not open to students with credit for STT 1810, STT 2820, STT 3850, or STT 4811. 
