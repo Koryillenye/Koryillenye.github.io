@@ -1,0 +1,1438 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={ChebyChev Analysis},
+            pdfauthor={Kory Illenye},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{ChebyChev Analysis}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Kory Illenye}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{4/19/2018}
+
+
+\begin{document}
+\maketitle
+
+\section{Steepest Descent and Steepest Descent with Least
+Squares.}\label{steepest-descent-and-steepest-descent-with-least-squares.}
+
+Lets take a look at two iterative methods for finding solutions to
+positive definite, symetric matrices. Steepest Descent is often called
+\textbf{gradient descent}, which is a approach to finding minima of a
+function \(f\). Using an estimate \(x_i\), the negative gradient
+\(-\nabla f(x_i)\) gives the direction of in which \(f\) is decreasing
+at the greatest rate. The goal is to take steps in this direction until
+we react the minimum.
+
+Notation:
+
+\(e\) denotes an error term
+
+\(i\) denotes the i-ith term
+
+\(r\) denotes a residual
+
+\[e_i = x_i - x\] \[r_i = b - Ax_i = -Ae_i\]
+
+So, the next item to worry about is step size, lets call this
+\(\alpha\), and use \(x_{i+1} = x_i - \alpha_i\nabla f(x_i)\) this
+minimizes \(f(x_{i+1})\). lets look at some code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#setting the seed to work with }
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{31}\NormalTok{)}
+\CommentTok{#Number of columns and rows in the matrix in the matrix}
+\NormalTok{n <-}\StringTok{ }\DecValTok{5} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{maxIts <-}\StringTok{ }\DecValTok{1000000}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+
+
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+The return of TRUE above allows us to know that the matrix we are using
+is positive definite. Meanin that it has all positive eigen values. Now
+that all the components have been created for the use in the function.
+Lets see what the matrix looks like and design the function.
+
+\subsubsection{The Matrix A}\label{the-matrix-a}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#prints the matrix A}
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          [,1]      [,2]      [,3]      [,4]      [,5]
+[1,] 2.4299775 1.7269373 2.0199944 0.5590044 1.5099956
+[2,] 1.7269373 1.8590925 1.1651029 0.4614977 1.1855963
+[3,] 2.0199944 1.1651029 1.8962176 0.5224703 1.2304534
+[4,] 0.5590044 0.4614977 0.5224703 0.3137412 0.4209155
+[5,] 1.5099956 1.1855963 1.2304534 0.4209155 1.0294046
+\end{verbatim}
+
+\subsubsection{The b vector}\label{the-b-vector}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Prints b}
+\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          [,1]
+[1,] 2.2159566
+[2,] 1.4658554
+[3,] 1.9866331
+[4,] 0.6013222
+[5,] 1.3916532
+\end{verbatim}
+
+\section{The Funtion of Gradient Descent
+Method}\label{the-funtion-of-gradient-descent-method}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# defines the function}
+\NormalTok{grad <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{ (A,b,x0, maxIts, tol)}
+\NormalTok{  \{}
+    \CommentTok{# creates an initial residual}
+\NormalTok{    r <-}\StringTok{ }\NormalTok{b }\OperatorTok{-}\StringTok{ }\NormalTok{(A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x0)}
+    \CommentTok{# used to keep track of the number of iterations.}
+\NormalTok{    k =}\StringTok{ }\DecValTok{0}
+    \CommentTok{# loop used to attempt to find the approximation of the X vector}
+    \ControlFlowTok{while}\NormalTok{ (k }\OperatorTok{<}\StringTok{ }\NormalTok{maxIts }\OperatorTok{&&}\StringTok{ }\KeywordTok{norm}\NormalTok{(r, }\StringTok{"1"}\NormalTok{) }\OperatorTok{>}\StringTok{ }\NormalTok{tol)}
+\NormalTok{    \{}
+      \CommentTok{# increments the iteration}
+\NormalTok{      k <-}\StringTok{ }\NormalTok{k}\OperatorTok{+}\DecValTok{1}
+      \CommentTok{# creates a step size using the residuals and matrix A}
+\NormalTok{      alpha <-}\StringTok{ }\NormalTok{(}\KeywordTok{t}\NormalTok{(r) }\OperatorTok{%*%}\StringTok{ }\NormalTok{r) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{t}\NormalTok{(r) }\OperatorTok{%*%}\StringTok{ }\NormalTok{(A }\OperatorTok{%*%}\StringTok{ }\NormalTok{r))}
+      \CommentTok{# creates the next approximation of the X vector}
+\NormalTok{      x0 <-}\StringTok{ }\NormalTok{x0 }\OperatorTok{+}\StringTok{ }\KeywordTok{drop}\NormalTok{(alpha) }\OperatorTok{*}\StringTok{ }\NormalTok{r}
+      \CommentTok{# creates the new residual with the new approximation}
+\NormalTok{      r <-}\StringTok{ }\NormalTok{b }\OperatorTok{-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x0}
+\NormalTok{    \}}
+  \CommentTok{#Calculates the residual vector.}
+\NormalTok{  res <-}\StringTok{ }\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{x0}
+  \CommentTok{# vairable to store the exact X, the aproximated X and the number of iterations}
+\NormalTok{  sol <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(x, x0, res, }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(k,n),}\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{))}
+  \CommentTok{# Names the colums of the new array}
+  \KeywordTok{colnames}\NormalTok{(sol) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"X"}\NormalTok{, }\StringTok{"X0"}\NormalTok{,}\StringTok{"resid"}\NormalTok{, }\StringTok{"iter"}\NormalTok{)}
+  \CommentTok{# prints the array}
+\NormalTok{  sol}
+ 
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+This code when run generates the following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# runs the function and saves it to a variable "c"}
+\NormalTok{c <-}\StringTok{ }\KeywordTok{grad}\NormalTok{(A, b, x0, maxIts, tol)}
+\CommentTok{# prints the array }
+\NormalTok{c }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X         X0         resid iter
+[1,] 0.04876597 0.04895561 -1.896346e-04  325
+[2,] 0.14752424 0.14746647  5.776931e-05  325
+[3,] 0.81504717 0.81491134  1.358297e-04  325
+[4,] 0.16098630 0.16109232 -1.060204e-04  325
+[5,] 0.07040319 0.07030940  9.378641e-05  325
+\end{verbatim}
+
+I set the seed so this data can be replicated. As you can see the
+approximation is very close to the actual solution. The norm of the
+residual is 10\^{}\{-5\} when rounded to 5 decimal places. For this
+document we know that if the \texttt{iter} column is not equal to `r
+maxits
+
+\section{6x6 matrix}\label{x6-matrix}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{21}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{6} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+Lets see how the function does on this 6x6 matrix.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol<-}\KeywordTok{grad}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             X        X0         resid iter
+[1,] 0.2163319 0.2164881 -0.0001561833 1781
+[2,] 0.6504235 0.6502254  0.0001980371 1781
+[3,] 0.3351660 0.3348874  0.0002786669 1781
+[4,] 0.5076559 0.5075127  0.0001432318 1781
+[5,] 0.6528394 0.6532767 -0.0004373487 1781
+[6,] 0.9655767 0.9654451  0.0001315399 1781
+\end{verbatim}
+
+I want to look at a few matrices, I am going to adjust the seed number
+for each. These numbers are arbitrary but for replication purposes I am
+setting the seed.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{214}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{6} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+Lets see how the function does on this 6x6 matrix.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+         [,1]     [,2]      [,3]      [,4]      [,5]      [,6]
+[1,] 2.591707 2.217206 1.1814162 1.5399616 1.6181376 1.1860408
+[2,] 2.217206 2.650669 1.6894440 2.0397363 1.4540539 1.1738115
+[3,] 1.181416 1.689444 1.3483715 1.3084386 0.9020424 0.5422738
+[4,] 1.539962 2.039736 1.3084386 2.0160104 1.2108004 0.8519311
+[5,] 1.618138 1.454054 0.9020424 1.2108004 1.4474137 0.4330670
+[6,] 1.186041 1.173812 0.5422738 0.8519311 0.4330670 0.9206222
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol <-}\KeywordTok{grad}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             X        X0         resid iter
+[1,] 0.6807363 0.6806130  1.233517e-04 1419
+[2,] 0.1331188 0.1331240 -5.250738e-06 1419
+[3,] 0.4157805 0.4157955 -1.500242e-05 1419
+[4,] 0.8683657 0.8683055  6.016602e-05 1419
+[5,] 0.6214230 0.6215572 -1.341803e-04 1419
+[6,] 0.1328657 0.1330050 -1.392501e-04 1419
+\end{verbatim}
+
+We can see that the function completed after 1419 iterations. This means
+that the norm is within \(10^{-5}\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{2145}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{6} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+Lets see how the function does on this 6x6 matrix.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+         [,1]      [,2]      [,3]     [,4]     [,5]     [,6]
+[1,] 1.629180 1.3253076 1.3704596 1.897338 1.492470 1.388390
+[2,] 1.325308 2.1268329 0.9046964 2.031244 1.432492 1.145834
+[3,] 1.370460 0.9046964 1.6388220 1.852486 1.570883 1.469332
+[4,] 1.897338 2.0312444 1.8524862 2.844479 2.251959 1.748982
+[5,] 1.492470 1.4324924 1.5708827 2.251959 2.753722 1.775626
+[6,] 1.388390 1.1458340 1.4693319 1.748982 1.775626 1.692876
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol<-}\StringTok{ }\KeywordTok{grad}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             X        X0         resid iter
+[1,] 0.6258299 0.6258653 -3.544603e-05 1515
+[2,] 0.2011419 0.2014055 -2.636294e-04 1515
+[3,] 0.5883483 0.5887837 -4.354756e-04 1515
+[4,] 0.8560448 0.8556266  4.181889e-04 1515
+[5,] 0.9363852 0.9364996 -1.144587e-04 1515
+[6,] 0.9780356 0.9777614  2.741660e-04 1515
+\end{verbatim}
+
+We can see that the function completed after 1515 iterations. This means
+that the norm is within \(10^{-5}\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{21456}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{6} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+Lets see how the function does on this 6x6 matrix.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          [,1]      [,2]     [,3]      [,4]      [,5]      [,6]
+[1,] 2.5322214 0.9122529 2.004203 1.5482151 0.7751318 2.0283032
+[2,] 0.9122529 2.0519766 2.134736 0.9660084 0.7108958 1.5908699
+[3,] 2.0042025 2.1347358 3.714131 1.4712356 1.1478843 2.0035704
+[4,] 1.5482151 0.9660084 1.471236 1.2711860 0.6324079 1.4763406
+[5,] 0.7751318 0.7108958 1.147884 0.6324079 0.4117123 0.7575121
+[6,] 2.0283032 1.5908699 2.003570 1.4763406 0.7575121 2.3369386
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol<-}\StringTok{ }\KeywordTok{grad}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X         X0         resid iter
+[1,] 0.79899443 0.79902045 -2.601344e-05 2127
+[2,] 0.43135773 0.43143786 -8.012212e-05 2127
+[3,] 0.07193685 0.07209572 -1.588676e-04 2127
+[4,] 0.10669362 0.10699923 -3.056067e-04 2127
+[5,] 0.33782973 0.33693283  8.969094e-04 2127
+[6,] 0.15723681 0.15712123  1.155732e-04 2127
+\end{verbatim}
+
+We can see that the function completed after 2127 iterations. This means
+that the norm is within \(10^{-5}\).
+
+\section{10x10 matrix}\label{x10-matrix}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{21456}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{10} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          [,1]     [,2]      [,3]     [,4]     [,5]      [,6]     [,7]
+ [1,] 4.576307 3.544017 1.8706107 2.699453 3.464121 2.1412326 3.630429
+ [2,] 3.544017 3.995759 1.7402252 2.908020 3.122860 1.7878213 3.701816
+ [3,] 1.870611 1.740225 1.4091612 1.632820 1.585560 0.8950613 1.883202
+ [4,] 2.699453 2.908020 1.6328204 3.177959 2.352454 1.6335524 2.982156
+ [5,] 3.464121 3.122860 1.5855600 2.352454 3.832469 2.1929775 3.852252
+ [6,] 2.141233 1.787821 0.8950613 1.633552 2.192978 2.0398368 2.512283
+ [7,] 3.630429 3.701816 1.8832023 2.982156 3.852252 2.5122828 5.087222
+ [8,] 2.783155 2.232120 1.2940313 1.823810 2.891021 1.8346436 3.536088
+ [9,] 2.300886 2.567662 1.2002483 2.224262 2.623019 1.8329427 3.223934
+[10,] 2.345922 2.103801 1.4733256 1.801321 2.664459 1.7837057 2.810596
+          [,8]     [,9]    [,10]
+ [1,] 2.783155 2.300886 2.345922
+ [2,] 2.232120 2.567662 2.103801
+ [3,] 1.294031 1.200248 1.473326
+ [4,] 1.823810 2.224262 1.801321
+ [5,] 2.891021 2.623019 2.664459
+ [6,] 1.834644 1.832943 1.783706
+ [7,] 3.536088 3.223934 2.810596
+ [8,] 3.133619 2.283068 1.976192
+ [9,] 2.283068 2.591424 1.922565
+[10,] 1.976192 1.922565 2.373093
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol<-}\StringTok{ }\KeywordTok{grad}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X        X0         resid iter
+ [1,] 0.6172931 0.6173013 -8.226232e-06 3532
+ [2,] 0.8323071 0.8323258 -1.870730e-05 3532
+ [3,] 0.5397727 0.5397052  6.745871e-05 3532
+ [4,] 0.1785781 0.1785965 -1.844572e-05 3532
+ [5,] 0.7888260 0.7887850  4.097310e-05 3532
+ [6,] 0.3950113 0.3949807  3.059918e-05 3532
+ [7,] 0.7050482 0.7050369  1.135881e-05 3532
+ [8,] 0.8651250 0.8651531 -2.812421e-05 3532
+ [9,] 0.1558820 0.1558699  1.212071e-05 3532
+[10,] 0.3583763 0.3584488 -7.249651e-05 3532
+\end{verbatim}
+
+We can see that the function completed after 3532 iterations. This means
+that the norm is within \(10^{-5}\).
+
+\section{Gradient Descent with least
+squares}\label{gradient-descent-with-least-squares}
+
+This function is supposed to converge faster.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# defines the function}
+\NormalTok{gradLS <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{ (A,b,x0, maxIts, tol)}
+\NormalTok{  \{}
+    \CommentTok{# creates an initial residual}
+\NormalTok{    r <-}\StringTok{ }\NormalTok{b }\OperatorTok{-}\StringTok{ }\NormalTok{(A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x0)}
+    \CommentTok{# used to keep track of the number of iterations.}
+\NormalTok{    k =}\StringTok{ }\DecValTok{0}
+    \CommentTok{# loop used to attempt to find the approximation of the X vector}
+    \ControlFlowTok{while}\NormalTok{ (k }\OperatorTok{<}\StringTok{ }\NormalTok{maxIts }\OperatorTok{&&}\StringTok{ }\KeywordTok{norm}\NormalTok{(r, }\StringTok{"1"}\NormalTok{) }\OperatorTok{>}\StringTok{ }\NormalTok{tol)}
+\NormalTok{    \{}
+      \CommentTok{# increments the iteration}
+\NormalTok{      k <-}\StringTok{ }\NormalTok{k}\OperatorTok{+}\DecValTok{1}
+      \CommentTok{# creates a step size using the residuals and matrix A}
+\NormalTok{      alpha <-}\StringTok{ }\NormalTok{(}\KeywordTok{t}\NormalTok{(r) }\OperatorTok{%*%}\StringTok{ }\NormalTok{r) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{t}\NormalTok{(A}\OperatorTok{%*%}\NormalTok{r) }\OperatorTok{%*%}\StringTok{ }\NormalTok{(A }\OperatorTok{%*%}\StringTok{ }\NormalTok{r))}
+      \CommentTok{# creates the next approximation of the X vector}
+\NormalTok{      x0 <-}\StringTok{ }\NormalTok{x0 }\OperatorTok{+}\StringTok{ }\KeywordTok{drop}\NormalTok{(alpha) }\OperatorTok{*}\StringTok{ }\NormalTok{r}
+      \CommentTok{# creates the new residual with the new approximation}
+\NormalTok{      r <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A)}\OperatorTok{%*%}\StringTok{ }\NormalTok{b }\OperatorTok{-}\StringTok{ }\NormalTok{(}\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{x0}
+\NormalTok{    \}}
+  \CommentTok{#Calculates the residual vector.}
+\NormalTok{  res <-}\StringTok{ }\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{x0}
+  \CommentTok{# vairable to store the exact X, the aproximated X and the number of iterations}
+\NormalTok{  sol <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(x, x0, res, }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(k,n),}\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{))}
+  \CommentTok{# Names the colums of the new array}
+  \KeywordTok{colnames}\NormalTok{(sol) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"X"}\NormalTok{, }\StringTok{"X0"}\NormalTok{,}\StringTok{"resid"}\NormalTok{, }\StringTok{"iter"}\NormalTok{)}
+  \CommentTok{# prints the array}
+\NormalTok{  sol}
+ 
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          [,1]     [,2]      [,3]     [,4]     [,5]      [,6]     [,7]
+ [1,] 4.576307 3.544017 1.8706107 2.699453 3.464121 2.1412326 3.630429
+ [2,] 3.544017 3.995759 1.7402252 2.908020 3.122860 1.7878213 3.701816
+ [3,] 1.870611 1.740225 1.4091612 1.632820 1.585560 0.8950613 1.883202
+ [4,] 2.699453 2.908020 1.6328204 3.177959 2.352454 1.6335524 2.982156
+ [5,] 3.464121 3.122860 1.5855600 2.352454 3.832469 2.1929775 3.852252
+ [6,] 2.141233 1.787821 0.8950613 1.633552 2.192978 2.0398368 2.512283
+ [7,] 3.630429 3.701816 1.8832023 2.982156 3.852252 2.5122828 5.087222
+ [8,] 2.783155 2.232120 1.2940313 1.823810 2.891021 1.8346436 3.536088
+ [9,] 2.300886 2.567662 1.2002483 2.224262 2.623019 1.8329427 3.223934
+[10,] 2.345922 2.103801 1.4733256 1.801321 2.664459 1.7837057 2.810596
+          [,8]     [,9]    [,10]
+ [1,] 2.783155 2.300886 2.345922
+ [2,] 2.232120 2.567662 2.103801
+ [3,] 1.294031 1.200248 1.473326
+ [4,] 1.823810 2.224262 1.801321
+ [5,] 2.891021 2.623019 2.664459
+ [6,] 1.834644 1.832943 1.783706
+ [7,] 3.536088 3.223934 2.810596
+ [8,] 3.133619 2.283068 1.976192
+ [9,] 2.283068 2.591424 1.922565
+[10,] 1.976192 1.922565 2.373093
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol<-}\StringTok{ }\KeywordTok{gradLS}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X        X0         resid   iter
+ [1,] 0.6172931 0.6177202 -0.0004271701 914619
+ [2,] 0.8323071 0.8332761 -0.0009690351 914619
+ [3,] 0.5397727 0.5362854  0.0034873060 914619
+ [4,] 0.1785781 0.1795333 -0.0009552130 914619
+ [5,] 0.7888260 0.7867091  0.0021169184 914619
+ [6,] 0.3950113 0.3934302  0.0015811167 914619
+ [7,] 0.7050482 0.7044629  0.0005853126 914619
+ [8,] 0.8651250 0.8665807 -0.0014557269 914619
+ [9,] 0.1558820 0.1552567  0.0006253598 914619
+[10,] 0.3583763 0.3621263 -0.0037499883 914619
+\end{verbatim}
+
+Here is the point my mind went, What!!!! This took
+9.14619\times 10\^{}\{5\} iterations. Why? I had to know more. initially
+I decided lets mess with the code a little.
+
+So on the line that creates the new residual I removed the additional
+transposes of A.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# defines the function}
+\NormalTok{gradLS2 <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{ (A,b,x0, maxIts, tol)}
+\NormalTok{  \{}
+    \CommentTok{# creates an initial residual}
+\NormalTok{    r <-}\StringTok{ }\NormalTok{b }\OperatorTok{-}\StringTok{ }\NormalTok{(A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x0)}
+    \CommentTok{# used to keep track of the number of iterations.}
+\NormalTok{    k =}\StringTok{ }\DecValTok{0}
+    \CommentTok{# loop used to attempt to find the approximation of the X vector}
+    \ControlFlowTok{while}\NormalTok{ (k }\OperatorTok{<}\StringTok{ }\NormalTok{maxIts }\OperatorTok{&&}\StringTok{ }\KeywordTok{norm}\NormalTok{(r, }\StringTok{"1"}\NormalTok{) }\OperatorTok{>}\StringTok{ }\NormalTok{tol)}
+\NormalTok{    \{}
+      \CommentTok{# increments the iteration}
+\NormalTok{      k <-}\StringTok{ }\NormalTok{k}\OperatorTok{+}\DecValTok{1}
+      \CommentTok{# creates a step size using the residuals and matrix A}
+\NormalTok{      alpha <-}\StringTok{ }\NormalTok{(}\KeywordTok{t}\NormalTok{(r) }\OperatorTok{%*%}\StringTok{ }\NormalTok{r) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\KeywordTok{t}\NormalTok{(A}\OperatorTok{%*%}\NormalTok{r) }\OperatorTok{%*%}\StringTok{ }\NormalTok{(A }\OperatorTok{%*%}\StringTok{ }\NormalTok{r))}
+      \CommentTok{# creates the next approximation of the X vector}
+\NormalTok{      x0 <-}\StringTok{ }\NormalTok{x0 }\OperatorTok{+}\StringTok{ }\KeywordTok{drop}\NormalTok{(alpha) }\OperatorTok{*}\StringTok{ }\NormalTok{r}
+      \CommentTok{# creates the new residual with the new approximation}
+\NormalTok{      r <-}\StringTok{  }\NormalTok{b }\OperatorTok{-}\StringTok{ }\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{x0}
+\NormalTok{    \}}
+  \CommentTok{#Calculates the residual vector.}
+\NormalTok{  res <-}\StringTok{ }\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{x0}
+  \CommentTok{# vairable to store the exact X, the aproximated X and the number of iterations}
+\NormalTok{  sol <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(x, x0, res, }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(k,n),}\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{))}
+  \CommentTok{# Names the colums of the new array}
+  \KeywordTok{colnames}\NormalTok{(sol) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"X"}\NormalTok{, }\StringTok{"X0"}\NormalTok{,}\StringTok{"resid"}\NormalTok{, }\StringTok{"iter"}\NormalTok{)}
+  \CommentTok{# prints the array}
+\NormalTok{  sol}
+ 
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Same matrix but slightly different function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          [,1]     [,2]      [,3]     [,4]     [,5]      [,6]     [,7]
+ [1,] 4.576307 3.544017 1.8706107 2.699453 3.464121 2.1412326 3.630429
+ [2,] 3.544017 3.995759 1.7402252 2.908020 3.122860 1.7878213 3.701816
+ [3,] 1.870611 1.740225 1.4091612 1.632820 1.585560 0.8950613 1.883202
+ [4,] 2.699453 2.908020 1.6328204 3.177959 2.352454 1.6335524 2.982156
+ [5,] 3.464121 3.122860 1.5855600 2.352454 3.832469 2.1929775 3.852252
+ [6,] 2.141233 1.787821 0.8950613 1.633552 2.192978 2.0398368 2.512283
+ [7,] 3.630429 3.701816 1.8832023 2.982156 3.852252 2.5122828 5.087222
+ [8,] 2.783155 2.232120 1.2940313 1.823810 2.891021 1.8346436 3.536088
+ [9,] 2.300886 2.567662 1.2002483 2.224262 2.623019 1.8329427 3.223934
+[10,] 2.345922 2.103801 1.4733256 1.801321 2.664459 1.7837057 2.810596
+          [,8]     [,9]    [,10]
+ [1,] 2.783155 2.300886 2.345922
+ [2,] 2.232120 2.567662 2.103801
+ [3,] 1.294031 1.200248 1.473326
+ [4,] 1.823810 2.224262 1.801321
+ [5,] 2.891021 2.623019 2.664459
+ [6,] 1.834644 1.832943 1.783706
+ [7,] 3.536088 3.223934 2.810596
+ [8,] 3.133619 2.283068 1.976192
+ [9,] 2.283068 2.591424 1.922565
+[10,] 1.976192 1.922565 2.373093
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol<-}\StringTok{ }\KeywordTok{gradLS2}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X        X0         resid iter
+ [1,] 0.6172931 0.6173075 -1.444088e-05  886
+ [2,] 0.8323071 0.8322895  1.756001e-05  886
+ [3,] 0.5397727 0.5397693  3.335324e-06  886
+ [4,] 0.1785781 0.1785764  1.682705e-06  886
+ [5,] 0.7888260 0.7888242  1.814743e-06  886
+ [6,] 0.3950113 0.3949988  1.251022e-05  886
+ [7,] 0.7050482 0.7050616 -1.332729e-05  886
+ [8,] 0.8651250 0.8651073  1.765960e-05  886
+ [9,] 0.1558820 0.1558986 -1.654262e-05  886
+[10,] 0.3583763 0.3583780 -1.650070e-06  886
+\end{verbatim}
+
+Well, thats wierd 886 iterations. This seems interesting we went from
+3532 to 914619 to 886 iterations. Well this fixed the problem for this
+matrix but does it work for all?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{214567}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{5}
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          [,1]     [,2]      [,3]      [,4]      [,5]
+[1,] 1.3951977 1.439403 0.9458712 0.6875470 0.3530277
+[2,] 1.4394026 2.826384 2.1103633 1.3952379 1.3081469
+[3,] 0.9458712 2.110363 1.8090746 0.9263186 1.1690460
+[4,] 0.6875470 1.395238 0.9263186 0.8325923 0.6920785
+[5,] 0.3530277 1.308147 1.1690460 0.6920785 1.0185438
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol1<-}\StringTok{ }\KeywordTok{grad}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol2<-}\StringTok{ }\KeywordTok{gradLS}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol3<-}\StringTok{ }\KeywordTok{gradLS2}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X         X0         resid iter
+[1,] 0.28642738 0.28633495  9.243224e-05 4667
+[2,] 0.09199288 0.09073066  1.262219e-03 4667
+[3,] 0.36928209 0.37065175 -1.369664e-03 4667
+[4,] 0.03981780 0.04120865 -1.390849e-03 4667
+[5,] 0.95860400 0.95773918  8.648254e-04 4667
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X          X0        resid iter
+[1,] 0.28642738 0.280137231  0.006290151  486
+[2,] 0.09199288 0.008120223  0.083872660  486
+[3,] 0.36928209 0.460459605 -0.091177516  486
+[4,] 0.03981780 0.132354278 -0.092536480  486
+[5,] 0.95860400 0.900839980  0.057764024  486
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X         X0         resid iter
+[1,] 0.28642738 0.28639605  3.133395e-05 1439
+[2,] 0.09199288 0.09156893  4.239535e-04 1439
+[3,] 0.36928209 0.36974119 -4.591008e-04 1439
+[4,] 0.03981780 0.04028413 -4.663322e-04 1439
+[5,] 0.95860400 0.95831367  2.903382e-04 1439
+\end{verbatim}
+
+Well this matrix broke my theory again. Back to the drawing board. I
+decided maybe I just had a bad psuedo code. I decided to look into
+another iterative method and found the advanced chevy cheb iterative
+method that avoids dot products of residuals.
+
+\section{Advanced Cheby Chev iterative
+method}\label{advanced-cheby-chev-iterative-method}
+
+So I did some research and found some psuedo code to play with.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cheby <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{ (A,b,x0, maxIts, tol)}
+\NormalTok{\{}
+\NormalTok{  ev <-}\StringTok{ }\KeywordTok{eigen}\NormalTok{(A)}
+\NormalTok{  lmax<-}\StringTok{ }\KeywordTok{max}\NormalTok{(ev}\OperatorTok{$}\NormalTok{values)}
+\NormalTok{  lmin <-}\StringTok{ }\KeywordTok{min}\NormalTok{(ev}\OperatorTok{$}\NormalTok{values)}
+  
+\NormalTok{  d<-}\StringTok{ }\NormalTok{(lmax }\OperatorTok{+}\NormalTok{lmin)}\OperatorTok{/}\FloatTok{2.0}
+\NormalTok{  c<-}\StringTok{ }\NormalTok{(lmax}\OperatorTok{-}\NormalTok{lmin)}\OperatorTok{/}\FloatTok{2.0}
+\NormalTok{  precon <-}\StringTok{ }\KeywordTok{diag}\NormalTok{(}\KeywordTok{length}\NormalTok{(A[,}\DecValTok{1}\NormalTok{]))}
+\NormalTok{  x <-}\StringTok{ }\NormalTok{x0}
+\NormalTok{  r <-}\StringTok{ }\NormalTok{b }\OperatorTok{-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\NormalTok{  i <-}\StringTok{ }\DecValTok{1}
+  \ControlFlowTok{while}\NormalTok{(i }\OperatorTok{<}\StringTok{ }\NormalTok{maxIts }\OperatorTok{&&}\StringTok{ }\KeywordTok{norm}\NormalTok{(r, }\StringTok{"1"}\NormalTok{) }\OperatorTok{>}\StringTok{ }\NormalTok{tol)}
+\NormalTok{  \{}
+\NormalTok{    z =}\StringTok{ }\KeywordTok{solve}\NormalTok{(precon, r)}
+    \ControlFlowTok{if}\NormalTok{ (i }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\NormalTok{    \{}
+\NormalTok{      p <-}\StringTok{ }\NormalTok{z}
+\NormalTok{      alpha <-}\StringTok{ }\DecValTok{1}\OperatorTok{/}\NormalTok{d}
+\NormalTok{    \}}
+    \ControlFlowTok{else}
+\NormalTok{    \{}
+\NormalTok{      beta <-}\StringTok{ }\NormalTok{(c}\OperatorTok{*}\NormalTok{alpha}\OperatorTok{/}\FloatTok{2.0}\NormalTok{)}\OperatorTok{^}\DecValTok{2}
+\NormalTok{      alpha <-}\StringTok{ }\DecValTok{1}\OperatorTok{/}\NormalTok{(d}\OperatorTok{-}\NormalTok{beta}\OperatorTok{/}\NormalTok{alpha)}
+\NormalTok{      p <-}\StringTok{ }\NormalTok{z }\OperatorTok{+}\StringTok{ }\NormalTok{beta}\OperatorTok{*}\NormalTok{p}
+\NormalTok{    \}}
+\NormalTok{    x <-}\StringTok{ }\NormalTok{x }\OperatorTok{+}\StringTok{ }\NormalTok{alpha}\OperatorTok{*}\NormalTok{p}
+\NormalTok{    r <-}\StringTok{ }\NormalTok{b }\OperatorTok{-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\NormalTok{    i =}\StringTok{ }\NormalTok{i}\OperatorTok{+}\DecValTok{1}
+\NormalTok{  \}}
+  \CommentTok{#Calculates the residual vector.}
+\NormalTok{  res <-}\StringTok{ }\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{x0}
+  \CommentTok{# vairable to store the exact X, the aproximated X and the number of iterations}
+\NormalTok{  sol <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(x, x0, res, }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(i}\OperatorTok{-}\DecValTok{1}\NormalTok{,n),}\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{))}
+  \CommentTok{# Names the colums of the new array}
+  \KeywordTok{colnames}\NormalTok{(sol) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"X"}\NormalTok{, }\StringTok{"X0"}\NormalTok{,}\StringTok{"resid"}\NormalTok{, }\StringTok{"iter"}\NormalTok{)}
+  \CommentTok{# prints the array}
+\NormalTok{  sol}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+lets see how it does?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          [,1]     [,2]      [,3]      [,4]      [,5]
+[1,] 1.3951977 1.439403 0.9458712 0.6875470 0.3530277
+[2,] 1.4394026 2.826384 2.1103633 1.3952379 1.3081469
+[3,] 0.9458712 2.110363 1.8090746 0.9263186 1.1690460
+[4,] 0.6875470 1.395238 0.9263186 0.8325923 0.6920785
+[5,] 0.3530277 1.308147 1.1690460 0.6920785 1.0185438
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol1<-}\StringTok{ }\KeywordTok{grad}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol2<-}\StringTok{ }\KeywordTok{gradLS}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol3<-}\StringTok{ }\KeywordTok{gradLS2}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol4<-}\StringTok{ }\KeywordTok{cheby}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X         X0         resid iter
+[1,] 0.28642738 0.28633495  9.243224e-05 4667
+[2,] 0.09199288 0.09073066  1.262219e-03 4667
+[3,] 0.36928209 0.37065175 -1.369664e-03 4667
+[4,] 0.03981780 0.04120865 -1.390849e-03 4667
+[5,] 0.95860400 0.95773918  8.648254e-04 4667
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X          X0        resid iter
+[1,] 0.28642738 0.280137231  0.006290151  486
+[2,] 0.09199288 0.008120223  0.083872660  486
+[3,] 0.36928209 0.460459605 -0.091177516  486
+[4,] 0.03981780 0.132354278 -0.092536480  486
+[5,] 0.95860400 0.900839980  0.057764024  486
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X         X0         resid iter
+[1,] 0.28642738 0.28639605  3.133395e-05 1439
+[2,] 0.09199288 0.09156893  4.239535e-04 1439
+[3,] 0.36928209 0.36974119 -4.591008e-04 1439
+[4,] 0.03981780 0.04028413 -4.663322e-04 1439
+[5,] 0.95860400 0.95831367  2.903382e-04 1439
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X X0      resid iter
+[1,] 0.28642714  0 0.28642714  496
+[2,] 0.09199234  0 0.09199234  496
+[3,] 0.36928183  0 0.36928183  496
+[4,] 0.03981767  0 0.03981767  496
+[5,] 0.95860372  0 0.95860372  496
+\end{verbatim}
+
+Interesting this matrix it only took 496 iterations. Lets try a few more
+from earlier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{21456}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{10} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          [,1]     [,2]      [,3]     [,4]     [,5]      [,6]     [,7]
+ [1,] 4.576307 3.544017 1.8706107 2.699453 3.464121 2.1412326 3.630429
+ [2,] 3.544017 3.995759 1.7402252 2.908020 3.122860 1.7878213 3.701816
+ [3,] 1.870611 1.740225 1.4091612 1.632820 1.585560 0.8950613 1.883202
+ [4,] 2.699453 2.908020 1.6328204 3.177959 2.352454 1.6335524 2.982156
+ [5,] 3.464121 3.122860 1.5855600 2.352454 3.832469 2.1929775 3.852252
+ [6,] 2.141233 1.787821 0.8950613 1.633552 2.192978 2.0398368 2.512283
+ [7,] 3.630429 3.701816 1.8832023 2.982156 3.852252 2.5122828 5.087222
+ [8,] 2.783155 2.232120 1.2940313 1.823810 2.891021 1.8346436 3.536088
+ [9,] 2.300886 2.567662 1.2002483 2.224262 2.623019 1.8329427 3.223934
+[10,] 2.345922 2.103801 1.4733256 1.801321 2.664459 1.7837057 2.810596
+          [,8]     [,9]    [,10]
+ [1,] 2.783155 2.300886 2.345922
+ [2,] 2.232120 2.567662 2.103801
+ [3,] 1.294031 1.200248 1.473326
+ [4,] 1.823810 2.224262 1.801321
+ [5,] 2.891021 2.623019 2.664459
+ [6,] 1.834644 1.832943 1.783706
+ [7,] 3.536088 3.223934 2.810596
+ [8,] 3.133619 2.283068 1.976192
+ [9,] 2.283068 2.591424 1.922565
+[10,] 1.976192 1.922565 2.373093
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol<-}\StringTok{ }\KeywordTok{cheby}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X X0     resid iter
+ [1,] 0.6172931  0 0.6172931  325
+ [2,] 0.8323071  0 0.8323071  325
+ [3,] 0.5397727  0 0.5397727  325
+ [4,] 0.1785781  0 0.1785781  325
+ [5,] 0.7888260  0 0.7888260  325
+ [6,] 0.3950113  0 0.3950113  325
+ [7,] 0.7050483  0 0.7050483  325
+ [8,] 0.8651250  0 0.8651250  325
+ [9,] 0.1558820  0 0.1558820  325
+[10,] 0.3583763  0 0.3583763  325
+\end{verbatim}
+
+wow, on the 10x10 it only took 325 iterations!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{21456}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{6} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+Lets see how the function does on this 6x6 matrix.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          [,1]      [,2]     [,3]      [,4]      [,5]      [,6]
+[1,] 2.5322214 0.9122529 2.004203 1.5482151 0.7751318 2.0283032
+[2,] 0.9122529 2.0519766 2.134736 0.9660084 0.7108958 1.5908699
+[3,] 2.0042025 2.1347358 3.714131 1.4712356 1.1478843 2.0035704
+[4,] 1.5482151 0.9660084 1.471236 1.2711860 0.6324079 1.4763406
+[5,] 0.7751318 0.7108958 1.147884 0.6324079 0.4117123 0.7575121
+[6,] 2.0283032 1.5908699 2.003570 1.4763406 0.7575121 2.3369386
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol<-}\StringTok{ }\KeywordTok{cheby}\NormalTok{(A, b, x0, maxIts, tol)}
+\NormalTok{sol}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+              X X0      resid iter
+[1,] 0.79899462  0 0.79899462  393
+[2,] 0.43135791  0 0.43135791  393
+[3,] 0.07193712  0 0.07193712  393
+[4,] 0.10669381  0 0.10669381  393
+[5,] 0.33782969  0 0.33782969  393
+[6,] 0.15723699  0 0.15723699  393
+\end{verbatim}
+
+Even better for this 6x6! Well what is different between gradient
+descent and cheby chevy. Well Cheby Chevy iteration avoids the dot
+products and ratio of residuals. It uses an eliptical appraoch to
+solving the problem. This means we have to have some knowledge of the
+eigen values of our matrix.
+
+After talking to Dr.~Palmer I realized that part of the problem might be
+that the matrices are ill conditioned. So, lets redfine a few matrices
+and look at the condition numbers.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{21456}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{10} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{2145}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{6} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{B <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{B }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{214}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{6} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{C <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{C }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(C)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{21}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{6} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{D <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{D }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(D)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kappa}\NormalTok{(A)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 49.10724
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kappa}\NormalTok{(B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2148.086
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kappa}\NormalTok{(C)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 434.2473
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{kappa}\NormalTok{(D)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1706.385
+\end{verbatim}
+
+Well higher condition numbers mean that the matrices are ill
+conditioned. We can see that matrix B is highly ill conditioned. Well
+lets condition a matrix and see how that affects the number of
+iterations. We can use the B matrix.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{2145}\NormalTok{)}
+\NormalTok{n <-}\StringTok{ }\DecValTok{6} 
+\CommentTok{# Creates a Random matrix with n^2 randomly generated numbers}
+\NormalTok{A<-}\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n}\OperatorTok{^}\DecValTok{2}\NormalTok{), }\DataTypeTok{ncol=}\NormalTok{n)}
+\CommentTok{# Forces the matrix to be symmetric}
+\NormalTok{B <-}\StringTok{ }\NormalTok{(}\KeywordTok{t}\NormalTok{(A) }\OperatorTok{%*%}\StringTok{ }\NormalTok{A)}
+\NormalTok{B<-}\StringTok{ }\NormalTok{B }\OperatorTok{+}\StringTok{ }\NormalTok{(}\DecValTok{100}\OperatorTok{*}\KeywordTok{diag}\NormalTok{(n))}
+\CommentTok{# Creates a random solution vector to solve for}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Creates a b vector from our random vector x}
+\NormalTok{b <-}\StringTok{ }\NormalTok{B }\OperatorTok{%*%}\StringTok{ }\NormalTok{x}
+\CommentTok{# initial approximation vector (zero vecor)}
+\NormalTok{x0 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\FloatTok{0.0}\NormalTok{,n), }\DataTypeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\CommentTok{# Setting a tolerance for the norm of our vector}
+\NormalTok{tol =}\StringTok{ }\DecValTok{10}\OperatorTok{^-}\DecValTok{5}
+\CommentTok{# determines if all the eigen values are positive}
+\KeywordTok{is.positive.definite}\NormalTok{(B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+           [,1]        [,2]        [,3]       [,4]       [,5]       [,6]
+[1,] 101.629180   1.3253076   1.3704596   1.897338   1.492470   1.388390
+[2,]   1.325308 102.1268329   0.9046964   2.031244   1.432492   1.145834
+[3,]   1.370460   0.9046964 101.6388220   1.852486   1.570883   1.469332
+[4,]   1.897338   2.0312444   1.8524862 102.844479   2.251959   1.748982
+[5,]   1.492470   1.4324924   1.5708827   2.251959 102.753722   1.775626
+[6,]   1.388390   1.1458340   1.4693319   1.748982   1.775626 101.692876
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol1<-}\StringTok{ }\KeywordTok{grad}\NormalTok{(B, b, x0, maxIts, tol)}
+\NormalTok{sol2<-}\StringTok{ }\KeywordTok{gradLS}\NormalTok{(B, b, x0, maxIts, tol)}
+\NormalTok{sol3<-}\StringTok{ }\KeywordTok{gradLS2}\NormalTok{(B, b, x0, maxIts, tol)}
+\NormalTok{sol4<-}\StringTok{ }\KeywordTok{cheby}\NormalTok{(B, b, x0, maxIts, tol)}
+\NormalTok{sol1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             X        X0         resid iter
+[1,] 0.6258299 0.6258299 -3.726958e-09    5
+[2,] 0.2011419 0.2011419 -1.359563e-08    5
+[3,] 0.5883483 0.5883483 -2.515808e-08    5
+[4,] 0.8560448 0.8560448  6.611190e-09    5
+[5,] 0.9363852 0.9363852 -1.016239e-08    5
+[6,] 0.9780356 0.9780356  1.431781e-08    5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             X        X0        resid iter
+[1,] 0.6258299 0.6258299 6.393130e-11    9
+[2,] 0.2011419 0.2011419 3.926945e-11    9
+[3,] 0.5883483 0.5883483 1.334466e-11    9
+[4,] 0.8560448 0.8560448 1.281852e-10    9
+[5,] 0.9363852 0.9363852 6.868373e-11    9
+[6,] 0.9780356 0.9780356 1.035089e-10    9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             X        X0         resid iter
+[1,] 0.6258299 0.6258299  8.458740e-09 1880
+[2,] 0.2011419 0.2011419 -1.867218e-08 1880
+[3,] 0.5883483 0.5883482  4.345919e-09 1880
+[4,] 0.8560448 0.8560448  1.170221e-08 1880
+[5,] 0.9363852 0.9363851  1.918453e-08 1880
+[6,] 0.9780356 0.9780356  3.216321e-08 1880
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sol4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             X X0     resid iter
+[1,] 0.6258299  0 0.6258299    6
+[2,] 0.2011419  0 0.2011419    6
+[3,] 0.5883483  0 0.5883483    6
+[4,] 0.8560448  0 0.8560448    6
+[5,] 0.9363852  0 0.9363852    6
+[6,] 0.9780356  0 0.9780356    6
+\end{verbatim}
+
+By conditioning the matrix prior to solving using the iterative method
+we can see that it makes a significant differance in solving for the
+solution but Cheby Chev's method is still clost to the fastest method
+for solving these symetric matrices. There is also a functional form
+that can be used for non-symetric matrices. I want to consider using
+this on image processing and seeing where this takes me.
+
+
+\end{document}

@@ -1,10 +1,6 @@
 ---
-title: "ChebyChev Analysis"
-author: "Kory Illenye"
-date: "4/19/2018"
-output:
-  html_document: default
-  pdf_document: default
+title: ""
+output:  html_document
 ---
 
 ```{r setup, include=FALSE}
