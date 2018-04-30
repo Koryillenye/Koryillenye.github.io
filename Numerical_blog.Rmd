@@ -1,0 +1,606 @@
+---
+title: "ChebyChev Analysis"
+author: "Kory Illenye"
+date: "4/19/2018"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, prompt = FALSE, comment = NA)
+library(matrixcalc)
+```
+
+# Steepest Descent and Steepest Descent with Least Squares.
+
+Lets take a look at two iterative methods for finding solutions to positive definite, symetric matrices. Steepest Descent is often called **gradient descent**, which is a approach to finding minima of a function $f$. Using an estimate $x_i$, the negative gradient $-\nabla f(x_i)$ gives the direction of in which $f$ is decreasing at the greatest rate. The goal is to take steps in this direction until we react the minimum. 
+
+Notation:
+
+$e$ denotes an error term
+
+$i$ denotes the i-ith term
+
+$r$ denotes a residual
+
+$$e_i = x_i - x$$
+$$r_i = b - Ax_i = -Ae_i$$
+
+So, the next item to worry about is step size, lets call this $\alpha$, and use $x_{i+1} = x_i - \alpha_i\nabla f(x_i)$ this minimizes $f(x_{i+1})$. lets look at some code.
+
+```{r}
+#setting the seed to work with 
+set.seed(31)
+#Number of columns and rows in the matrix in the matrix
+n <- 5 
+# Creates a Random matrix with n^2 randomly generated numbers
+maxIts <- 1000000
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+A <- t(A) %*% A
+
+
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- A %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(A)
+```
+
+The return of TRUE above allows us to know that the matrix we are using is positive definite. Meanin that it has all positive eigen values. Now that all the components have been created for the use in the function. Lets see what the matrix looks like and design the function.
+
+### The Matrix A
+```{r}
+#prints the matrix A
+A
+```
+### The b vector
+```{r}
+#Prints b
+b
+```
+#The Funtion of Gradient Descent Method
+```{r}
+# defines the function
+grad <- function (A,b,x0, maxIts, tol)
+  {
+    # creates an initial residual
+    r <- b - (A %*% x0)
+    # used to keep track of the number of iterations.
+    k = 0
+    # loop used to attempt to find the approximation of the X vector
+    while (k < maxIts && norm(r, "1") > tol)
+    {
+      # increments the iteration
+      k <- k+1
+      # creates a step size using the residuals and matrix A
+      alpha <- (t(r) %*% r) / (t(r) %*% (A %*% r))
+      # creates the next approximation of the X vector
+      x0 <- x0 + drop(alpha) * r
+      # creates the new residual with the new approximation
+      r <- b - A %*% x0
+    }
+  #Calculates the residual vector.
+  res <- x - x0
+  # vairable to store the exact X, the aproximated X and the number of iterations
+  sol <- cbind(x, x0, res, matrix(rep(k,n),ncol = 1))
+  # Names the colums of the new array
+  colnames(sol) <- c("X", "X0","resid", "iter")
+  # prints the array
+  sol
+ 
+}
+```
+
+This code when run generates the following:
+
+```{r}
+# runs the function and saves it to a variable "c"
+c <- grad(A, b, x0, maxIts, tol)
+# prints the array 
+c 
+```
+
+I set the seed so this data can be replicated. As you can see the approximation is very close to the actual solution. The norm of the residual is `r round(sum(c[,3]),5)` when rounded to 5 decimal places. For this document we know that if the `iter` column is not equal to `r maxits
+
+# 6x6 matrix
+```{r}
+set.seed(21)
+n <- 6 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+A <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- A %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(A)
+```
+
+Lets see how the function does on this 6x6 matrix.
+```{r}
+sol<-grad(A, b, x0, maxIts, tol)
+sol
+```
+
+I want to look at a few matrices, I am going to adjust the seed number for each. These numbers are arbitrary but for replication purposes I am setting the seed.
+
+```{r}
+set.seed(214)
+n <- 6 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+A <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- A %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(A)
+```
+
+Lets see how the function does on this 6x6 matrix.
+```{r}
+A
+sol <-grad(A, b, x0, maxIts, tol)
+sol
+```
+
+We can see that the function completed after `r sol[1,4]` iterations. This means that the norm is within $10^{-5}$. 
+
+```{r}
+set.seed(2145)
+n <- 6 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+A <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- A %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(A)
+```
+
+Lets see how the function does on this 6x6 matrix.
+```{r}
+A
+sol<- grad(A, b, x0, maxIts, tol)
+sol
+```
+
+We can see that the function completed after `r sol[1,4]` iterations. This means that the norm is within $10^{-5}$. 
+
+```{r}
+set.seed(21456)
+n <- 6 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+A <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- A %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(A)
+```
+
+Lets see how the function does on this 6x6 matrix.
+```{r}
+A
+sol<- grad(A, b, x0, maxIts, tol)
+sol
+```
+
+We can see that the function completed after `r sol[1,4]` iterations. This means that the norm is within $10^{-5}$. 
+
+# 10x10 matrix
+
+```{r}
+set.seed(21456)
+n <- 10 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+A <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- A %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(A)
+```
+
+```{r}
+A
+sol<- grad(A, b, x0, maxIts, tol)
+sol
+```
+
+We can see that the function completed after `r sol[1,4]` iterations. This means that the norm is within $10^{-5}$. 
+
+# Gradient Descent with least squares
+
+This function is supposed to converge faster.
+
+```{r}
+# defines the function
+gradLS <- function (A,b,x0, maxIts, tol)
+  {
+    # creates an initial residual
+    r <- b - (A %*% x0)
+    # used to keep track of the number of iterations.
+    k = 0
+    # loop used to attempt to find the approximation of the X vector
+    while (k < maxIts && norm(r, "1") > tol)
+    {
+      # increments the iteration
+      k <- k+1
+      # creates a step size using the residuals and matrix A
+      alpha <- (t(r) %*% r) / (t(A%*%r) %*% (A %*% r))
+      # creates the next approximation of the X vector
+      x0 <- x0 + drop(alpha) * r
+      # creates the new residual with the new approximation
+      r <- t(A)%*% b - (t(A) %*% A) %*% x0
+    }
+  #Calculates the residual vector.
+  res <- x - x0
+  # vairable to store the exact X, the aproximated X and the number of iterations
+  sol <- cbind(x, x0, res, matrix(rep(k,n),ncol = 1))
+  # Names the colums of the new array
+  colnames(sol) <- c("X", "X0","resid", "iter")
+  # prints the array
+  sol
+ 
+}
+```
+
+```{r}
+A
+sol<- gradLS(A, b, x0, maxIts, tol)
+sol
+```
+
+Here is the point my mind went, What!!!! This took `r sol[1,4]` iterations. Why? I had to know more. initially I decided lets mess with the code a little.
+
+So on the line that creates the new residual I removed the additional transposes of A.
+
+```{r}
+# defines the function
+gradLS2 <- function (A,b,x0, maxIts, tol)
+  {
+    # creates an initial residual
+    r <- b - (A %*% x0)
+    # used to keep track of the number of iterations.
+    k = 0
+    # loop used to attempt to find the approximation of the X vector
+    while (k < maxIts && norm(r, "1") > tol)
+    {
+      # increments the iteration
+      k <- k+1
+      # creates a step size using the residuals and matrix A
+      alpha <- (t(r) %*% r) / (t(A%*%r) %*% (A %*% r))
+      # creates the next approximation of the X vector
+      x0 <- x0 + drop(alpha) * r
+      # creates the new residual with the new approximation
+      r <-  b - (A) %*% x0
+    }
+  #Calculates the residual vector.
+  res <- x - x0
+  # vairable to store the exact X, the aproximated X and the number of iterations
+  sol <- cbind(x, x0, res, matrix(rep(k,n),ncol = 1))
+  # Names the colums of the new array
+  colnames(sol) <- c("X", "X0","resid", "iter")
+  # prints the array
+  sol
+ 
+}
+```
+Same matrix but slightly different function
+```{r}
+A
+sol<- gradLS2(A, b, x0, maxIts, tol)
+sol
+```
+
+Well, thats wierd `r sol[1,4]` iterations. This seems interesting we went from 3532 to 914619 to 886 iterations. Well this fixed the problem for this matrix but does it work for all?
+
+```{r}
+set.seed(214567)
+n <- 5
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+A <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- A %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(A)
+```
+```{r}
+A
+sol1<- grad(A, b, x0, maxIts, tol)
+sol2<- gradLS(A, b, x0, maxIts, tol)
+sol3<- gradLS2(A, b, x0, maxIts, tol)
+sol1
+sol2
+sol3
+```
+
+Well this matrix broke my theory again. Back to the drawing board. I decided maybe I just had a bad psuedo code. I decided to look into another iterative method and found the advanced chevy cheb iterative method that avoids dot products of residuals.
+
+#Advanced Cheby Chev iterative method
+
+So I did some research and found some psuedo code to play with.
+
+```{r}
+cheby <- function (A,b,x0, maxIts, tol)
+{
+  ev <- eigen(A)
+  lmax<- max(ev$values)
+  lmin <- min(ev$values)
+  
+  d<- (lmax +lmin)/2.0
+  c<- (lmax-lmin)/2.0
+  precon <- diag(length(A[,1]))
+  x <- x0
+  r <- b - A %*% x
+  i <- 1
+  while(i < maxIts && norm(r, "1") > tol)
+  {
+    z = solve(precon, r)
+    if (i == 1)
+    {
+      p <- z
+      alpha <- 1/d
+    }
+    else
+    {
+      beta <- (c*alpha/2.0)^2
+      alpha <- 1/(d-beta/alpha)
+      p <- z + beta*p
+    }
+    x <- x + alpha*p
+    r <- b - A %*% x
+    i = i+1
+  }
+  #Calculates the residual vector.
+  res <- x - x0
+  # vairable to store the exact X, the aproximated X and the number of iterations
+  sol <- cbind(x, x0, res, matrix(rep(i-1,n),ncol = 1))
+  # Names the colums of the new array
+  colnames(sol) <- c("X", "X0","resid", "iter")
+  # prints the array
+  sol
+}
+
+```
+
+lets see how it does?
+
+```{r}
+A
+sol1<- grad(A, b, x0, maxIts, tol)
+sol2<- gradLS(A, b, x0, maxIts, tol)
+sol3<- gradLS2(A, b, x0, maxIts, tol)
+sol4<- cheby(A, b, x0, maxIts, tol)
+sol1
+sol2
+sol3
+sol4
+```
+
+Interesting this matrix it only took 496 iterations. Lets try a few more from earlier.
+
+```{r}
+set.seed(21456)
+n <- 10 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+A <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- A %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(A)
+```
+
+```{r}
+A
+sol<- cheby(A, b, x0, maxIts, tol)
+sol
+```
+
+wow, on the 10x10 it only took 325 iterations!
+
+```{r}
+set.seed(21456)
+n <- 6 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+A <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- A %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(A)
+```
+
+Lets see how the function does on this 6x6 matrix.
+```{r}
+A
+sol<- cheby(A, b, x0, maxIts, tol)
+sol
+```
+
+Even better for this 6x6! Well what is different between gradient descent and cheby chevy. Well Cheby Chevy iteration avoids the dot products and ratio of residuals. It uses an eliptical appraoch to solving the problem. This means we have to have some knowledge of the eigen values of our matrix.
+
+After talking to Dr. Palmer I realized that part of the problem might be that the matrices are ill conditioned. So, lets redfine a few matrices and look at the condition numbers.
+
+```{r}
+set.seed(21456)
+n <- 10 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+A <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- A %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(A)
+```
+
+```{r}
+set.seed(2145)
+n <- 6 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+B <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- B %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(B)
+```
+
+```{r}
+set.seed(214)
+n <- 6 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+C <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- C %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(C)
+```
+```{r}
+set.seed(21)
+n <- 6 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+D <- t(A) %*% A
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- D %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(D)
+```
+
+```{r}
+kappa(A)
+kappa(B)
+kappa(C)
+kappa(D)
+```
+
+Well higher condition numbers mean that the matrices are ill conditioned. We can see that matrix B is highly ill conditioned. Well lets condition a matrix and see how that affects the number of iterations. We can use the B matrix.
+
+```{r}
+set.seed(2145)
+n <- 6 
+# Creates a Random matrix with n^2 randomly generated numbers
+A<-matrix(runif(n^2), ncol=n)
+# Forces the matrix to be symmetric
+B <- (t(A) %*% A)
+B<- B + (100*diag(n))
+# Creates a random solution vector to solve for
+x <- matrix(runif(n), ncol = 1)
+# Creates a b vector from our random vector x
+b <- B %*% x
+# initial approximation vector (zero vecor)
+x0 <- matrix(rep(0.0,n), ncol = 1)
+# Setting a tolerance for the norm of our vector
+tol = 10^-5
+# determines if all the eigen values are positive
+is.positive.definite(B)
+
+```
+
+```{r}
+B
+sol1<- grad(B, b, x0, maxIts, tol)
+sol2<- gradLS(B, b, x0, maxIts, tol)
+sol3<- gradLS2(B, b, x0, maxIts, tol)
+sol4<- cheby(B, b, x0, maxIts, tol)
+sol1
+sol2
+sol3
+sol4
+```
+
+By conditioning the matrix prior to solving using the iterative method we can see that it makes a significant differance in solving for the solution but Cheby Chev's method is still clost to the fastest method for solving these symetric matrices. There is also a functional form that can be used for non-symetric matrices.  I want to consider using this on image processing and seeing where this takes me.

@@ -13,6 +13,8 @@ navbar:
       href: Class_1.html
     - text: Resources
       href: Resources.html
+    - text: Numerical Blog
+      href: Numerical_blog.html
   - text: Contact
     href: Contact.html
   - text: Department of Mathematical Sciences
