@@ -10,7 +10,7 @@ library(matrixcalc)
 
 # Steepest Descent and Steepest Descent with Least Squares.
 
-Lets take a look at two iterative methods for finding solutions to positive definite, symetric matrices. Steepest Descent is often called **gradient descent**, which is a approach to finding minima of a function $f$. Using an estimate $x_i$, the negative gradient $-\nabla f(x_i)$ gives the direction of in which $f$ is decreasing at the greatest rate. The goal is to take steps in this direction until we react the minimum. 
+Initially we started by looking at two iterative methods for finding solutions to positive definite, symmetric matrices. Steepest Descent is often called **gradient descent**, which is a approach to finding minima of a function $f$. Using an estimate $x_i$, the negative gradient $-\nabla f(x_i)$ gives the direction of in which $f$ is decreasing at the greatest rate. The goal is to take steps in this direction until we react the minimum. 
 
 Notation:
 
@@ -23,7 +23,9 @@ $r$ denotes a residual
 $$e_i = x_i - x$$
 $$r_i = b - Ax_i = -Ae_i$$
 
-So, the next item to worry about is step size, lets call this $\alpha$, and use $x_{i+1} = x_i - \alpha_i\nabla f(x_i)$ this minimizes $f(x_{i+1})$. lets look at some code.
+To determine the size, often referred to as $\alpha$, a ratio of inner products from residuals is used. $x_{i+1} = x_i - \alpha_i\nabla f(x_i)$ this minimizes $f(x_{i+1})$. Now, that it is understood what is needed lets define a few things. To be symmetric 
+
+## Creating a positive definite, symetric matrix
 
 ```{r}
 #setting the seed to work with 
@@ -34,9 +36,7 @@ n <- 5
 maxIts <- 1000000
 A<-matrix(runif(n^2), ncol=n)
 # Forces the matrix to be symmetric
-A <- t(A) %*% A
-
-
+A <- t(A) %*% A 
 # Creates a random solution vector to solve for
 x <- matrix(runif(n), ncol = 1)
 # Creates a b vector from our random vector x
@@ -49,7 +49,7 @@ tol = 10^-5
 is.positive.definite(A)
 ```
 
-The return of TRUE above allows us to know that the matrix we are using is positive definite. Meanin that it has all positive eigen values. Now that all the components have been created for the use in the function. Lets see what the matrix looks like and design the function.
+The return of TRUE from the code block above allows us to know that the matrix is positive definite. This means that the matrix has all positive eigen values. Now that all the components have been created for the use in the function. Lets see what the matrix looks like and design the function.
 
 ### The Matrix A
 ```{r}
@@ -330,7 +330,7 @@ sol<- gradLS2(A, b, x0, maxIts, tol)
 sol
 ```
 
-Well, thats wierd `r sol[1,4]` iterations. This seems interesting we went from 3532 to 914619 to 886 iterations. Well this fixed the problem for this matrix but does it work for all?
+Well, that's weird `r sol[1,4]` iterations. This seems interesting we went from 3532 to 914619 to 886 iterations. Well this fixed the problem for this matrix but does it work for all?
 
 ```{r}
 set.seed(214567)
@@ -360,11 +360,11 @@ sol2
 sol3
 ```
 
-Well this matrix broke my theory again. Back to the drawing board. I decided maybe I just had a bad psuedo code. I decided to look into another iterative method and found the advanced chevy cheb iterative method that avoids dot products of residuals.
+Well this matrix broke my theory again. Back to the drawing board. I decided maybe I just had a bad pseudo code. I decided to look into another iterative method and found the advanced chevy cheb iterative method that avoids dot products of residuals.
 
 #Advanced Cheby Chev iterative method
 
-So I did some research and found some psuedo code to play with.
+So I did some research and found some pseudo code to play with.
 
 ```{r}
 cheby <- function (A,b,x0, maxIts, tol)
@@ -478,9 +478,9 @@ sol<- cheby(A, b, x0, maxIts, tol)
 sol
 ```
 
-Even better for this 6x6! Well what is different between gradient descent and cheby chevy. Well Cheby Chevy iteration avoids the dot products and ratio of residuals. It uses an eliptical appraoch to solving the problem. This means we have to have some knowledge of the eigen values of our matrix.
+Even better for this 6x6! Well what is different between gradient descent and cheby chevy. Well Cheby Chevy iteration avoids the dot products and ratio of residuals. It uses an elliptical approach to solving the problem. This means we have to have some knowledge of the eigen values of our matrix.
 
-After talking to Dr. Palmer I realized that part of the problem might be that the matrices are ill conditioned. So, lets redfine a few matrices and look at the condition numbers.
+After talking to Dr. Palmer I realized that part of the problem might be that the matrices are ill conditioned. So, lets redefine a few matrices and look at the condition numbers.
 
 ```{r}
 set.seed(21456)
@@ -599,4 +599,4 @@ sol3
 sol4
 ```
 
-By conditioning the matrix prior to solving using the iterative method we can see that it makes a significant differance in solving for the solution but Cheby Chev's method is still clost to the fastest method for solving these symetric matrices. There is also a functional form that can be used for non-symetric matrices.  I want to consider using this on image processing and seeing where this takes me.
+By conditioning the matrix prior to solving using the iterative method we can see that it makes a significant difference in solving for the solution but Cheby Chev's method is still close to the fastest method for solving these symmetric matrices. There is also a functional form that can be used for non-symmetric matrices.  I want to consider using this on image processing and seeing where this takes me.
