@@ -232,30 +232,32 @@ $(document).ready(function () {
 <p><span class="math inline">\(i\)</span> denotes the i-ith term</p>
 <p><span class="math inline">\(r\)</span> denotes a residual</p>
 <p><span class="math display">\[e_i = x_i - x\]</span> <span class="math display">\[r_i = b - Ax_i = -Ae_i\]</span></p>
-<p>To determine the size, often referred to as <span class="math inline">\(\alpha\)</span>, a ratio of inner products from residuals is used. <span class="math inline">\(x_{i+1} = x_i - \alpha_i\nabla f(x_i)\)</span> this minimizes <span class="math inline">\(f(x_{i+1})\)</span>. Now, that it is understood what is needed lets define a few things. To be symmetric</p>
+<p>To determine the size, often referred to as <span class="math inline">\(\alpha\)</span>, a ratio of inner products from residuals is used. <span class="math inline">\(x_{i+1} = x_i - \alpha_i\nabla f(x_i)\)</span> this minimizes <span class="math inline">\(f(x_{i+1})\)</span>. Now, that it is understood what is needed lets define a few things. To be symmetric means <span class="math inline">\(A = A^T\)</span> where <span class="math inline">\(A^T\)</span> is the transpose of A. Positive definite means all of the matrix’s eigen values are greater than 0.</p>
 <div id="creating-a-positive-definite-symetric-matrix" class="section level2">
 <h2>Creating a positive definite, symetric matrix</h2>
-<pre class="r"><code>#setting the seed to work with 
+<p>Defining initial variables.</p>
+<pre class="r"><code># Setting the seed to work with 
 set.seed(31)
-#Number of columns and rows in the matrix in the matrix
+# Number of columns and rows in the matrix in the matrix
 n &lt;- 5 
-# Creates a Random matrix with n^2 randomly generated numbers
+# Maximum number of iterations for functions
 maxIts &lt;- 1000000
+# Setting a tolerance for use with the function
+tol = 10^-5
+# Creates a random nxn matrix with n^2 randomly generated numbers
 A&lt;-matrix(runif(n^2), ncol=n)
 # Forces the matrix to be symmetric
 A &lt;- t(A) %*% A 
-# Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
-# Creates a b vector from our random vector x
-b &lt;- A %*% x
-# initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
-# determines if all the eigen values are positive
+# Creates a random nx1 solution vector to solve for
+xa &lt;- matrix(runif(n), ncol = 1)
+# Creates an nx1 b vector from the random vector x
+a &lt;- A %*% xa
+# Initial approximation vector (zero vecor)
+x0a &lt;- matrix(rep(0.0,n), ncol = 1)
+# Determines if all the eigen values are positive
 is.positive.definite(A)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<p>The return of TRUE from the code block above allows us to know that the matrix is positive definite. This means that the matrix has all positive eigen values. Now that all the components have been created for the use in the function. Lets see what the matrix looks like and design the function.</p>
+<p>The return of TRUE from the code block above allows us to know that the matrix is positive definite. Lets see what these objects look like and then design the function.</p>
 <div id="the-matrix-a" class="section level3">
 <h3>The Matrix A</h3>
 <pre class="r"><code>#prints the matrix A
@@ -270,7 +272,7 @@ A</code></pre>
 <div id="the-b-vector" class="section level3">
 <h3>The b vector</h3>
 <pre class="r"><code>#Prints b
-b</code></pre>
+a</code></pre>
 <pre><code>          [,1]
 [1,] 2.2159566
 [2,] 1.4658554
@@ -280,13 +282,15 @@ b</code></pre>
 </div>
 </div>
 </div>
-<div id="the-funtion-of-gradient-descent-method" class="section level1">
-<h1>The Funtion of Gradient Descent Method</h1>
+<div id="the-funtion-for-gradient-descent-method" class="section level1">
+<h1>The Funtion for Gradient Descent Method</h1>
 <pre class="r"><code># defines the function
-grad &lt;- function (A,b,x0, maxIts, tol)
+grad &lt;- function (A,b,x0a, maxIts, tol, x)
   {
+    # calculates n
+    n &lt;- length(b)
     # creates an initial residual
-    r &lt;- b - (A %*% x0)
+    r &lt;- b - (A %*% x0a)
     # used to keep track of the number of iterations.
     k = 0
     # loop used to attempt to find the approximation of the X vector
@@ -297,14 +301,14 @@ grad &lt;- function (A,b,x0, maxIts, tol)
       # creates a step size using the residuals and matrix A
       alpha &lt;- (t(r) %*% r) / (t(r) %*% (A %*% r))
       # creates the next approximation of the X vector
-      x0 &lt;- x0 + drop(alpha) * r
+      x0a &lt;- x0a + drop(alpha) * r
       # creates the new residual with the new approximation
-      r &lt;- b - A %*% x0
+      r &lt;- b - A %*% x0a
     }
   #Calculates the residual vector.
-  res &lt;- x - x0
+  res &lt;- x - x0a
   # vairable to store the exact X, the aproximated X and the number of iterations
-  sol &lt;- cbind(x, x0, res, matrix(rep(k,n),ncol = 1))
+  sol &lt;- cbind(x, x0a, res, matrix(rep(k,n),ncol = 1))
   # Names the colums of the new array
   colnames(sol) &lt;- c(&quot;X&quot;, &quot;X0&quot;,&quot;resid&quot;, &quot;iter&quot;)
   # prints the array
@@ -313,39 +317,56 @@ grad &lt;- function (A,b,x0, maxIts, tol)
 }</code></pre>
 <p>This code when run generates the following:</p>
 <pre class="r"><code># runs the function and saves it to a variable &quot;c&quot;
-c &lt;- grad(A, b, x0, maxIts, tol)
+sol1 &lt;- grad(A, a, x0a, maxIts, tol, xa)
 # prints the array 
-c </code></pre>
+sol1</code></pre>
 <pre><code>              X         X0         resid iter
 [1,] 0.04876597 0.04895561 -1.896346e-04  325
 [2,] 0.14752424 0.14746647  5.776931e-05  325
 [3,] 0.81504717 0.81491134  1.358297e-04  325
 [4,] 0.16098630 0.16109232 -1.060204e-04  325
 [5,] 0.07040319 0.07030940  9.378641e-05  325</code></pre>
-<p>I set the seed so this data can be replicated. As you can see the approximation is very close to the actual solution. The norm of the residual is 10^{-5} when rounded to 5 decimal places. For this document we know that if the <code>iter</code> column is not equal to `r maxits</p>
-</div>
-<div id="x6-matrix" class="section level1">
-<h1>6x6 matrix</h1>
+<p>You will notice that the code is not random and reproduces the same number every time. This is because a random seed was selected for reproduction of results. The <span class="math inline">\(X\)</span> column represents the exact solution, where the <span class="math inline">\(X0\)</span> column represents the approximation from the function. The resid column shows the actual difference between the two vectors. As you can see the approximation is very close to the actual solution. The norm of the residual is <span class="math inline">\(10^5\)</span> when rounded to 5 decimal places. For this document we know that if the <code>iter</code> column is not equal to 10^{6} then the maximum norm of the residual vector is <span class="math inline">\(10^5\)</span>. The final column just represents the number of iterations it actually took the function before converging to the approximate solution. You will notice that each row has an out put but this does <strong>not</strong> mean each row took that many iterations. Simply was concatenated this way. On the above matrix it took the function 325 iterations to complete. It worked for a <span class="math inline">\(5x5\)</span> matrix, now to apply it to a few larger matrices.</p>
+<div id="x6-positive-definite-symmetric-matrix" class="section level2">
+<h2>6x6 Positive Definite Symmetric Matrix</h2>
 <pre class="r"><code>set.seed(21)
 n &lt;- 6 
 # Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
+B&lt;-matrix(runif(n^2), ncol=n)
 # Forces the matrix to be symmetric
-A &lt;- t(A) %*% A
+B &lt;- t(B) %*% B
 # Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
+xb &lt;- matrix(runif(n), ncol = 1)
 # Creates a b vector from our random vector x
-b &lt;- A %*% x
+b &lt;- B %*% xb
 # initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
+x0b &lt;- matrix(rep(0.0,n), ncol = 1)
 # determines if all the eigen values are positive
-is.positive.definite(A)</code></pre>
+is.positive.definite(B)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<p>Lets see how the function does on this 6x6 matrix.</p>
-<pre class="r"><code>sol&lt;-grad(A, b, x0, maxIts, tol)
-sol</code></pre>
+<div id="the-matrix-and-b-vector" class="section level3">
+<h3>The Matrix and b vector</h3>
+<pre class="r"><code>B</code></pre>
+<pre><code>         [,1]      [,2]      [,3]     [,4]     [,5]     [,6]
+[1,] 2.969523 2.4693875 1.0945040 2.265522 2.268699 2.549656
+[2,] 2.469388 3.0539191 0.9314847 2.069346 2.489122 2.389834
+[3,] 1.094504 0.9314847 0.7736687 1.114188 1.197342 1.040629
+[4,] 2.265522 2.0693460 1.1141883 2.475676 2.296733 2.158044
+[5,] 2.268699 2.4891220 1.1973418 2.296733 2.593211 2.497518
+[6,] 2.549656 2.3898338 1.0406293 2.158044 2.497518 3.180717</code></pre>
+<pre class="r"><code>b</code></pre>
+<pre><code>         [,1]
+[1,] 7.708481
+[2,] 7.815830
+[3,] 3.454047
+[4,] 7.049440
+[5,] 7.781529
+[6,] 8.252008</code></pre>
+</div>
+<div id="the-results" class="section level3">
+<h3>The Results</h3>
+<pre class="r"><code>sol2&lt;-grad(B, b, x0b, maxIts, tol,xb)
+sol2</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.2163319 0.2164881 -0.0001561833 1781
 [2,] 0.6504235 0.6502254  0.0001980371 1781
@@ -353,26 +374,29 @@ sol</code></pre>
 [4,] 0.5076559 0.5075127  0.0001432318 1781
 [5,] 0.6528394 0.6532767 -0.0004373487 1781
 [6,] 0.9655767 0.9654451  0.0001315399 1781</code></pre>
-<p>I want to look at a few matrices, I am going to adjust the seed number for each. These numbers are arbitrary but for replication purposes I am setting the seed.</p>
+<p>For the purpose of this document random seeds have been set for replication and discussion but many of random matrices were sampled repeatedly but not reported. Each of the following seeds were created by a random 10-sided dice and adding a digit to the previous seed.</p>
+</div>
+</div>
+<div id="another-6x6-positive-definite-symmetric-matrix" class="section level2">
+<h2>Another 6x6 Positive Definite Symmetric Matrix</h2>
 <pre class="r"><code>set.seed(214)
 n &lt;- 6 
 # Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
+C&lt;-matrix(runif(n^2), ncol=n)
 # Forces the matrix to be symmetric
-A &lt;- t(A) %*% A
+C &lt;- t(C) %*% C
 # Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
+xc &lt;- matrix(runif(n), ncol = 1)
 # Creates a b vector from our random vector x
-b &lt;- A %*% x
+c &lt;- C %*% xc
 # initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
+x0c &lt;- matrix(rep(0.0,n), ncol = 1)
 # determines if all the eigen values are positive
-is.positive.definite(A)</code></pre>
+is.positive.definite(C)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<p>Lets see how the function does on this 6x6 matrix.</p>
-<pre class="r"><code>A</code></pre>
+<div id="the-matrix-and-b-vector-1" class="section level3">
+<h3>The Matrix and b vector</h3>
+<pre class="r"><code>C</code></pre>
 <pre><code>         [,1]     [,2]      [,3]      [,4]      [,5]      [,6]
 [1,] 2.591707 2.217206 1.1814162 1.5399616 1.6181376 1.1860408
 [2,] 2.217206 2.650669 1.6894440 2.0397363 1.4540539 1.1738115
@@ -380,8 +404,19 @@ is.positive.definite(A)</code></pre>
 [4,] 1.539962 2.039736 1.3084386 2.0160104 1.2108004 0.8519311
 [5,] 1.618138 1.454054 0.9020424 1.2108004 1.4474137 0.4330670
 [6,] 1.186041 1.173812 0.5422738 0.8519311 0.4330670 0.9206222</code></pre>
-<pre class="r"><code>sol &lt;-grad(A, b, x0, maxIts, tol)
-sol</code></pre>
+<pre class="r"><code>c</code></pre>
+<pre><code>         [,1]
+[1,] 5.051013
+[2,] 5.395403
+[3,] 3.358559
+[4,] 4.480104
+[5,] 3.678552
+[6,] 2.320329</code></pre>
+</div>
+<div id="the-results-1" class="section level3">
+<h3>The Results</h3>
+<pre class="r"><code>sol3&lt;-grad(C, c, x0c, maxIts, tol,xc)
+sol3</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.6807363 0.6806130  1.233517e-04 1419
 [2,] 0.1331188 0.1331240 -5.250738e-06 1419
@@ -389,26 +424,28 @@ sol</code></pre>
 [4,] 0.8683657 0.8683055  6.016602e-05 1419
 [5,] 0.6214230 0.6215572 -1.341803e-04 1419
 [6,] 0.1328657 0.1330050 -1.392501e-04 1419</code></pre>
-<p>We can see that the function completed after 1419 iterations. This means that the norm is within <span class="math inline">\(10^{-5}\)</span>.</p>
+</div>
+</div>
+<div id="another-6x6-positive-definite-symmetric-matrix-1" class="section level2">
+<h2>Another 6x6 Positive Definite Symmetric Matrix</h2>
 <pre class="r"><code>set.seed(2145)
 n &lt;- 6 
 # Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
+D&lt;-matrix(runif(n^2), ncol=n)
 # Forces the matrix to be symmetric
-A &lt;- t(A) %*% A
+D &lt;- t(D) %*% D
 # Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
+xd &lt;- matrix(runif(n), ncol = 1)
 # Creates a b vector from our random vector x
-b &lt;- A %*% x
+d &lt;- D %*% xd
 # initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
+x0d &lt;- matrix(rep(0.0,n), ncol = 1)
 # determines if all the eigen values are positive
-is.positive.definite(A)</code></pre>
+is.positive.definite(D)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<p>Lets see how the function does on this 6x6 matrix.</p>
-<pre class="r"><code>A</code></pre>
+<div id="the-matrix-and-b-vector-2" class="section level3">
+<h3>The Matrix and b vector</h3>
+<pre class="r"><code>D</code></pre>
 <pre><code>         [,1]      [,2]      [,3]     [,4]     [,5]     [,6]
 [1,] 1.629180 1.3253076 1.3704596 1.897338 1.492470 1.388390
 [2,] 1.325308 2.1268329 0.9046964 2.031244 1.432492 1.145834
@@ -416,8 +453,19 @@ is.positive.definite(A)</code></pre>
 [4,] 1.897338 2.0312444 1.8524862 2.844479 2.251959 1.748982
 [5,] 1.492470 1.4324924 1.5708827 2.251959 2.753722 1.775626
 [6,] 1.388390 1.1458340 1.4693319 1.748982 1.775626 1.692876</code></pre>
-<pre class="r"><code>sol&lt;- grad(A, b, x0, maxIts, tol)
-sol</code></pre>
+<pre class="r"><code>d</code></pre>
+<pre><code>         [,1]
+[1,] 6.472100
+[2,] 5.990356
+[3,] 6.497666
+[4,] 8.940155
+[5,] 8.389341
+[6,] 6.779419</code></pre>
+</div>
+<div id="the-results-2" class="section level3">
+<h3>The Results</h3>
+<pre class="r"><code>sol4&lt;- grad(D, d, x0d, maxIts, tol,xd)
+sol4</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.6258299 0.6258653 -3.544603e-05 1515
 [2,] 0.2011419 0.2014055 -2.636294e-04 1515
@@ -425,64 +473,78 @@ sol</code></pre>
 [4,] 0.8560448 0.8556266  4.181889e-04 1515
 [5,] 0.9363852 0.9364996 -1.144587e-04 1515
 [6,] 0.9780356 0.9777614  2.741660e-04 1515</code></pre>
-<p>We can see that the function completed after 1515 iterations. This means that the norm is within <span class="math inline">\(10^{-5}\)</span>.</p>
-<pre class="r"><code>set.seed(21456)
+</div>
+</div>
+<div id="another-6x6-positive-definite-symmetric-matrix-2" class="section level2">
+<h2>Another 6x6 Positive Definite Symmetric Matrix</h2>
+<pre class="r"><code>set.seed(21458)
 n &lt;- 6 
 # Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
+E&lt;-matrix(runif(n^2), ncol=n)
 # Forces the matrix to be symmetric
-A &lt;- t(A) %*% A
+E &lt;- t(E) %*% E
 # Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
+xe &lt;- matrix(runif(n), ncol = 1)
 # Creates a b vector from our random vector x
-b &lt;- A %*% x
+e &lt;- E %*% xe
 # initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
+x0e &lt;- matrix(rep(0.0,n), ncol = 1)
 # determines if all the eigen values are positive
-is.positive.definite(A)</code></pre>
+is.positive.definite(E)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<p>Lets see how the function does on this 6x6 matrix.</p>
-<pre class="r"><code>A</code></pre>
-<pre><code>          [,1]      [,2]     [,3]      [,4]      [,5]      [,6]
-[1,] 2.5322214 0.9122529 2.004203 1.5482151 0.7751318 2.0283032
-[2,] 0.9122529 2.0519766 2.134736 0.9660084 0.7108958 1.5908699
-[3,] 2.0042025 2.1347358 3.714131 1.4712356 1.1478843 2.0035704
-[4,] 1.5482151 0.9660084 1.471236 1.2711860 0.6324079 1.4763406
-[5,] 0.7751318 0.7108958 1.147884 0.6324079 0.4117123 0.7575121
-[6,] 2.0283032 1.5908699 2.003570 1.4763406 0.7575121 2.3369386</code></pre>
-<pre class="r"><code>sol&lt;- grad(A, b, x0, maxIts, tol)
-sol</code></pre>
-<pre><code>              X         X0         resid iter
-[1,] 0.79899443 0.79902045 -2.601344e-05 2127
-[2,] 0.43135773 0.43143786 -8.012212e-05 2127
-[3,] 0.07193685 0.07209572 -1.588676e-04 2127
-[4,] 0.10669362 0.10699923 -3.056067e-04 2127
-[5,] 0.33782973 0.33693283  8.969094e-04 2127
-[6,] 0.15723681 0.15712123  1.155732e-04 2127</code></pre>
-<p>We can see that the function completed after 2127 iterations. This means that the norm is within <span class="math inline">\(10^{-5}\)</span>.</p>
+<div id="the-matrix-and-b-vector-3" class="section level3">
+<h3>The Matrix and b vector</h3>
+<pre class="r"><code>E</code></pre>
+<pre><code>          [,1]      [,2]      [,3]      [,4]      [,5]      [,6]
+[1,] 0.8516702 0.5918866 0.9644886 0.2638436 0.8583120 1.2921903
+[2,] 0.5918866 1.5296755 1.6492970 0.1676149 1.6131301 1.1953723
+[3,] 0.9644886 1.6492970 3.0691736 1.0978719 2.0166848 1.7108179
+[4,] 0.2638436 0.1676149 1.0978719 0.9585854 0.3851128 0.4277445
+[5,] 0.8583120 1.6131301 2.0166848 0.3851128 2.1906219 1.6998282
+[6,] 1.2921903 1.1953723 1.7108179 0.4277445 1.6998282 2.3113791</code></pre>
+<pre class="r"><code>e</code></pre>
+<pre><code>         [,1]
+[1,] 2.246422
+[2,] 3.265114
+[3,] 4.870010
+[4,] 1.403840
+[5,] 4.279366
+[6,] 4.070408</code></pre>
 </div>
-<div id="x10-matrix" class="section level1">
-<h1>10x10 matrix</h1>
+<div id="the-results-3" class="section level3">
+<h3>The Results</h3>
+<pre class="r"><code>sol5&lt;- grad(E, e, x0e, maxIts, tol,xe)
+sol5</code></pre>
+<pre><code>             X        X0         resid iter
+[1,] 0.4544894 0.4544451  4.431286e-05  322
+[2,] 0.3672737 0.3672618  1.191118e-05  322
+[3,] 0.4045790 0.4045915 -1.246805e-05  322
+[4,] 0.3278605 0.3278489  1.160496e-05  322
+[5,] 0.7741572 0.7741505  6.730072e-06  322
+[6,] 0.3875421 0.3875714 -2.928487e-05  322</code></pre>
+</div>
+</div>
+</div>
+<div id="a-10x10-positive-definite-symmetric-matrix" class="section level1">
+<h1>A 10x10 Positive Definite Symmetric Matrix</h1>
 <pre class="r"><code>set.seed(21456)
 n &lt;- 10 
 # Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
+F&lt;-matrix(runif(n^2), ncol=n)
 # Forces the matrix to be symmetric
-A &lt;- t(A) %*% A
+F &lt;- t(F) %*% F
 # Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
+xf &lt;- matrix(runif(n), ncol = 1)
 # Creates a b vector from our random vector x
-b &lt;- A %*% x
+f &lt;- F %*% xf
 # initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
+x0f &lt;- matrix(rep(0.0,n), ncol = 1)
 # determines if all the eigen values are positive
-is.positive.definite(A)</code></pre>
+is.positive.definite(F)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<pre class="r"><code>A</code></pre>
+<div id="the-matrix-and-b-vector-4" class="section level3">
+<h3>The Matrix and b vector</h3>
+<pre class="r"><code>F</code></pre>
 <pre><code>          [,1]     [,2]      [,3]     [,4]     [,5]      [,6]     [,7]
  [1,] 4.576307 3.544017 1.8706107 2.699453 3.464121 2.1412326 3.630429
  [2,] 3.544017 3.995759 1.7402252 2.908020 3.122860 1.7878213 3.701816
@@ -505,8 +567,20 @@ is.positive.definite(A)</code></pre>
  [8,] 3.133619 2.283068 1.976192
  [9,] 2.283068 2.591424 1.922565
 [10,] 1.976192 1.922565 2.373093</code></pre>
-<pre class="r"><code>sol&lt;- grad(A, b, x0, maxIts, tol)
-sol</code></pre>
+<pre class="r"><code>f</code></pre>
+<pre><code>           [,1]
+ [1,] 17.011594
+ [2,] 15.836859
+ [3,]  8.421969
+ [4,] 12.709194
+ [5,] 16.483775
+ [6,] 10.403704
+ [7,] 19.057971
+ [8,] 13.873418
+ [9,] 12.736734
+[10,] 11.963858</code></pre>
+<pre class="r"><code>sol6&lt;- grad(F, f, x0f, maxIts, tol,xf)
+sol6</code></pre>
 <pre><code>              X        X0         resid iter
  [1,] 0.6172931 0.6173013 -8.226232e-06 3532
  [2,] 0.8323071 0.8323258 -1.870730e-05 3532
@@ -518,16 +592,18 @@ sol</code></pre>
  [8,] 0.8651250 0.8651531 -2.812421e-05 3532
  [9,] 0.1558820 0.1558699  1.212071e-05 3532
 [10,] 0.3583763 0.3584488 -7.249651e-05 3532</code></pre>
-<p>We can see that the function completed after 3532 iterations. This means that the norm is within <span class="math inline">\(10^{-5}\)</span>.</p>
+</div>
 </div>
 <div id="gradient-descent-with-least-squares" class="section level1">
 <h1>Gradient Descent with least squares</h1>
-<p>This function is supposed to converge faster.</p>
+<p>Now that a few diferrent matrices have been tested with gradient descent its time to look at gradient descent with least squares. This function is supposed to converge faster.</p>
 <pre class="r"><code># defines the function
-gradLS &lt;- function (A,b,x0, maxIts, tol)
+gradLS &lt;- function (A,b,x0a, maxIts, tol,xa)
   {
+    # calculates n
+    n &lt;- length(b)
     # creates an initial residual
-    r &lt;- b - (A %*% x0)
+    r &lt;- b - (A %*% x0a)
     # used to keep track of the number of iterations.
     k = 0
     # loop used to attempt to find the approximation of the X vector
@@ -538,63 +614,38 @@ gradLS &lt;- function (A,b,x0, maxIts, tol)
       # creates a step size using the residuals and matrix A
       alpha &lt;- (t(r) %*% r) / (t(A%*%r) %*% (A %*% r))
       # creates the next approximation of the X vector
-      x0 &lt;- x0 + drop(alpha) * r
+      x0a &lt;- x0a + drop(alpha) * r
       # creates the new residual with the new approximation
-      r &lt;- t(A)%*% b - (t(A) %*% A) %*% x0
+      r &lt;- t(A)%*% b - (t(A) %*% A) %*% x0a
     }
   #Calculates the residual vector.
-  res &lt;- x - x0
+  res &lt;- xa - x0a
   # vairable to store the exact X, the aproximated X and the number of iterations
-  sol &lt;- cbind(x, x0, res, matrix(rep(k,n),ncol = 1))
+  sol &lt;- cbind(xa, x0a, res, matrix(rep(k,n),ncol = 1))
   # Names the colums of the new array
   colnames(sol) &lt;- c(&quot;X&quot;, &quot;X0&quot;,&quot;resid&quot;, &quot;iter&quot;)
   # prints the array
   sol
  
 }</code></pre>
-<pre class="r"><code>A</code></pre>
-<pre><code>          [,1]     [,2]      [,3]     [,4]     [,5]      [,6]     [,7]
- [1,] 4.576307 3.544017 1.8706107 2.699453 3.464121 2.1412326 3.630429
- [2,] 3.544017 3.995759 1.7402252 2.908020 3.122860 1.7878213 3.701816
- [3,] 1.870611 1.740225 1.4091612 1.632820 1.585560 0.8950613 1.883202
- [4,] 2.699453 2.908020 1.6328204 3.177959 2.352454 1.6335524 2.982156
- [5,] 3.464121 3.122860 1.5855600 2.352454 3.832469 2.1929775 3.852252
- [6,] 2.141233 1.787821 0.8950613 1.633552 2.192978 2.0398368 2.512283
- [7,] 3.630429 3.701816 1.8832023 2.982156 3.852252 2.5122828 5.087222
- [8,] 2.783155 2.232120 1.2940313 1.823810 2.891021 1.8346436 3.536088
- [9,] 2.300886 2.567662 1.2002483 2.224262 2.623019 1.8329427 3.223934
-[10,] 2.345922 2.103801 1.4733256 1.801321 2.664459 1.7837057 2.810596
-          [,8]     [,9]    [,10]
- [1,] 2.783155 2.300886 2.345922
- [2,] 2.232120 2.567662 2.103801
- [3,] 1.294031 1.200248 1.473326
- [4,] 1.823810 2.224262 1.801321
- [5,] 2.891021 2.623019 2.664459
- [6,] 1.834644 1.832943 1.783706
- [7,] 3.536088 3.223934 2.810596
- [8,] 3.133619 2.283068 1.976192
- [9,] 2.283068 2.591424 1.922565
-[10,] 1.976192 1.922565 2.373093</code></pre>
-<pre class="r"><code>sol&lt;- gradLS(A, b, x0, maxIts, tol)
-sol</code></pre>
-<pre><code>              X        X0         resid   iter
- [1,] 0.6172931 0.6177202 -0.0004271701 914619
- [2,] 0.8323071 0.8332761 -0.0009690351 914619
- [3,] 0.5397727 0.5362854  0.0034873060 914619
- [4,] 0.1785781 0.1795333 -0.0009552130 914619
- [5,] 0.7888260 0.7867091  0.0021169184 914619
- [6,] 0.3950113 0.3934302  0.0015811167 914619
- [7,] 0.7050482 0.7044629  0.0005853126 914619
- [8,] 0.8651250 0.8665807 -0.0014557269 914619
- [9,] 0.1558820 0.1552567  0.0006253598 914619
-[10,] 0.3583763 0.3621263 -0.0037499883 914619</code></pre>
-<p>Here is the point my mind went, What!!!! This took 9.1461910^{5} iterations. Why? I had to know more. initially I decided lets mess with the code a little.</p>
-<p>So on the line that creates the new residual I removed the additional transposes of A.</p>
+<div id="initial-5x5-a" class="section level3">
+<h3>Initial 5x5 (A)</h3>
+<pre class="r"><code>sol7&lt;- gradLS(A, a, x0a, maxIts, tol, xa)
+sol7</code></pre>
+<pre><code>              X         X0        resid iter
+[1,] 0.04876597 0.05866985 -0.009903879 9996
+[2,] 0.14752424 0.14450011  0.003024130 9996
+[3,] 0.81504717 0.80794311  0.007104065 9996
+[4,] 0.16098630 0.16652532 -0.005539026 9996
+[5,] 0.07040319 0.06549751  0.004905672 9996</code></pre>
+<p>Huston there is a problem. This method is supposed to be faster! 325 is much faster than 9996. Maybe its the algorythm. If we adjust the residual vector maybe that will fix it.</p>
 <pre class="r"><code># defines the function
-gradLS2 &lt;- function (A,b,x0, maxIts, tol)
+gradLS2 &lt;- function (A,b,x0a, maxIts, tol, xa)
   {
+    # Determines N
+    n &lt;- length(b)
     # creates an initial residual
-    r &lt;- b - (A %*% x0)
+    r &lt;- b - (A %*% x0a)
     # used to keep track of the number of iterations.
     k = 0
     # loop used to attempt to find the approximation of the X vector
@@ -605,129 +656,126 @@ gradLS2 &lt;- function (A,b,x0, maxIts, tol)
       # creates a step size using the residuals and matrix A
       alpha &lt;- (t(r) %*% r) / (t(A%*%r) %*% (A %*% r))
       # creates the next approximation of the X vector
-      x0 &lt;- x0 + drop(alpha) * r
+      x0a &lt;- x0a + drop(alpha) * r
       # creates the new residual with the new approximation
-      r &lt;-  b - (A) %*% x0
+      r &lt;-  b - (A) %*% x0a
     }
   #Calculates the residual vector.
-  res &lt;- x - x0
+  res &lt;- xa - x0a
   # vairable to store the exact X, the aproximated X and the number of iterations
-  sol &lt;- cbind(x, x0, res, matrix(rep(k,n),ncol = 1))
+  sol &lt;- cbind(xa, x0a, res, matrix(rep(k,n),ncol = 1))
   # Names the colums of the new array
   colnames(sol) &lt;- c(&quot;X&quot;, &quot;X0&quot;,&quot;resid&quot;, &quot;iter&quot;)
   # prints the array
   sol
- 
 }</code></pre>
-<p>Same matrix but slightly different function</p>
-<pre class="r"><code>A</code></pre>
-<pre><code>          [,1]     [,2]      [,3]     [,4]     [,5]      [,6]     [,7]
- [1,] 4.576307 3.544017 1.8706107 2.699453 3.464121 2.1412326 3.630429
- [2,] 3.544017 3.995759 1.7402252 2.908020 3.122860 1.7878213 3.701816
- [3,] 1.870611 1.740225 1.4091612 1.632820 1.585560 0.8950613 1.883202
- [4,] 2.699453 2.908020 1.6328204 3.177959 2.352454 1.6335524 2.982156
- [5,] 3.464121 3.122860 1.5855600 2.352454 3.832469 2.1929775 3.852252
- [6,] 2.141233 1.787821 0.8950613 1.633552 2.192978 2.0398368 2.512283
- [7,] 3.630429 3.701816 1.8832023 2.982156 3.852252 2.5122828 5.087222
- [8,] 2.783155 2.232120 1.2940313 1.823810 2.891021 1.8346436 3.536088
- [9,] 2.300886 2.567662 1.2002483 2.224262 2.623019 1.8329427 3.223934
-[10,] 2.345922 2.103801 1.4733256 1.801321 2.664459 1.7837057 2.810596
-          [,8]     [,9]    [,10]
- [1,] 2.783155 2.300886 2.345922
- [2,] 2.232120 2.567662 2.103801
- [3,] 1.294031 1.200248 1.473326
- [4,] 1.823810 2.224262 1.801321
- [5,] 2.891021 2.623019 2.664459
- [6,] 1.834644 1.832943 1.783706
- [7,] 3.536088 3.223934 2.810596
- [8,] 3.133619 2.283068 1.976192
- [9,] 2.283068 2.591424 1.922565
-[10,] 1.976192 1.922565 2.373093</code></pre>
-<pre class="r"><code>sol&lt;- gradLS2(A, b, x0, maxIts, tol)
-sol</code></pre>
-<pre><code>              X        X0         resid iter
- [1,] 0.6172931 0.6173075 -1.444088e-05  886
- [2,] 0.8323071 0.8322895  1.756001e-05  886
- [3,] 0.5397727 0.5397693  3.335324e-06  886
- [4,] 0.1785781 0.1785764  1.682705e-06  886
- [5,] 0.7888260 0.7888242  1.814743e-06  886
- [6,] 0.3950113 0.3949988  1.251022e-05  886
- [7,] 0.7050482 0.7050616 -1.332729e-05  886
- [8,] 0.8651250 0.8651073  1.765960e-05  886
- [9,] 0.1558820 0.1558986 -1.654262e-05  886
-[10,] 0.3583763 0.3583780 -1.650070e-06  886</code></pre>
-<p>Well, that’s weird 886 iterations. This seems interesting we went from 3532 to 914619 to 886 iterations. Well this fixed the problem for this matrix but does it work for all?</p>
-<pre class="r"><code>set.seed(214567)
-n &lt;- 5
-# Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
-# Forces the matrix to be symmetric
-A &lt;- t(A) %*% A
-# Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
-# Creates a b vector from our random vector x
-b &lt;- A %*% x
-# initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
-# determines if all the eigen values are positive
-is.positive.definite(A)</code></pre>
-<pre><code>[1] TRUE</code></pre>
-<pre class="r"><code>A</code></pre>
-<pre><code>          [,1]     [,2]      [,3]      [,4]      [,5]
-[1,] 1.3951977 1.439403 0.9458712 0.6875470 0.3530277
-[2,] 1.4394026 2.826384 2.1103633 1.3952379 1.3081469
-[3,] 0.9458712 2.110363 1.8090746 0.9263186 1.1690460
-[4,] 0.6875470 1.395238 0.9263186 0.8325923 0.6920785
-[5,] 0.3530277 1.308147 1.1690460 0.6920785 1.0185438</code></pre>
-<pre class="r"><code>sol1&lt;- grad(A, b, x0, maxIts, tol)
-sol2&lt;- gradLS(A, b, x0, maxIts, tol)
-sol3&lt;- gradLS2(A, b, x0, maxIts, tol)
-sol1</code></pre>
+</div>
+<div id="same-matrix" class="section level2">
+<h2>Same Matrix</h2>
+<pre class="r"><code>sol7&lt;- gradLS2(A, a, x0a, maxIts, tol,xa)
+sol7</code></pre>
 <pre><code>              X         X0         resid iter
-[1,] 0.28642738 0.28633495  9.243224e-05 4667
-[2,] 0.09199288 0.09073066  1.262219e-03 4667
-[3,] 0.36928209 0.37065175 -1.369664e-03 4667
-[4,] 0.03981780 0.04120865 -1.390849e-03 4667
-[5,] 0.95860400 0.95773918  8.648254e-04 4667</code></pre>
-<pre class="r"><code>sol2</code></pre>
-<pre><code>              X          X0        resid iter
-[1,] 0.28642738 0.280137231  0.006290151  486
-[2,] 0.09199288 0.008120223  0.083872660  486
-[3,] 0.36928209 0.460459605 -0.091177516  486
-[4,] 0.03981780 0.132354278 -0.092536480  486
-[5,] 0.95860400 0.900839980  0.057764024  486</code></pre>
-<pre class="r"><code>sol3</code></pre>
-<pre><code>              X         X0         resid iter
-[1,] 0.28642738 0.28639605  3.133395e-05 1439
-[2,] 0.09199288 0.09156893  4.239535e-04 1439
-[3,] 0.36928209 0.36974119 -4.591008e-04 1439
-[4,] 0.03981780 0.04028413 -4.663322e-04 1439
-[5,] 0.95860400 0.95831367  2.903382e-04 1439</code></pre>
-<p>Well this matrix broke my theory again. Back to the drawing board. I decided maybe I just had a bad pseudo code. I decided to look into another iterative method and found the advanced chevy cheb iterative method that avoids dot products of residuals.</p>
+[1,] 0.04876597 0.04892393 -1.579616e-04  567
+[2,] 0.14752424 0.14747914  4.510033e-05  567
+[3,] 0.81504717 0.81493841  1.087606e-04  567
+[4,] 0.16098630 0.16105485 -6.855431e-05  567
+[5,] 0.07040319 0.07032542  7.776373e-05  567</code></pre>
+<p>Thats better than the the Gradient Descent Least Square but still not better than the original Gradient Descent function. Lets test it on a few more matrices and see if this is true for them all.</p>
+<pre class="r"><code>sol8&lt;- gradLS(B, b, x0c, maxIts, tol,xb)
+sol9&lt;- gradLS(C, c, x0c, maxIts, tol,xc)
+sol10&lt;- gradLS(D, d, x0d, maxIts, tol,xd)
+sol11&lt;- gradLS2(B, b, x0c, maxIts, tol,xb)
+sol12&lt;- gradLS2(C, c, x0c, maxIts, tol,xc)
+sol13&lt;- gradLS2(D, d, x0d, maxIts, tol,xd)
+sol8</code></pre>
+<pre><code>             X        X0       resid   iter
+[1,] 0.2163319 0.2348287 -0.01849672 877346
+[2,] 0.6504235 0.6269530  0.02347044 877346
+[3,] 0.3351660 0.3021469  0.03301912 877346
+[4,] 0.5076559 0.4906793  0.01697655 877346
+[5,] 0.6528394 0.7046481 -0.05180877 877346
+[6,] 0.9655767 0.9499844  0.01559222 877346</code></pre>
+<pre class="r"><code>sol9</code></pre>
+<pre><code>             X        X0         resid   iter
+[1,] 0.6807363 0.6729057  0.0078306519 198154
+[2,] 0.1331188 0.1334402 -0.0003213818 198154
+[3,] 0.4157805 0.4167254 -0.0009448726 198154
+[4,] 0.8683657 0.8645425  0.0038231974 198154
+[5,] 0.6214230 0.6299234 -0.0085004329 198154
+[6,] 0.1328657 0.1416898 -0.0088240857 198154</code></pre>
+<pre class="r"><code>sol10</code></pre>
+<pre><code>             X        X0        resid  iter
+[1,] 0.6258299 0.6322439 -0.006413995 30014
+[2,] 0.2011419 0.2488987 -0.047756839 30014
+[3,] 0.5883483 0.6672407 -0.078892493 30014
+[4,] 0.8560448 0.7802649  0.075779870 30014
+[5,] 0.9363852 0.9571127 -0.020727566 30014
+[6,] 0.9780356 0.9283533  0.049682312 30014</code></pre>
+<pre class="r"><code>sol11</code></pre>
+<pre><code>             X        X0         resid iter
+[1,] 0.2163319 0.2164927 -0.0001607680 1431
+[2,] 0.6504235 0.6502197  0.0002037872 1431
+[3,] 0.3351660 0.3348793  0.0002867849 1431
+[4,] 0.5076559 0.5075085  0.0001473855 1431
+[5,] 0.6528394 0.6532895 -0.0004501359 1431
+[6,] 0.9655767 0.9654413  0.0001353492 1431</code></pre>
+<pre class="r"><code>sol12</code></pre>
+<pre><code>             X        X0         resid iter
+[1,] 0.6807363 0.6807517 -1.538168e-05  685
+[2,] 0.1331188 0.1330651  5.366519e-05  685
+[3,] 0.4157805 0.4158182 -3.764951e-05  685
+[4,] 0.8683657 0.8683789 -1.323665e-05  685
+[5,] 0.6214230 0.6214207  2.293070e-06  685
+[6,] 0.1328657 0.1328826 -1.685239e-05  685</code></pre>
+<pre class="r"><code>sol13</code></pre>
+<pre><code>             X        X0         resid iter
+[1,] 0.6258299 0.6258056  0.0000242890 6978
+[2,] 0.2011419 0.2010149  0.0001269961 6978
+[3,] 0.5883483 0.5881388  0.0002094314 6978
+[4,] 0.8560448 0.8562503 -0.0002054745 6978
+[5,] 0.9363852 0.9363277  0.0000575043 6978
+[6,] 0.9780356 0.9781731 -0.0001375366 6978</code></pre>
+<p>These matrices broke my theory again. Maybe the pseudo code is all wrong. Lets try another iterative method maybe the advanced Cheby Chev iterative method this method avoids the inner products of residuals.</p>
+</div>
 </div>
 <div id="advanced-cheby-chev-iterative-method" class="section level1">
 <h1>Advanced Cheby Chev iterative method</h1>
-<p>So I did some research and found some pseudo code to play with.</p>
-<pre class="r"><code>cheby &lt;- function (A,b,x0, maxIts, tol)
+<p>After some research I found some psuedo code for this method.</p>
+<div id="the-function" class="section level2">
+<h2>The function</h2>
+<pre class="r"><code>cheby &lt;- function (A,b,x0a, maxIts, tol,xa)
 {
+  # Determines n
+  n&lt;- length(b)
+  # Creates vectors of eigen values and vectors
   ev &lt;- eigen(A)
+  # Determines lambda max
   lmax&lt;- max(ev$values)
+  # Determines lambda min
   lmin &lt;- min(ev$values)
   
+  # Longest eliptical axis
   d&lt;- (lmax +lmin)/2.0
+  # Shortest eliptical axis
   c&lt;- (lmax-lmin)/2.0
+  # Creates a preconditioning matrix
   precon &lt;- diag(length(A[,1]))
-  x &lt;- x0
+  #Stores initial approximation vector
+  x &lt;- x0a
+  #Creates an inital residual vector
   r &lt;- b - A %*% x
+  # tracks iterations
   i &lt;- 1
+  
   while(i &lt; maxIts &amp;&amp; norm(r, &quot;1&quot;) &gt; tol)
   {
+    # solving the preconditioned matrix
     z = solve(precon, r)
     if (i == 1)
     {
+      # Intial start
       p &lt;- z
+      # Initial step size
       alpha &lt;- 1/d
     }
     else
@@ -741,286 +789,95 @@ sol1</code></pre>
     i = i+1
   }
   #Calculates the residual vector.
-  res &lt;- x - x0
+  res &lt;- xa - x
   # vairable to store the exact X, the aproximated X and the number of iterations
-  sol &lt;- cbind(x, x0, res, matrix(rep(i-1,n),ncol = 1))
+  sol &lt;- cbind(xa, x, res, matrix(rep(i-1,n),ncol = 1))
   # Names the colums of the new array
   colnames(sol) &lt;- c(&quot;X&quot;, &quot;X0&quot;,&quot;resid&quot;, &quot;iter&quot;)
   # prints the array
   sol
 }</code></pre>
 <p>lets see how it does?</p>
-<pre class="r"><code>A</code></pre>
-<pre><code>          [,1]     [,2]      [,3]      [,4]      [,5]
-[1,] 1.3951977 1.439403 0.9458712 0.6875470 0.3530277
-[2,] 1.4394026 2.826384 2.1103633 1.3952379 1.3081469
-[3,] 0.9458712 2.110363 1.8090746 0.9263186 1.1690460
-[4,] 0.6875470 1.395238 0.9263186 0.8325923 0.6920785
-[5,] 0.3530277 1.308147 1.1690460 0.6920785 1.0185438</code></pre>
-<pre class="r"><code>sol1&lt;- grad(A, b, x0, maxIts, tol)
-sol2&lt;- gradLS(A, b, x0, maxIts, tol)
-sol3&lt;- gradLS2(A, b, x0, maxIts, tol)
-sol4&lt;- cheby(A, b, x0, maxIts, tol)
-sol1</code></pre>
+</div>
+<div id="x5-matrix-a" class="section level2">
+<h2>5x5 Matrix (A)</h2>
+<pre class="r"><code>sol14&lt;- cheby(A, a, x0a, maxIts, tol, xa)
+sol14</code></pre>
 <pre><code>              X         X0         resid iter
-[1,] 0.28642738 0.28633495  9.243224e-05 4667
-[2,] 0.09199288 0.09073066  1.262219e-03 4667
-[3,] 0.36928209 0.37065175 -1.369664e-03 4667
-[4,] 0.03981780 0.04120865 -1.390849e-03 4667
-[5,] 0.95860400 0.95773918  8.648254e-04 4667</code></pre>
-<pre class="r"><code>sol2</code></pre>
-<pre><code>              X          X0        resid iter
-[1,] 0.28642738 0.280137231  0.006290151  486
-[2,] 0.09199288 0.008120223  0.083872660  486
-[3,] 0.36928209 0.460459605 -0.091177516  486
-[4,] 0.03981780 0.132354278 -0.092536480  486
-[5,] 0.95860400 0.900839980  0.057764024  486</code></pre>
-<pre class="r"><code>sol3</code></pre>
-<pre><code>              X         X0         resid iter
-[1,] 0.28642738 0.28639605  3.133395e-05 1439
-[2,] 0.09199288 0.09156893  4.239535e-04 1439
-[3,] 0.36928209 0.36974119 -4.591008e-04 1439
-[4,] 0.03981780 0.04028413 -4.663322e-04 1439
-[5,] 0.95860400 0.95831367  2.903382e-04 1439</code></pre>
-<pre class="r"><code>sol4</code></pre>
-<pre><code>              X X0      resid iter
-[1,] 0.28642714  0 0.28642714  496
-[2,] 0.09199234  0 0.09199234  496
-[3,] 0.36928183  0 0.36928183  496
-[4,] 0.03981767  0 0.03981767  496
-[5,] 0.95860372  0 0.95860372  496</code></pre>
-<p>Interesting this matrix it only took 496 iterations. Lets try a few more from earlier.</p>
-<pre class="r"><code>set.seed(21456)
-n &lt;- 10 
-# Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
-# Forces the matrix to be symmetric
-A &lt;- t(A) %*% A
-# Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
-# Creates a b vector from our random vector x
-b &lt;- A %*% x
-# initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
-# determines if all the eigen values are positive
-is.positive.definite(A)</code></pre>
-<pre><code>[1] TRUE</code></pre>
-<pre class="r"><code>A</code></pre>
-<pre><code>          [,1]     [,2]      [,3]     [,4]     [,5]      [,6]     [,7]
- [1,] 4.576307 3.544017 1.8706107 2.699453 3.464121 2.1412326 3.630429
- [2,] 3.544017 3.995759 1.7402252 2.908020 3.122860 1.7878213 3.701816
- [3,] 1.870611 1.740225 1.4091612 1.632820 1.585560 0.8950613 1.883202
- [4,] 2.699453 2.908020 1.6328204 3.177959 2.352454 1.6335524 2.982156
- [5,] 3.464121 3.122860 1.5855600 2.352454 3.832469 2.1929775 3.852252
- [6,] 2.141233 1.787821 0.8950613 1.633552 2.192978 2.0398368 2.512283
- [7,] 3.630429 3.701816 1.8832023 2.982156 3.852252 2.5122828 5.087222
- [8,] 2.783155 2.232120 1.2940313 1.823810 2.891021 1.8346436 3.536088
- [9,] 2.300886 2.567662 1.2002483 2.224262 2.623019 1.8329427 3.223934
-[10,] 2.345922 2.103801 1.4733256 1.801321 2.664459 1.7837057 2.810596
-          [,8]     [,9]    [,10]
- [1,] 2.783155 2.300886 2.345922
- [2,] 2.232120 2.567662 2.103801
- [3,] 1.294031 1.200248 1.473326
- [4,] 1.823810 2.224262 1.801321
- [5,] 2.891021 2.623019 2.664459
- [6,] 1.834644 1.832943 1.783706
- [7,] 3.536088 3.223934 2.810596
- [8,] 3.133619 2.283068 1.976192
- [9,] 2.283068 2.591424 1.922565
-[10,] 1.976192 1.922565 2.373093</code></pre>
-<pre class="r"><code>sol&lt;- cheby(A, b, x0, maxIts, tol)
-sol</code></pre>
-<pre><code>              X X0     resid iter
- [1,] 0.6172931  0 0.6172931  325
- [2,] 0.8323071  0 0.8323071  325
- [3,] 0.5397727  0 0.5397727  325
- [4,] 0.1785781  0 0.1785781  325
- [5,] 0.7888260  0 0.7888260  325
- [6,] 0.3950113  0 0.3950113  325
- [7,] 0.7050483  0 0.7050483  325
- [8,] 0.8651250  0 0.8651250  325
- [9,] 0.1558820  0 0.1558820  325
-[10,] 0.3583763  0 0.3583763  325</code></pre>
-<p>wow, on the 10x10 it only took 325 iterations!</p>
-<pre class="r"><code>set.seed(21456)
-n &lt;- 6 
-# Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
-# Forces the matrix to be symmetric
-A &lt;- t(A) %*% A
-# Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
-# Creates a b vector from our random vector x
-b &lt;- A %*% x
-# initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
-# determines if all the eigen values are positive
-is.positive.definite(A)</code></pre>
-<pre><code>[1] TRUE</code></pre>
-<p>Lets see how the function does on this 6x6 matrix.</p>
-<pre class="r"><code>A</code></pre>
-<pre><code>          [,1]      [,2]     [,3]      [,4]      [,5]      [,6]
-[1,] 2.5322214 0.9122529 2.004203 1.5482151 0.7751318 2.0283032
-[2,] 0.9122529 2.0519766 2.134736 0.9660084 0.7108958 1.5908699
-[3,] 2.0042025 2.1347358 3.714131 1.4712356 1.1478843 2.0035704
-[4,] 1.5482151 0.9660084 1.471236 1.2711860 0.6324079 1.4763406
-[5,] 0.7751318 0.7108958 1.147884 0.6324079 0.4117123 0.7575121
-[6,] 2.0283032 1.5908699 2.003570 1.4763406 0.7575121 2.3369386</code></pre>
-<pre class="r"><code>sol&lt;- cheby(A, b, x0, maxIts, tol)
-sol</code></pre>
-<pre><code>              X X0      resid iter
-[1,] 0.79899462  0 0.79899462  393
-[2,] 0.43135791  0 0.43135791  393
-[3,] 0.07193712  0 0.07193712  393
-[4,] 0.10669381  0 0.10669381  393
-[5,] 0.33782969  0 0.33782969  393
-[6,] 0.15723699  0 0.15723699  393</code></pre>
-<p>Even better for this 6x6! Well what is different between gradient descent and cheby chevy. Well Cheby Chevy iteration avoids the dot products and ratio of residuals. It uses an elliptical approach to solving the problem. This means we have to have some knowledge of the eigen values of our matrix.</p>
-<p>After talking to Dr. Palmer I realized that part of the problem might be that the matrices are ill conditioned. So, lets redefine a few matrices and look at the condition numbers.</p>
-<pre class="r"><code>set.seed(21456)
-n &lt;- 10 
-# Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
-# Forces the matrix to be symmetric
-A &lt;- t(A) %*% A
-# Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
-# Creates a b vector from our random vector x
-b &lt;- A %*% x
-# initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
-# determines if all the eigen values are positive
-is.positive.definite(A)</code></pre>
-<pre><code>[1] TRUE</code></pre>
-<pre class="r"><code>set.seed(2145)
-n &lt;- 6 
-# Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
-# Forces the matrix to be symmetric
-B &lt;- t(A) %*% A
-# Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
-# Creates a b vector from our random vector x
-b &lt;- B %*% x
-# initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
-# determines if all the eigen values are positive
-is.positive.definite(B)</code></pre>
-<pre><code>[1] TRUE</code></pre>
-<pre class="r"><code>set.seed(214)
-n &lt;- 6 
-# Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
-# Forces the matrix to be symmetric
-C &lt;- t(A) %*% A
-# Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
-# Creates a b vector from our random vector x
-b &lt;- C %*% x
-# initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
-# determines if all the eigen values are positive
-is.positive.definite(C)</code></pre>
-<pre><code>[1] TRUE</code></pre>
-<pre class="r"><code>set.seed(21)
-n &lt;- 6 
-# Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
-# Forces the matrix to be symmetric
-D &lt;- t(A) %*% A
-# Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
-# Creates a b vector from our random vector x
-b &lt;- D %*% x
-# initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
-# determines if all the eigen values are positive
-is.positive.definite(D)</code></pre>
-<pre><code>[1] TRUE</code></pre>
-<pre class="r"><code>kappa(A)</code></pre>
-<pre><code>[1] 49.10724</code></pre>
-<pre class="r"><code>kappa(B)</code></pre>
-<pre><code>[1] 2148.086</code></pre>
-<pre class="r"><code>kappa(C)</code></pre>
-<pre><code>[1] 434.2473</code></pre>
-<pre class="r"><code>kappa(D)</code></pre>
-<pre><code>[1] 1706.385</code></pre>
-<p>Well higher condition numbers mean that the matrices are ill conditioned. We can see that matrix B is highly ill conditioned. Well lets condition a matrix and see how that affects the number of iterations. We can use the B matrix.</p>
-<pre class="r"><code>set.seed(2145)
-n &lt;- 6 
-# Creates a Random matrix with n^2 randomly generated numbers
-A&lt;-matrix(runif(n^2), ncol=n)
-# Forces the matrix to be symmetric
-B &lt;- (t(A) %*% A)
-B&lt;- B + (100*diag(n))
-# Creates a random solution vector to solve for
-x &lt;- matrix(runif(n), ncol = 1)
-# Creates a b vector from our random vector x
-b &lt;- B %*% x
-# initial approximation vector (zero vecor)
-x0 &lt;- matrix(rep(0.0,n), ncol = 1)
-# Setting a tolerance for the norm of our vector
-tol = 10^-5
-# determines if all the eigen values are positive
-is.positive.definite(B)</code></pre>
-<pre><code>[1] TRUE</code></pre>
-<pre class="r"><code>B</code></pre>
-<pre><code>           [,1]        [,2]        [,3]       [,4]       [,5]       [,6]
-[1,] 101.629180   1.3253076   1.3704596   1.897338   1.492470   1.388390
-[2,]   1.325308 102.1268329   0.9046964   2.031244   1.432492   1.145834
-[3,]   1.370460   0.9046964 101.6388220   1.852486   1.570883   1.469332
-[4,]   1.897338   2.0312444   1.8524862 102.844479   2.251959   1.748982
-[5,]   1.492470   1.4324924   1.5708827   2.251959 102.753722   1.775626
-[6,]   1.388390   1.1458340   1.4693319   1.748982   1.775626 101.692876</code></pre>
-<pre class="r"><code>sol1&lt;- grad(B, b, x0, maxIts, tol)
-sol2&lt;- gradLS(B, b, x0, maxIts, tol)
-sol3&lt;- gradLS2(B, b, x0, maxIts, tol)
-sol4&lt;- cheby(B, b, x0, maxIts, tol)
-sol1</code></pre>
+[1,] 0.04876597 0.04876585  1.179932e-07  160
+[2,] 0.14752424 0.14752382  4.187338e-07  160
+[3,] 0.81504717 0.81504659  5.780416e-07  160
+[4,] 0.16098630 0.16098635 -5.878102e-08  160
+[5,] 0.07040319 0.07040275  4.342705e-07  160</code></pre>
+<p>This was faster then all the other methods it appears. Time to investigate further.</p>
+</div>
+<div id="x6-matrix-b" class="section level2">
+<h2>6x6 Matrix (B)</h2>
+<pre class="r"><code>sol15&lt;- cheby(B, b, x0b, maxIts, tol, xb)
+sol15</code></pre>
 <pre><code>             X        X0         resid iter
-[1,] 0.6258299 0.6258299 -3.726958e-09    5
-[2,] 0.2011419 0.2011419 -1.359563e-08    5
-[3,] 0.5883483 0.5883483 -2.515808e-08    5
-[4,] 0.8560448 0.8560448  6.611190e-09    5
-[5,] 0.9363852 0.9363852 -1.016239e-08    5
-[6,] 0.9780356 0.9780356  1.431781e-08    5</code></pre>
-<pre class="r"><code>sol2</code></pre>
+[1,] 0.2163319 0.2163321 -1.541916e-07  371
+[2,] 0.6504235 0.6504236 -1.305528e-07  371
+[3,] 0.3351660 0.3351661 -4.539997e-08  371
+[4,] 0.5076559 0.5076560 -1.209017e-07  371
+[5,] 0.6528394 0.6528395 -1.691811e-07  371
+[6,] 0.9655767 0.9655768 -1.387843e-07  371</code></pre>
+</div>
+<div id="x6-matrix-c" class="section level2">
+<h2>6x6 Matrix (C)</h2>
+<pre class="r"><code>sol16&lt;- cheby(C, c, x0c, maxIts, tol, xc)
+sol16</code></pre>
 <pre><code>             X        X0        resid iter
-[1,] 0.6258299 0.6258299 6.393130e-11    9
-[2,] 0.2011419 0.2011419 3.926945e-11    9
-[3,] 0.5883483 0.5883483 1.334466e-11    9
-[4,] 0.8560448 0.8560448 1.281852e-10    9
-[5,] 0.9363852 0.9363852 6.868373e-11    9
-[6,] 0.9780356 0.9780356 1.035089e-10    9</code></pre>
-<pre class="r"><code>sol3</code></pre>
+[1,] 0.6807363 0.6807361 2.473449e-07  208
+[2,] 0.1331188 0.1331185 2.458469e-07  208
+[3,] 0.4157805 0.4157804 1.459222e-07  208
+[4,] 0.8683657 0.8683655 2.053613e-07  208
+[5,] 0.6214230 0.6214229 1.294426e-07  208
+[6,] 0.1328657 0.1328657 8.116714e-08  208</code></pre>
+</div>
+<div id="x6-matrix-d" class="section level2">
+<h2>6x6 Matrix (D)</h2>
+<pre class="r"><code>sol17&lt;- cheby(D, d, x0d, maxIts, tol, xd)
+sol17</code></pre>
 <pre><code>             X        X0         resid iter
-[1,] 0.6258299 0.6258299  8.458740e-09 1880
-[2,] 0.2011419 0.2011419 -1.867218e-08 1880
-[3,] 0.5883483 0.5883482  4.345919e-09 1880
-[4,] 0.8560448 0.8560448  1.170221e-08 1880
-[5,] 0.9363852 0.9363851  1.918453e-08 1880
-[6,] 0.9780356 0.9780356  3.216321e-08 1880</code></pre>
-<pre class="r"><code>sol4</code></pre>
-<pre><code>             X X0     resid iter
-[1,] 0.6258299  0 0.6258299    6
-[2,] 0.2011419  0 0.2011419    6
-[3,] 0.5883483  0 0.5883483    6
-[4,] 0.8560448  0 0.8560448    6
-[5,] 0.9363852  0 0.9363852    6
-[6,] 0.9780356  0 0.9780356    6</code></pre>
+[1,] 0.6258299 0.6258300 -1.445057e-07  393
+[2,] 0.2011419 0.2011421 -1.617106e-07  393
+[3,] 0.5883483 0.5883484 -1.722459e-07  393
+[4,] 0.8560448 0.8560449 -1.650346e-07  393
+[5,] 0.9363852 0.9363854 -1.873318e-07  393
+[6,] 0.9780356 0.9780357 -1.214472e-07  393</code></pre>
+</div>
+<div id="x6-matrix-e" class="section level2">
+<h2>6x6 Matrix (E)</h2>
+<pre class="r"><code>sol18&lt;- cheby(E, e, x0e, maxIts, tol, xe)
+sol18</code></pre>
+<pre><code>             X        X0         resid iter
+[1,] 0.4544894 0.4544895 -2.017894e-08   95
+[2,] 0.3672737 0.3672738 -1.448896e-07   95
+[3,] 0.4045790 0.4045793 -2.819368e-07   95
+[4,] 0.3278605 0.3278606 -5.023016e-08   95
+[5,] 0.7741572 0.7741574 -2.078386e-07   95
+[6,] 0.3875421 0.3875424 -2.725173e-07   95</code></pre>
+</div>
+<div id="x6-matrix-f" class="section level2">
+<h2>6x6 Matrix (F)</h2>
+<pre class="r"><code>sol18&lt;- cheby(F, f, x0f, maxIts, tol, xf)
+sol18</code></pre>
+<pre><code>              X        X0         resid iter
+ [1,] 0.6172931 0.6172931 -4.760992e-08  325
+ [2,] 0.8323071 0.8323071 -4.552779e-08  325
+ [3,] 0.5397727 0.5397727 -1.791034e-08  325
+ [4,] 0.1785781 0.1785781 -3.797272e-08  325
+ [5,] 0.7888260 0.7888260 -4.208400e-08  325
+ [6,] 0.3950113 0.3950113 -2.666612e-08  325
+ [7,] 0.7050482 0.7050483 -5.197652e-08  325
+ [8,] 0.8651250 0.8651250 -4.009958e-08  325
+ [9,] 0.1558820 0.1558820 -3.507980e-08  325
+[10,] 0.3583763 0.3583763 -3.911280e-08  325</code></pre>
+<p>After talking to Dr. Palmer I realized that part of the problem might be that the matrices are ill conditioned. So, lets redefine a few matrices and look at the condition numbers.</p>
+<p>Well higher condition numbers mean that the matrices are ill conditioned. We can see that matrix B is highly ill conditioned. Well lets condition a matrix and see how that affects the number of iterations. We can use the B matrix.</p>
 <p>By conditioning the matrix prior to solving using the iterative method we can see that it makes a significant difference in solving for the solution but Cheby Chev’s method is still close to the fastest method for solving these symmetric matrices. There is also a functional form that can be used for non-symmetric matrices. I want to consider using this on image processing and seeing where this takes me.</p>
+</div>
 </div>
 
 
