@@ -226,13 +226,15 @@ $(document).ready(function () {
 
 <div id="steepest-descent-and-steepest-descent-with-least-squares." class="section level1">
 <h1>Steepest Descent and Steepest Descent with Least Squares.</h1>
-<p>Lets take a look at two iterative methods for finding solutions to positive definite, symetric matrices. Steepest Descent is often called <strong>gradient descent</strong>, which is a approach to finding minima of a function <span class="math inline">\(f\)</span>. Using an estimate <span class="math inline">\(x_i\)</span>, the negative gradient <span class="math inline">\(-\nabla f(x_i)\)</span> gives the direction of in which <span class="math inline">\(f\)</span> is decreasing at the greatest rate. The goal is to take steps in this direction until we react the minimum.</p>
+<p>Initially we started by looking at two iterative methods for finding solutions to positive definite, symmetric matrices. Steepest Descent is often called <strong>gradient descent</strong>, which is a approach to finding minima of a function <span class="math inline">\(f\)</span>. Using an estimate <span class="math inline">\(x_i\)</span>, the negative gradient <span class="math inline">\(-\nabla f(x_i)\)</span> gives the direction of in which <span class="math inline">\(f\)</span> is decreasing at the greatest rate. The goal is to take steps in this direction until we react the minimum.</p>
 <p>Notation:</p>
 <p><span class="math inline">\(e\)</span> denotes an error term</p>
 <p><span class="math inline">\(i\)</span> denotes the i-ith term</p>
 <p><span class="math inline">\(r\)</span> denotes a residual</p>
 <p><span class="math display">\[e_i = x_i - x\]</span> <span class="math display">\[r_i = b - Ax_i = -Ae_i\]</span></p>
-<p>So, the next item to worry about is step size, lets call this <span class="math inline">\(\alpha\)</span>, and use <span class="math inline">\(x_{i+1} = x_i - \alpha_i\nabla f(x_i)\)</span> this minimizes <span class="math inline">\(f(x_{i+1})\)</span>. lets look at some code.</p>
+<p>To determine the size, often referred to as <span class="math inline">\(\alpha\)</span>, a ratio of inner products from residuals is used. <span class="math inline">\(x_{i+1} = x_i - \alpha_i\nabla f(x_i)\)</span> this minimizes <span class="math inline">\(f(x_{i+1})\)</span>. Now, that it is understood what is needed lets define a few things. To be symmetric</p>
+<div id="creating-a-positive-definite-symetric-matrix" class="section level2">
+<h2>Creating a positive definite, symetric matrix</h2>
 <pre class="r"><code>#setting the seed to work with 
 set.seed(31)
 #Number of columns and rows in the matrix in the matrix
@@ -241,9 +243,7 @@ n &lt;- 5
 maxIts &lt;- 1000000
 A&lt;-matrix(runif(n^2), ncol=n)
 # Forces the matrix to be symmetric
-A &lt;- t(A) %*% A
-
-
+A &lt;- t(A) %*% A 
 # Creates a random solution vector to solve for
 x &lt;- matrix(runif(n), ncol = 1)
 # Creates a b vector from our random vector x
@@ -255,7 +255,7 @@ tol = 10^-5
 # determines if all the eigen values are positive
 is.positive.definite(A)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<p>The return of TRUE above allows us to know that the matrix we are using is positive definite. Meanin that it has all positive eigen values. Now that all the components have been created for the use in the function. Lets see what the matrix looks like and design the function.</p>
+<p>The return of TRUE from the code block above allows us to know that the matrix is positive definite. This means that the matrix has all positive eigen values. Now that all the components have been created for the use in the function. Lets see what the matrix looks like and design the function.</p>
 <div id="the-matrix-a" class="section level3">
 <h3>The Matrix A</h3>
 <pre class="r"><code>#prints the matrix A
@@ -277,6 +277,7 @@ b</code></pre>
 [3,] 1.9866331
 [4,] 0.6013222
 [5,] 1.3916532</code></pre>
+</div>
 </div>
 </div>
 <div id="the-funtion-of-gradient-descent-method" class="section level1">
@@ -655,7 +656,7 @@ sol</code></pre>
  [8,] 0.8651250 0.8651073  1.765960e-05  886
  [9,] 0.1558820 0.1558986 -1.654262e-05  886
 [10,] 0.3583763 0.3583780 -1.650070e-06  886</code></pre>
-<p>Well, thats wierd 886 iterations. This seems interesting we went from 3532 to 914619 to 886 iterations. Well this fixed the problem for this matrix but does it work for all?</p>
+<p>Well, that’s weird 886 iterations. This seems interesting we went from 3532 to 914619 to 886 iterations. Well this fixed the problem for this matrix but does it work for all?</p>
 <pre class="r"><code>set.seed(214567)
 n &lt;- 5
 # Creates a Random matrix with n^2 randomly generated numbers
@@ -704,11 +705,11 @@ sol1</code></pre>
 [3,] 0.36928209 0.36974119 -4.591008e-04 1439
 [4,] 0.03981780 0.04028413 -4.663322e-04 1439
 [5,] 0.95860400 0.95831367  2.903382e-04 1439</code></pre>
-<p>Well this matrix broke my theory again. Back to the drawing board. I decided maybe I just had a bad psuedo code. I decided to look into another iterative method and found the advanced chevy cheb iterative method that avoids dot products of residuals.</p>
+<p>Well this matrix broke my theory again. Back to the drawing board. I decided maybe I just had a bad pseudo code. I decided to look into another iterative method and found the advanced chevy cheb iterative method that avoids dot products of residuals.</p>
 </div>
 <div id="advanced-cheby-chev-iterative-method" class="section level1">
 <h1>Advanced Cheby Chev iterative method</h1>
-<p>So I did some research and found some psuedo code to play with.</p>
+<p>So I did some research and found some pseudo code to play with.</p>
 <pre class="r"><code>cheby &lt;- function (A,b,x0, maxIts, tol)
 {
   ev &lt;- eigen(A)
@@ -878,8 +879,8 @@ sol</code></pre>
 [4,] 0.10669381  0 0.10669381  393
 [5,] 0.33782969  0 0.33782969  393
 [6,] 0.15723699  0 0.15723699  393</code></pre>
-<p>Even better for this 6x6! Well what is different between gradient descent and cheby chevy. Well Cheby Chevy iteration avoids the dot products and ratio of residuals. It uses an eliptical appraoch to solving the problem. This means we have to have some knowledge of the eigen values of our matrix.</p>
-<p>After talking to Dr. Palmer I realized that part of the problem might be that the matrices are ill conditioned. So, lets redfine a few matrices and look at the condition numbers.</p>
+<p>Even better for this 6x6! Well what is different between gradient descent and cheby chevy. Well Cheby Chevy iteration avoids the dot products and ratio of residuals. It uses an elliptical approach to solving the problem. This means we have to have some knowledge of the eigen values of our matrix.</p>
+<p>After talking to Dr. Palmer I realized that part of the problem might be that the matrices are ill conditioned. So, lets redefine a few matrices and look at the condition numbers.</p>
 <pre class="r"><code>set.seed(21456)
 n &lt;- 10 
 # Creates a Random matrix with n^2 randomly generated numbers
@@ -1019,7 +1020,7 @@ sol1</code></pre>
 [4,] 0.8560448  0 0.8560448    6
 [5,] 0.9363852  0 0.9363852    6
 [6,] 0.9780356  0 0.9780356    6</code></pre>
-<p>By conditioning the matrix prior to solving using the iterative method we can see that it makes a significant differance in solving for the solution but Cheby Chev’s method is still clost to the fastest method for solving these symetric matrices. There is also a functional form that can be used for non-symetric matrices. I want to consider using this on image processing and seeing where this takes me.</p>
+<p>By conditioning the matrix prior to solving using the iterative method we can see that it makes a significant difference in solving for the solution but Cheby Chev’s method is still close to the fastest method for solving these symmetric matrices. There is also a functional form that can be used for non-symmetric matrices. I want to consider using this on image processing and seeing where this takes me.</p>
 </div>
 
 
