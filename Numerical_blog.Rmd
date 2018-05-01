@@ -287,7 +287,7 @@ sol6
 
 # Gradient Descent with least squares
 
-Now that a few diferrent matrices have been tested with gradient descent its time to look at gradient descent with least squares. This function is supposed to converge faster.
+Now that a few different matrices have been tested with gradient descent its time to look at gradient descent with least squares. This function is supposed to converge faster.
 
 ```{r}
 # defines the function
@@ -329,7 +329,7 @@ sol7<- gradLS(A, a, x0a, maxIts, tol, xa)
 sol7
 ```
 
-Huston there is a problem. This method is supposed to be faster! `r sol1[1,4]` is much faster than `r sol7[1,4]`. Maybe its the algorythm. If we adjust the residual vector maybe that will fix it.
+Huston there is a problem. This method is supposed to be faster! `r sol1[1,4]` is much faster than `r sol7[1,4]`. Maybe its the algorithm. If we adjust the residual vector maybe that will fix it.
 
 
 ```{r}
@@ -372,7 +372,7 @@ sol7<- gradLS2(A, a, x0a, maxIts, tol,xa)
 sol7
 ```
 
-Thats better than the the Gradient Descent Least Square but still not better than the original Gradient Descent function. Lets test it on a few more matrices and see if this is true for them all.
+That's better than the the Gradient Descent Least Square but still not better than the original Gradient Descent function. Lets test it on a few more matrices and see if this is true for them all.
 
 
 ```{r}
@@ -395,7 +395,7 @@ These matrices broke my theory again. Maybe the pseudo code is all wrong. Lets t
 
 #Advanced Cheby Chev iterative method
 
-After some research I found some psuedo code for this method. 
+After some research I found some pseudo code for this method. 
 
 ## The function
 

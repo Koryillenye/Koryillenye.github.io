@@ -596,7 +596,7 @@ sol6</code></pre>
 </div>
 <div id="gradient-descent-with-least-squares" class="section level1">
 <h1>Gradient Descent with least squares</h1>
-<p>Now that a few diferrent matrices have been tested with gradient descent its time to look at gradient descent with least squares. This function is supposed to converge faster.</p>
+<p>Now that a few different matrices have been tested with gradient descent its time to look at gradient descent with least squares. This function is supposed to converge faster.</p>
 <pre class="r"><code># defines the function
 gradLS &lt;- function (A,b,x0a, maxIts, tol,xa)
   {
@@ -638,7 +638,7 @@ sol7</code></pre>
 [3,] 0.81504717 0.80794311  0.007104065 9996
 [4,] 0.16098630 0.16652532 -0.005539026 9996
 [5,] 0.07040319 0.06549751  0.004905672 9996</code></pre>
-<p>Huston there is a problem. This method is supposed to be faster! 325 is much faster than 9996. Maybe its the algorythm. If we adjust the residual vector maybe that will fix it.</p>
+<p>Huston there is a problem. This method is supposed to be faster! 325 is much faster than 9996. Maybe its the algorithm. If we adjust the residual vector maybe that will fix it.</p>
 <pre class="r"><code># defines the function
 gradLS2 &lt;- function (A,b,x0a, maxIts, tol, xa)
   {
@@ -680,7 +680,7 @@ sol7</code></pre>
 [3,] 0.81504717 0.81493841  1.087606e-04  567
 [4,] 0.16098630 0.16105485 -6.855431e-05  567
 [5,] 0.07040319 0.07032542  7.776373e-05  567</code></pre>
-<p>Thats better than the the Gradient Descent Least Square but still not better than the original Gradient Descent function. Lets test it on a few more matrices and see if this is true for them all.</p>
+<p>That’s better than the the Gradient Descent Least Square but still not better than the original Gradient Descent function. Lets test it on a few more matrices and see if this is true for them all.</p>
 <pre class="r"><code>sol8&lt;- gradLS(B, b, x0c, maxIts, tol,xb)
 sol9&lt;- gradLS(C, c, x0c, maxIts, tol,xc)
 sol10&lt;- gradLS(D, d, x0d, maxIts, tol,xd)
@@ -740,7 +740,7 @@ sol8</code></pre>
 </div>
 <div id="advanced-cheby-chev-iterative-method" class="section level1">
 <h1>Advanced Cheby Chev iterative method</h1>
-<p>After some research I found some psuedo code for this method.</p>
+<p>After some research I found some pseudo code for this method.</p>
 <div id="the-function" class="section level2">
 <h2>The function</h2>
 <pre class="r"><code>cheby &lt;- function (A,b,x0a, maxIts, tol,xa)
