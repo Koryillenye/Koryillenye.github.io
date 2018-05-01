@@ -285,7 +285,7 @@ a</code></pre>
 </div>
 <div id="the-funtion-for-gradient-descent-method" class="section level1">
 <h1>The Funtion for Gradient Descent Method</h1>
-<p>This function uses a ratio of residual vectors as a stepsize.</p>
+<p>This function uses a ratio of residual vectors as a step size.</p>
 <p><span class="math display">\[\alpha = \frac{&lt;\vec{r}^T,\vec{r}&gt;}{\vec{r}^TA\vec{r}}\]</span> Where <span class="math inline">\(\vec{r}\)</span> is the previous iterations residual vector.</p>
 <p>We approximate <span class="math inline">\(\vec{x}\)</span> by the following equation:</p>
 <p><span class="math display">\[\vec{x_{n+1}} = \vec{x_n} + \alpha\vec{r}\]</span> Here is the code for gradient descent in <code>R</code>.</p>
@@ -711,7 +711,7 @@ SteepLS      9996 877346 198154 30014 10737 914619
 </div>
 <div id="advanced-cheby-chev-iterative-method" class="section level1">
 <h1>Advanced Cheby Chev iterative method</h1>
-<p>After some digging and searching I finally found some code that helped solve the solution of <span class="math inline">\(A\vec{x} = \vec{b}\)</span> using the Cheby Chev advanced iterative method. How is this different than the other methods? Well all of these methods are iterative methods but Chevy Cheb iterative method is avoids the use of a ratio of inner products. In order to avoid this ratio it has to create an elipse using the max and minimum eigen values. This means more knowledge of our original matrix must be known and this may not be as effective with larger matrices. For simplicity when creating this function I design it in a way that it solves for the max <span class="math inline">\(\lambda\)</span> and the min <span class="math inline">\(\lambda\)</span> which are our optimal values for solving this with Chevy Cheb method. If I were to work on something more large scale I would use these as inputs because I would want to seperate these computations.</p>
+<p>After some digging and searching I finally found some code that helped solve the solution of <span class="math inline">\(A\vec{x} = \vec{b}\)</span> using the Cheby Chev advanced iterative method. How is this different than the other methods? Well all of these methods are iterative methods but Cheby Chev iterative method is avoids the use of a ratio of inner products. In order to avoid this ratio it has to create an elipse using the max and minimum eigen values. This means more knowledge of our original matrix must be known and this may not be as effective with larger matrices. For simplicity when creating this function I design it in a way that it solves for the max <span class="math inline">\(\lambda\)</span> and the min <span class="math inline">\(\lambda\)</span> which are our optimal values for solving this with Cheby Chev method. If I were to work on something more large scale I would use these as inputs because I would want to seperate these computations.</p>
 <div id="the-function" class="section level2">
 <h2>The function</h2>
 <pre class="r"><code>cheby &lt;- function (A,b,x0a, maxIts, tol,xa)

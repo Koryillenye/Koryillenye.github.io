@@ -13,31 +13,26 @@ output: html_document
 }
 
 </style>
-<div class="col-sm-3", style="padding-top: 20px;">
-
-![](images/illenyekd.jpg)
+<figure>
+<div class="row-sm-6">
+### **KORY ILLENYE**
 </div>
 
+<img src="./images/illenyekd.jpg" alt="Kory" align="left" hspace="20">
+</figure>
 
-<div class="col-sm-5">
+<div class="row-sm-6">
 
-### *Kory Illenye*
+### **Contact Information:**
+Office: Walker Hall, RM 307A <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M--W--F from 1:00 - 2:00 <br>
+Phone: (828) 262-2864<br>
+Email: [illenyekd@gmail.com](mailto:illenyekd@gmail.com)<br>
 
-### Contact Information
-
-E-mail --- [illenyekd@appstate.edu](illenyekd@appstate.edu)
-
-Room 307A --- MWF --- 1130 - 1230
 
 </div>
-</div>
-
-<div class="row-sm-6", style="padding-left: 20px;padding-top: 20px;">
-
-After retiring from the Army in 2010, he became fascinated with chemistry, mathematics and Hydrogen based energy. This fascination has motivated him to seek education in Math with concentrations in chemistry and statistics.
-
-Illenye's research interests are in chemistry (green energy) and applied mathematics. He wants to use math to make the world more effecient.
-
+<br><br><br><br>
+<div class="row-sm-6">
 
 </div>
 
@@ -45,14 +40,10 @@ Illenye's research interests are in chemistry (green energy) and applied mathema
 <center>
 
 -------
-Appalachian State University
+
+
+[Department of Mathematics](http://mathsci.appstate.edu)
 
 Walker Hall --- 121 Bodenheimer Drive --- Boone, NC 28608
 
-
-
-
-
-
-</center>
-</footer>
+[Appalachian State University](http://www.appstate.edu)

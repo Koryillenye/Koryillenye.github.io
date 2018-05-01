@@ -72,7 +72,7 @@ Without question the code is giving us the desired outcome of a $5x5$ matrix and
 
 # The Funtion for Gradient Descent Method
 
-This function uses a ratio of residual vectors as a stepsize.
+This function uses a ratio of residual vectors as a step size.
 
 $$\alpha = \frac{<\vec{r}^T,\vec{r}>}{\vec{r}^TA\vec{r}}$$
 Where $\vec{r}$ is the previous iterations residual vector.
@@ -409,7 +409,7 @@ We can see that for matrix A, D, and E the Gradient Method is fastest. For B, C,
 
 # Advanced Cheby Chev iterative method
 
-After some digging and searching I finally found some code that helped solve the solution of $A\vec{x} = \vec{b}$ using the Cheby Chev advanced iterative method. How is this different than the other methods? Well all of these methods are iterative methods but Chevy Cheb iterative method is avoids the use of a ratio of inner products. In order to avoid this ratio it has to create an elipse using the max and minimum eigen values. This means more knowledge of our original matrix must be known and this may not be as effective with larger matrices. For simplicity when creating this function I design it in a way that it solves for the max $\lambda$ and the min $\lambda$ which are our optimal values for solving this with Chevy Cheb method. If I were to work on something more large scale I would use these as inputs because I would want to seperate these computations.
+After some digging and searching I finally found some code that helped solve the solution of $A\vec{x} = \vec{b}$ using the Cheby Chev advanced iterative method. How is this different than the other methods? Well all of these methods are iterative methods but Cheby Chev iterative method is avoids the use of a ratio of inner products. In order to avoid this ratio it has to create an elipse using the max and minimum eigen values. This means more knowledge of our original matrix must be known and this may not be as effective with larger matrices. For simplicity when creating this function I design it in a way that it solves for the max $\lambda$ and the min $\lambda$ which are our optimal values for solving this with Cheby Chev method. If I were to work on something more large scale I would use these as inputs because I would want to seperate these computations.
 
 ## The function
 
