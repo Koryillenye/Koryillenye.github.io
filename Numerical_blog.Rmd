@@ -10,7 +10,7 @@ library(matrixcalc)
 
 # Steepest Descent and Steepest Descent with Least Squares.
 
-Initially we started by looking at two iterative methods for finding solutions to positive definite, symmetric matrices. Steepest Descent is often called **gradient descent**, which is a approach to finding minima of a function $f$. Using an estimate $x_i$, the negative gradient $-\nabla f(x_i)$ gives the direction of in which $f$ is decreasing at the greatest rate. The goal is to take steps in this direction until we react the minimum. 
+Initially we started by looking at two iterative methods for finding solutions to positive definite, symmetric matrices. Steepest Descent is often called **gradient descent**, which is a approach to finding minima of a function $f$. Using an estimate $\vec{x}_i$, the negative gradient $-\nabla f(x_i)$ gives the direction of in which $f$ is decreasing at the greatest rate. The goal is to take steps in this direction until we react the minimum. 
 
 Notation:
 
@@ -20,10 +20,10 @@ $i$ denotes the i-ith term
 
 $r$ denotes a residual
 
-$$e_i = x_i - x$$
-$$r_i = b - Ax_i = -Ae_i$$
+$$\vec{e}_i = \vec{x}_i - \vec{x}$$
+$$\vec{r}_i = \vec{b} - A\vec{x}_i = -A\vec{e}_i$$
 
-To determine the size, often referred to as $\alpha$, a ratio of inner products from residuals is used. $x_{i+1} = x_i - \alpha_i\nabla f(x_i)$ this minimizes $f(x_{i+1})$. Now, that it is understood what is needed lets define a few things. To be symmetric means $A = A^T$ where $A^T$ is the transpose of A. Positive definite means all of the matrix's eigen values are greater than 0.
+To determine the size, often referred to as $\alpha$, a ratio of inner products from residuals is used. $\vec{x}_{i+1} = \vec{x}_i - \alpha_i\nabla f(\vec{x}_i)$ this minimizes $f(\vec{x}_{i+1})$. Now, that it is understood what is needed lets define a few things. To be symmetric means $A = A^T$ where $A^T$ is the transpose of A. Positive definite means all of the matrix's eigen values are greater than 0.
 
 ## Creating a positive definite, symetric matrix
 
@@ -57,48 +57,60 @@ The return of TRUE from the code block above allows us to know that the matrix i
 ### The Matrix A
 
 ```{r}
-#prints the matrix A
+# Prints the matrix A
 A
 ```
 
 ### The b vector
 
 ```{r}
-#Prints b
+# Prints b vector for A
 a
 ```
 
+Without question the code is giving us the desired outcome of a $5x5$ matrix and a $5x1$ solution vector.
+
 # The Funtion for Gradient Descent Method
 
+This function uses a ratio of residual vectors as a stepsize.
+
+$$\alpha = \frac{<\vec{r}^T,\vec{r}>}{\vec{r}^TA\vec{r}}$$
+Where $\vec{r}$ is the previous iterations residual vector.
+
+We approximate $\vec{x}$ by the following equation: 
+
+$$\vec{x_{n+1}} = \vec{x_n} + \alpha\vec{r}$$
+Here is the code for gradient descent in `R`.
+
 ```{r}
-# defines the function
+# Defines the function
 grad <- function (A,b,x0a, maxIts, tol, x)
   {
-    # calculates n
+    # Calculates n
     n <- length(b)
-    # creates an initial residual
+    # Creates an initial residual
     r <- b - (A %*% x0a)
-    # used to keep track of the number of iterations.
+    # Used to keep track of the number of iterations.
     k = 0
-    # loop used to attempt to find the approximation of the X vector
+    # Loop used to attempt to find the approximation of the X vector
     while (k < maxIts && norm(r, "1") > tol)
     {
-      # increments the iteration
+      # Increments the iteration
       k <- k+1
-      # creates a step size using the residuals and matrix A
+      # Creates a step size using the residuals and matrix A
       alpha <- (t(r) %*% r) / (t(r) %*% (A %*% r))
-      # creates the next approximation of the X vector
+      # Creates the next approximation of the X vector
       x0a <- x0a + drop(alpha) * r
-      # creates the new residual with the new approximation
+      # Creates the new residual with the new approximation
       r <- b - A %*% x0a
     }
-  #Calculates the residual vector.
+  # Calculates the residual vector.
   res <- x - x0a
   # vairable to store the exact X, the aproximated X and the number of iterations
   sol <- cbind(x, x0a, res, matrix(rep(k,n),ncol = 1))
   # Names the colums of the new array
   colnames(sol) <- c("X", "X0","resid", "iter")
-  # prints the array
+  # Prints the array
   sol
  
 }
@@ -107,13 +119,13 @@ grad <- function (A,b,x0a, maxIts, tol, x)
 This code when run generates the following:
 
 ```{r}
-# runs the function and saves it to a variable "c"
-sol1 <- grad(A, a, x0a, maxIts, tol, xa)
-# prints the array 
-sol1
+# Runs the function and saves it to a variable "c"
+solgradA <- grad(A, a, x0a, maxIts, tol, xa)
+# Prints the array 
+solgradA
 ```
 
-You will notice that the code is not random and reproduces the same number every time. This is because a random seed was selected for reproduction of results. The $X$ column represents the exact solution, where the $X0$ column represents the approximation from the function. The resid column shows the actual difference between the two vectors. As you can see the approximation is very close to the actual solution. The norm of the residual is $10^5$ when rounded to 5 decimal places. For this document we know that if the `iter` column is not equal to `r maxIts` then the maximum norm of the residual vector is $10^5$. The final column just represents the number of iterations it actually took the function before converging to the approximate solution. You will notice that each row has an out put but this does **not** mean each row took that many iterations. Simply was concatenated this way. On the above matrix it took the function `r sol1[1,4]` iterations to complete. It worked for a $5x5$ matrix, now to apply it to a few larger matrices.
+You will notice that the code is not random and reproduces the same number every time. This is because a random seed was selected for reproduction of results. The $X$ column represents the exact solution, where the $X0$ column represents the approximation from the function. The resid column shows the actual difference between the two vectors. As you can see the approximation is very close to the actual solution. The norm of the residual is $10^5$ when rounded to 5 decimal places. For this document we know that if the `iter` column is not equal to `r maxIts` then the maximum norm of the residual vector is $10^5$. The final column just represents the number of iterations it actually took the function before converging to the approximate solution. You will notice that each row has an out put but this does **not** mean each row took that many iterations. Simply was concatenated this way. On the above matrix it took the function `r solgradA[1,4]` iterations to complete. It worked for a $5x5$ matrix, now to apply it to a few larger matrices.
 
 ## 6x6 Positive Definite Symmetric Matrix
 
@@ -128,13 +140,13 @@ B <- t(B) %*% B
 xb <- matrix(runif(n), ncol = 1)
 # Creates a b vector from our random vector x
 b <- B %*% xb
-# initial approximation vector (zero vecor)
+# Initial approximation vector (zero vecor)
 x0b <- matrix(rep(0.0,n), ncol = 1)
-# determines if all the eigen values are positive
+# Determines if all the eigen values are positive
 is.positive.definite(B)
 ```
 
-### The Matrix and b vector
+### The B Matrix and b vector
 
 ```{r}
 B
@@ -144,8 +156,8 @@ b
 ### The Results
 
 ```{r}
-sol2<-grad(B, b, x0b, maxIts, tol,xb)
-sol2
+solgradB<-grad(B, b, x0b, maxIts, tol,xb)
+solgradB
 ```
 
 For the purpose of this document random seeds have been set for replication and discussion but many of random matrices were sampled repeatedly but not reported. Each of the following seeds were created by a random 10-sided dice and adding a digit to the previous seed.
@@ -169,7 +181,7 @@ x0c <- matrix(rep(0.0,n), ncol = 1)
 is.positive.definite(C)
 ```
 
-### The Matrix and b vector
+### The A Matrix and b vector
 
 ```{r}
 C
@@ -179,8 +191,8 @@ c
 ### The Results
 
 ```{r}
-sol3<-grad(C, c, x0c, maxIts, tol,xc)
-sol3
+solgradC<-grad(C, c, x0c, maxIts, tol,xc)
+solgradC
 ```
 
 ## Another 6x6 Positive Definite Symmetric Matrix
@@ -202,7 +214,7 @@ x0d <- matrix(rep(0.0,n), ncol = 1)
 is.positive.definite(D)
 ```
 
-### The Matrix and b vector
+### The D Matrix and b vector
 
 ```{r}
 D
@@ -213,8 +225,8 @@ d
 
 ```{r}
 
-sol4<- grad(D, d, x0d, maxIts, tol,xd)
-sol4
+solgradD<- grad(D, d, x0d, maxIts, tol,xd)
+solgradD
 ```
 
 ## Another 6x6 Positive Definite Symmetric Matrix
@@ -236,7 +248,7 @@ x0e <- matrix(rep(0.0,n), ncol = 1)
 is.positive.definite(E)
 ```
 
-### The Matrix and b vector
+### The E Matrix and b vector
 
 ```{r}
 E
@@ -246,8 +258,8 @@ e
 ### The Results
 
 ```{r}
-sol5<- grad(E, e, x0e, maxIts, tol,xe)
-sol5
+solgradE<- grad(E, e, x0e, maxIts, tol,xe)
+solgradE
 ```
 
 
@@ -271,7 +283,7 @@ x0f <- matrix(rep(0.0,n), ncol = 1)
 is.positive.definite(F)
 ```
 
-### The Matrix and b vector
+### The F Matrix and b vector
 
 ```{r}
 F
@@ -279,15 +291,13 @@ f
 ```
 
 ```{r}
-sol6<- grad(F, f, x0f, maxIts, tol,xf)
-sol6
+solgradF<- grad(F, f, x0f, maxIts, tol,xf)
+solgradF
 ```
 
- 
+ At this point I wasn't ready to actually do any analysis I was merely getting everything prepared for analysis. I decided to see how Gradient method compares to gradient method with least squares. From my understanding of Linear algebra and my explanation of least squares methods. Gradient method of least squares should be faster.
 
-# Gradient Descent with least squares
-
-Now that a few different matrices have been tested with gradient descent its time to look at gradient descent with least squares. This function is supposed to converge faster.
+# Gradient Descent with Least Squares
 
 ```{r}
 # defines the function
@@ -325,11 +335,11 @@ gradLS <- function (A,b,x0a, maxIts, tol,xa)
 
 ### Initial 5x5 (A)
 ```{r}
-sol7<- gradLS(A, a, x0a, maxIts, tol, xa)
-sol7
+solgradLSA<- gradLS(A, a, x0a, maxIts, tol, xa)
+solgradLSA
 ```
 
-Huston there is a problem. This method is supposed to be faster! `r sol1[1,4]` is much faster than `r sol7[1,4]`. Maybe its the algorithm. If we adjust the residual vector maybe that will fix it.
+Huston there is a problem. This method is supposed to be faster, but `r solgradA[1,4]` is much faster than `r solgradLSA[1,4]`. Maybe its the algorithm. If we adjust the residual vector maybe that will fix it.
 
 
 ```{r}
@@ -368,34 +378,38 @@ gradLS2 <- function (A,b,x0a, maxIts, tol, xa)
 ## Same Matrix
 
 ```{r}
-sol7<- gradLS2(A, a, x0a, maxIts, tol,xa)
-sol7
+solgradLS2A<- gradLS2(A, a, x0a, maxIts, tol,xa)
+solgradLS2A
 ```
 
-That's better than the the Gradient Descent Least Square but still not better than the original Gradient Descent function. Lets test it on a few more matrices and see if this is true for them all.
+That's better than the the Gradient Descent Least Squares but still not better than the original Gradient Descent function. Lets test it on a few more matrices and see if this is true for them all.
 
 
 ```{r}
-sol8<- gradLS(B, b, x0c, maxIts, tol,xb)
-sol9<- gradLS(C, c, x0c, maxIts, tol,xc)
-sol10<- gradLS(D, d, x0d, maxIts, tol,xd)
-sol11<- gradLS2(B, b, x0c, maxIts, tol,xb)
-sol12<- gradLS2(C, c, x0c, maxIts, tol,xc)
-sol13<- gradLS2(D, d, x0d, maxIts, tol,xd)
-sol8
-sol9
-sol10
-sol11
-sol12
-sol13
+solgradLSB<- gradLS(B, b, x0c, maxIts, tol,xb)
+solgradLSC<- gradLS(C, c, x0c, maxIts, tol,xc)
+solgradLSD<- gradLS(D, d, x0d, maxIts, tol,xd)
+solgradLSE<- gradLS(E, e, x0e, maxIts, tol,xe)
+solgradLSF<- gradLS(F, f, x0f, maxIts, tol,xf)
+solgradLS2B<- gradLS2(B, b, x0c, maxIts, tol,xb)
+solgradLS2C<- gradLS2(C, c, x0c, maxIts, tol,xc)
+solgradLS2D<- gradLS2(D, d, x0d, maxIts, tol,xd)
+solgradLS2E<- gradLS2(E, e, x0e, maxIts, tol,xe)
+solgradLS2F<- gradLS2(F, f, x0f, maxIts, tol,xf)
+iterations <- c(solgradA[1,4], solgradB[1,4],solgradC[1,4],solgradD[1,4],solgradE[1,4],solgradF[1,4])
+iterations <- rbind(iterations,c(solgradLSA[1,4], solgradLSB[1,4],solgradLSC[1,4],solgradLSD[1,4],solgradLSE[1,4], solgradLSF[1,4]))
+iterations <- rbind(iterations,c(solgradLS2A[1,4], solgradLS2B[1,4],solgradLS2C[1,4],solgradLS2D[1,4], solgradLS2E[1,4], solgradLS2F[1,4]))
+rownames(iterations) <- c("Steep", "SteepLS", "(mod)SteepLS")
+colnames(iterations) <- c("A", "B", "C", "D", "E", "F")
+iterations
 
 ```
 
-These matrices broke my theory again. Maybe the pseudo code is all wrong. Lets try another iterative method maybe the advanced Cheby Chev iterative method this method avoids the inner products of residuals.
+We can see that for matrix A, D, and E the Gradient Method is fastest. For B, C, and F the modded least squares method is fastest. Why though? This still doesn't make sense from my knowledge of linear Algebra. So, lets look at another method of iteration. Maybe it will help make some more sense of this. 
 
-#Advanced Cheby Chev iterative method
+# Advanced Cheby Chev iterative method
 
-After some research I found some pseudo code for this method. 
+After some digging and searching I finally found some code that helped solve the solution of $A\vec{x} = \vec{b}$ using the Cheby Chev advanced iterative method. How is this different than the other methods? Well all of these methods are iterative methods but Chevy Cheb iterative method is avoids the use of a ratio of inner products. In order to avoid this ratio it has to create an elipse using the max and minimum eigen values. This means more knowledge of our original matrix must be known and this may not be as effective with larger matrices. For simplicity when creating this function I design it in a way that it solves for the max $\lambda$ and the min $\lambda$ which are our optimal values for solving this with Chevy Cheb method. If I were to work on something more large scale I would use these as inputs because I would want to seperate these computations.
 
 ## The function
 
@@ -457,70 +471,169 @@ cheby <- function (A,b,x0a, maxIts, tol,xa)
 
 ```
 
-lets see how it does?
+Now that the function is created lets get it running and see how it compares to the previous methods.
 
 ## 5x5 Matrix (A)
 
 ```{r}
-sol14<- cheby(A, a, x0a, maxIts, tol, xa)
-sol14
+solchebyA<- cheby(A, a, x0a, maxIts, tol, xa)
+solchebyA
 ```
 
-This was faster then all the other methods it appears. Time to investigate further.
+
 
 ## 6x6 Matrix (B)
 
 ```{r}
-sol15<- cheby(B, b, x0b, maxIts, tol, xb)
-sol15
+solchebyB<- cheby(B, b, x0b, maxIts, tol, xb)
+solchebyB
 ```
 
 ## 6x6 Matrix (C)
 
 
 ```{r}
-sol16<- cheby(C, c, x0c, maxIts, tol, xc)
-sol16
+solchebyC<- cheby(C, c, x0c, maxIts, tol, xc)
+solchebyC
 ```
 
 ## 6x6 Matrix (D)
 
 
 ```{r}
-sol17<- cheby(D, d, x0d, maxIts, tol, xd)
-sol17
+solchebyD<- cheby(D, d, x0d, maxIts, tol, xd)
+solchebyD
 ```
 
 ## 6x6 Matrix (E)
 
 
 ```{r}
-sol18<- cheby(E, e, x0e, maxIts, tol, xe)
-sol18
+solchebyE<- cheby(E, e, x0e, maxIts, tol, xe)
+solchebyE
 ```
 
 ## 6x6 Matrix (F)
 
 
 ```{r}
-sol18<- cheby(F, f, x0f, maxIts, tol, xf)
-sol18
+solchebyF<- cheby(F, f, x0f, maxIts, tol, xf)
+solchebyF
+```
+
+```{r}
+iterations <- rbind(iterations,c(solchebyA[1,4], solchebyB[1,4],solchebyC[1,4],solchebyD[1,4], solchebyE[1,4], solchebyF[1,4]))
+rownames(iterations) <- c("Steep", "SteepLS", "(mod)SteepLS", "Cheby Chev")
+colnames(iterations) <- c("A", "B", "C", "D", "E", "F")
+iterations
+
+```
+
+
+Well this method is clearly faster then all methods previously discussed. This is interesting because it is not the dominantly used method. Why though? I am to assume that on larger matrices knowledge and calculation of eigenvalues might be expensive or taxing. At this point I decided I needed to discuss this with Dr. Katrina Palmer and see why. We talked about it for a minute and her first question was about the condition number of the matrices. Time to explore condition numbers.
+
+# Condition Numbers of our matrices
+
+```{r}
+condition <- c(kappa(A), kappa(B), kappa(C),kappa(D), kappa(E), kappa(F))
+condition <- rbind(c("A", "B", "C", "D", "E", "F"), round(condition,0))
+condition
+```
+
+Well these functions are very ill-conditioned. This means that small changes can affect the approximation greatly which explains why the modded method works better than the normal least squares method. Since this may very well be the issue lets recondition all the matrices and see if this changes our assumption on which method is better.
+
+## Conditioning the matrices
+
+To condition a matrix we simple add some multiple of the identity to the original matrix.
+
+```{r}
+precon <- diag(length(a))*5
+A <- A + precon
+a <- A %*% xa 
+kappa(A)
+```
+
+In the code chunk above, I preconditioned A then recalculated the solution vector $\vec{a}$ and printed the condition number. Now to repeat it for all of the matrices.
+
+```{r}
+precon <- diag(length(b))*5
+B <- B + precon
+b <- B %*% xb 
+kappa(B)
+```
+
+```{r}
+precon <- diag(length(c))*5
+C <- C + precon
+c <- C %*% xc 
+kappa(C)
+```
+
+```{r}
+precon <- diag(length(d))*5
+D <- D + precon
+d <- D %*% xd 
+kappa(D)
+```
+
+```{r}
+precon <- diag(length(e))*5
+E <- E + precon
+e <- E %*% xe 
+kappa(E)
+```
+
+```{r}
+precon <- diag(length(f))*5
+F <- F + precon
+f <- F %*% xf 
+kappa(F)
+```
+
+```{r}
+condition <- c(kappa(A), kappa(B), kappa(C),kappa(D), kappa(E), kappa(F))
+condition <- rbind(c("A", "B", "C", "D", "E", "F"), round(condition,0))
+condition
+```
+
+Much better condition numbers. Time to re-run all of the functions
+
+```{r}
+solgradA <- grad(A, a, x0a, maxIts, tol, xa)
+solgradB <- grad(B, b, x0b, maxIts, tol, xb)
+solgradC <- grad(C, c, x0c, maxIts, tol, xc)
+solgradD <- grad(D, d, x0d, maxIts, tol, xd)
+solgradE <- grad(E, e, x0e, maxIts, tol, xe)
+solgradF <- grad(F, f, x0f, maxIts, tol, xf)
+solgradLSA<- gradLS(A, a, x0a, maxIts, tol, xa)
+solgradLSB<- gradLS(B, b, x0c, maxIts, tol,xb)
+solgradLSC<- gradLS(C, c, x0c, maxIts, tol,xc)
+solgradLSD<- gradLS(D, d, x0d, maxIts, tol,xd)
+solgradLSE<- gradLS(E, e, x0e, maxIts, tol,xe)
+solgradLSF<- gradLS(F, f, x0f, maxIts, tol,xf)
+solgradLS2B<- gradLS2(B, b, x0c, maxIts, tol,xb)
+solgradLS2C<- gradLS2(C, c, x0c, maxIts, tol,xc)
+solgradLS2D<- gradLS2(D, d, x0d, maxIts, tol,xd)
+solgradLS2E<- gradLS2(E, e, x0e, maxIts, tol,xe)
+solgradLS2F<- gradLS2(F, f, x0f, maxIts, tol,xf)
+solchebyA<- cheby(A, a, x0a, maxIts, tol, xa)
+solchebyB<- cheby(B, b, x0b, maxIts, tol, xb)
+solchebyC<- cheby(C, c, x0c, maxIts, tol, xc)
+solchebyD<- cheby(D, d, x0d, maxIts, tol, xd)
+solchebyE<- cheby(E, e, x0e, maxIts, tol, xe)
+solchebyF<- cheby(F, f, x0f, maxIts, tol, xf)
+
+iterations <- c(solgradA[1,4], solgradB[1,4],solgradC[1,4],solgradD[1,4],solgradE[1,4],solgradF[1,4])
+iterations <- rbind(iterations,c(solgradLSA[1,4], solgradLSB[1,4],solgradLSC[1,4],solgradLSD[1,4],solgradLSE[1,4], solgradLSF[1,4]))
+iterations <- rbind(iterations,c(solgradLS2A[1,4], solgradLS2B[1,4],solgradLS2C[1,4],solgradLS2D[1,4], solgradLS2E[1,4], solgradLS2F[1,4]))
+iterations <- rbind(iterations,c(solchebyA[1,4], solchebyB[1,4],solchebyC[1,4],solchebyD[1,4], solchebyE[1,4], solchebyF[1,4]))
+rownames(iterations) <- c("Steep", "SteepLS", "(mod)SteepLS", "Cheby Chev")
+colnames(iterations) <- c("A", "B", "C", "D", "E", "F")
+iterations
 ```
 
 
 
-
-After talking to Dr. Palmer I realized that part of the problem might be that the matrices are ill conditioned. So, lets redefine a few matrices and look at the condition numbers.
-
-
-
-
-
-
-
-
-
-Well higher condition numbers mean that the matrices are ill conditioned. We can see that matrix B is highly ill conditioned. Well lets condition a matrix and see how that affects the number of iterations. We can use the B matrix.
-
-
 By conditioning the matrix prior to solving using the iterative method we can see that it makes a significant difference in solving for the solution but Cheby Chev's method is still close to the fastest method for solving these symmetric matrices. There is also a functional form that can be used for non-symmetric matrices.  I want to consider using this on image processing and seeing where this takes me.
+
+

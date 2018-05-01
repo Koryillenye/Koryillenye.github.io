@@ -226,13 +226,13 @@ $(document).ready(function () {
 
 <div id="steepest-descent-and-steepest-descent-with-least-squares." class="section level1">
 <h1>Steepest Descent and Steepest Descent with Least Squares.</h1>
-<p>Initially we started by looking at two iterative methods for finding solutions to positive definite, symmetric matrices. Steepest Descent is often called <strong>gradient descent</strong>, which is a approach to finding minima of a function <span class="math inline">\(f\)</span>. Using an estimate <span class="math inline">\(x_i\)</span>, the negative gradient <span class="math inline">\(-\nabla f(x_i)\)</span> gives the direction of in which <span class="math inline">\(f\)</span> is decreasing at the greatest rate. The goal is to take steps in this direction until we react the minimum.</p>
+<p>Initially we started by looking at two iterative methods for finding solutions to positive definite, symmetric matrices. Steepest Descent is often called <strong>gradient descent</strong>, which is a approach to finding minima of a function <span class="math inline">\(f\)</span>. Using an estimate <span class="math inline">\(\vec{x}_i\)</span>, the negative gradient <span class="math inline">\(-\nabla f(x_i)\)</span> gives the direction of in which <span class="math inline">\(f\)</span> is decreasing at the greatest rate. The goal is to take steps in this direction until we react the minimum.</p>
 <p>Notation:</p>
 <p><span class="math inline">\(e\)</span> denotes an error term</p>
 <p><span class="math inline">\(i\)</span> denotes the i-ith term</p>
 <p><span class="math inline">\(r\)</span> denotes a residual</p>
-<p><span class="math display">\[e_i = x_i - x\]</span> <span class="math display">\[r_i = b - Ax_i = -Ae_i\]</span></p>
-<p>To determine the size, often referred to as <span class="math inline">\(\alpha\)</span>, a ratio of inner products from residuals is used. <span class="math inline">\(x_{i+1} = x_i - \alpha_i\nabla f(x_i)\)</span> this minimizes <span class="math inline">\(f(x_{i+1})\)</span>. Now, that it is understood what is needed lets define a few things. To be symmetric means <span class="math inline">\(A = A^T\)</span> where <span class="math inline">\(A^T\)</span> is the transpose of A. Positive definite means all of the matrix’s eigen values are greater than 0.</p>
+<p><span class="math display">\[\vec{e}_i = \vec{x}_i - \vec{x}\]</span> <span class="math display">\[\vec{r}_i = \vec{b} - A\vec{x}_i = -A\vec{e}_i\]</span></p>
+<p>To determine the size, often referred to as <span class="math inline">\(\alpha\)</span>, a ratio of inner products from residuals is used. <span class="math inline">\(\vec{x}_{i+1} = \vec{x}_i - \alpha_i\nabla f(\vec{x}_i)\)</span> this minimizes <span class="math inline">\(f(\vec{x}_{i+1})\)</span>. Now, that it is understood what is needed lets define a few things. To be symmetric means <span class="math inline">\(A = A^T\)</span> where <span class="math inline">\(A^T\)</span> is the transpose of A. Positive definite means all of the matrix’s eigen values are greater than 0.</p>
 <div id="creating-a-positive-definite-symetric-matrix" class="section level2">
 <h2>Creating a positive definite, symetric matrix</h2>
 <p>Defining initial variables.</p>
@@ -260,7 +260,7 @@ is.positive.definite(A)</code></pre>
 <p>The return of TRUE from the code block above allows us to know that the matrix is positive definite. Lets see what these objects look like and then design the function.</p>
 <div id="the-matrix-a" class="section level3">
 <h3>The Matrix A</h3>
-<pre class="r"><code>#prints the matrix A
+<pre class="r"><code># Prints the matrix A
 A</code></pre>
 <pre><code>          [,1]      [,2]      [,3]      [,4]      [,5]
 [1,] 2.4299775 1.7269373 2.0199944 0.5590044 1.5099956
@@ -271,7 +271,7 @@ A</code></pre>
 </div>
 <div id="the-b-vector" class="section level3">
 <h3>The b vector</h3>
-<pre class="r"><code>#Prints b
+<pre class="r"><code># Prints b vector for A
 a</code></pre>
 <pre><code>          [,1]
 [1,] 2.2159566
@@ -279,47 +279,52 @@ a</code></pre>
 [3,] 1.9866331
 [4,] 0.6013222
 [5,] 1.3916532</code></pre>
+<p>Without question the code is giving us the desired outcome of a <span class="math inline">\(5x5\)</span> matrix and a <span class="math inline">\(5x1\)</span> solution vector.</p>
 </div>
 </div>
 </div>
 <div id="the-funtion-for-gradient-descent-method" class="section level1">
 <h1>The Funtion for Gradient Descent Method</h1>
-<pre class="r"><code># defines the function
+<p>This function uses a ratio of residual vectors as a stepsize.</p>
+<p><span class="math display">\[\alpha = \frac{&lt;\vec{r}^T,\vec{r}&gt;}{\vec{r}^TA\vec{r}}\]</span> Where <span class="math inline">\(\vec{r}\)</span> is the previous iterations residual vector.</p>
+<p>We approximate <span class="math inline">\(\vec{x}\)</span> by the following equation:</p>
+<p><span class="math display">\[\vec{x_{n+1}} = \vec{x_n} + \alpha\vec{r}\]</span> Here is the code for gradient descent in <code>R</code>.</p>
+<pre class="r"><code># Defines the function
 grad &lt;- function (A,b,x0a, maxIts, tol, x)
   {
-    # calculates n
+    # Calculates n
     n &lt;- length(b)
-    # creates an initial residual
+    # Creates an initial residual
     r &lt;- b - (A %*% x0a)
-    # used to keep track of the number of iterations.
+    # Used to keep track of the number of iterations.
     k = 0
-    # loop used to attempt to find the approximation of the X vector
+    # Loop used to attempt to find the approximation of the X vector
     while (k &lt; maxIts &amp;&amp; norm(r, &quot;1&quot;) &gt; tol)
     {
-      # increments the iteration
+      # Increments the iteration
       k &lt;- k+1
-      # creates a step size using the residuals and matrix A
+      # Creates a step size using the residuals and matrix A
       alpha &lt;- (t(r) %*% r) / (t(r) %*% (A %*% r))
-      # creates the next approximation of the X vector
+      # Creates the next approximation of the X vector
       x0a &lt;- x0a + drop(alpha) * r
-      # creates the new residual with the new approximation
+      # Creates the new residual with the new approximation
       r &lt;- b - A %*% x0a
     }
-  #Calculates the residual vector.
+  # Calculates the residual vector.
   res &lt;- x - x0a
   # vairable to store the exact X, the aproximated X and the number of iterations
   sol &lt;- cbind(x, x0a, res, matrix(rep(k,n),ncol = 1))
   # Names the colums of the new array
   colnames(sol) &lt;- c(&quot;X&quot;, &quot;X0&quot;,&quot;resid&quot;, &quot;iter&quot;)
-  # prints the array
+  # Prints the array
   sol
  
 }</code></pre>
 <p>This code when run generates the following:</p>
-<pre class="r"><code># runs the function and saves it to a variable &quot;c&quot;
-sol1 &lt;- grad(A, a, x0a, maxIts, tol, xa)
-# prints the array 
-sol1</code></pre>
+<pre class="r"><code># Runs the function and saves it to a variable &quot;c&quot;
+solgradA &lt;- grad(A, a, x0a, maxIts, tol, xa)
+# Prints the array 
+solgradA</code></pre>
 <pre><code>              X         X0         resid iter
 [1,] 0.04876597 0.04895561 -1.896346e-04  325
 [2,] 0.14752424 0.14746647  5.776931e-05  325
@@ -339,13 +344,13 @@ B &lt;- t(B) %*% B
 xb &lt;- matrix(runif(n), ncol = 1)
 # Creates a b vector from our random vector x
 b &lt;- B %*% xb
-# initial approximation vector (zero vecor)
+# Initial approximation vector (zero vecor)
 x0b &lt;- matrix(rep(0.0,n), ncol = 1)
-# determines if all the eigen values are positive
+# Determines if all the eigen values are positive
 is.positive.definite(B)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<div id="the-matrix-and-b-vector" class="section level3">
-<h3>The Matrix and b vector</h3>
+<div id="the-b-matrix-and-b-vector" class="section level3">
+<h3>The B Matrix and b vector</h3>
 <pre class="r"><code>B</code></pre>
 <pre><code>         [,1]      [,2]      [,3]     [,4]     [,5]     [,6]
 [1,] 2.969523 2.4693875 1.0945040 2.265522 2.268699 2.549656
@@ -365,8 +370,8 @@ is.positive.definite(B)</code></pre>
 </div>
 <div id="the-results" class="section level3">
 <h3>The Results</h3>
-<pre class="r"><code>sol2&lt;-grad(B, b, x0b, maxIts, tol,xb)
-sol2</code></pre>
+<pre class="r"><code>solgradB&lt;-grad(B, b, x0b, maxIts, tol,xb)
+solgradB</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.2163319 0.2164881 -0.0001561833 1781
 [2,] 0.6504235 0.6502254  0.0001980371 1781
@@ -394,8 +399,8 @@ x0c &lt;- matrix(rep(0.0,n), ncol = 1)
 # determines if all the eigen values are positive
 is.positive.definite(C)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<div id="the-matrix-and-b-vector-1" class="section level3">
-<h3>The Matrix and b vector</h3>
+<div id="the-a-matrix-and-b-vector" class="section level3">
+<h3>The A Matrix and b vector</h3>
 <pre class="r"><code>C</code></pre>
 <pre><code>         [,1]     [,2]      [,3]      [,4]      [,5]      [,6]
 [1,] 2.591707 2.217206 1.1814162 1.5399616 1.6181376 1.1860408
@@ -415,8 +420,8 @@ is.positive.definite(C)</code></pre>
 </div>
 <div id="the-results-1" class="section level3">
 <h3>The Results</h3>
-<pre class="r"><code>sol3&lt;-grad(C, c, x0c, maxIts, tol,xc)
-sol3</code></pre>
+<pre class="r"><code>solgradC&lt;-grad(C, c, x0c, maxIts, tol,xc)
+solgradC</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.6807363 0.6806130  1.233517e-04 1419
 [2,] 0.1331188 0.1331240 -5.250738e-06 1419
@@ -443,8 +448,8 @@ x0d &lt;- matrix(rep(0.0,n), ncol = 1)
 # determines if all the eigen values are positive
 is.positive.definite(D)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<div id="the-matrix-and-b-vector-2" class="section level3">
-<h3>The Matrix and b vector</h3>
+<div id="the-d-matrix-and-b-vector" class="section level3">
+<h3>The D Matrix and b vector</h3>
 <pre class="r"><code>D</code></pre>
 <pre><code>         [,1]      [,2]      [,3]     [,4]     [,5]     [,6]
 [1,] 1.629180 1.3253076 1.3704596 1.897338 1.492470 1.388390
@@ -464,8 +469,8 @@ is.positive.definite(D)</code></pre>
 </div>
 <div id="the-results-2" class="section level3">
 <h3>The Results</h3>
-<pre class="r"><code>sol4&lt;- grad(D, d, x0d, maxIts, tol,xd)
-sol4</code></pre>
+<pre class="r"><code>solgradD&lt;- grad(D, d, x0d, maxIts, tol,xd)
+solgradD</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.6258299 0.6258653 -3.544603e-05 1515
 [2,] 0.2011419 0.2014055 -2.636294e-04 1515
@@ -492,8 +497,8 @@ x0e &lt;- matrix(rep(0.0,n), ncol = 1)
 # determines if all the eigen values are positive
 is.positive.definite(E)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<div id="the-matrix-and-b-vector-3" class="section level3">
-<h3>The Matrix and b vector</h3>
+<div id="the-e-matrix-and-b-vector" class="section level3">
+<h3>The E Matrix and b vector</h3>
 <pre class="r"><code>E</code></pre>
 <pre><code>          [,1]      [,2]      [,3]      [,4]      [,5]      [,6]
 [1,] 0.8516702 0.5918866 0.9644886 0.2638436 0.8583120 1.2921903
@@ -513,8 +518,8 @@ is.positive.definite(E)</code></pre>
 </div>
 <div id="the-results-3" class="section level3">
 <h3>The Results</h3>
-<pre class="r"><code>sol5&lt;- grad(E, e, x0e, maxIts, tol,xe)
-sol5</code></pre>
+<pre class="r"><code>solgradE&lt;- grad(E, e, x0e, maxIts, tol,xe)
+solgradE</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.4544894 0.4544451  4.431286e-05  322
 [2,] 0.3672737 0.3672618  1.191118e-05  322
@@ -542,8 +547,8 @@ x0f &lt;- matrix(rep(0.0,n), ncol = 1)
 # determines if all the eigen values are positive
 is.positive.definite(F)</code></pre>
 <pre><code>[1] TRUE</code></pre>
-<div id="the-matrix-and-b-vector-4" class="section level3">
-<h3>The Matrix and b vector</h3>
+<div id="the-f-matrix-and-b-vector" class="section level3">
+<h3>The F Matrix and b vector</h3>
 <pre class="r"><code>F</code></pre>
 <pre><code>          [,1]     [,2]      [,3]     [,4]     [,5]      [,6]     [,7]
  [1,] 4.576307 3.544017 1.8706107 2.699453 3.464121 2.1412326 3.630429
@@ -579,8 +584,8 @@ is.positive.definite(F)</code></pre>
  [8,] 13.873418
  [9,] 12.736734
 [10,] 11.963858</code></pre>
-<pre class="r"><code>sol6&lt;- grad(F, f, x0f, maxIts, tol,xf)
-sol6</code></pre>
+<pre class="r"><code>solgradF&lt;- grad(F, f, x0f, maxIts, tol,xf)
+solgradF</code></pre>
 <pre><code>              X        X0         resid iter
  [1,] 0.6172931 0.6173013 -8.226232e-06 3532
  [2,] 0.8323071 0.8323258 -1.870730e-05 3532
@@ -592,11 +597,11 @@ sol6</code></pre>
  [8,] 0.8651250 0.8651531 -2.812421e-05 3532
  [9,] 0.1558820 0.1558699  1.212071e-05 3532
 [10,] 0.3583763 0.3584488 -7.249651e-05 3532</code></pre>
+<p>At this point I wasn’t ready to actually do any analysis I was merely getting everything prepared for analysis. I decided to see how Gradient method compares to gradient method with least squares. From my understanding of Linear algebra and my explanation of least squares methods. Gradient method of least squares should be faster.</p>
 </div>
 </div>
 <div id="gradient-descent-with-least-squares" class="section level1">
-<h1>Gradient Descent with least squares</h1>
-<p>Now that a few different matrices have been tested with gradient descent its time to look at gradient descent with least squares. This function is supposed to converge faster.</p>
+<h1>Gradient Descent with Least Squares</h1>
 <pre class="r"><code># defines the function
 gradLS &lt;- function (A,b,x0a, maxIts, tol,xa)
   {
@@ -630,15 +635,15 @@ gradLS &lt;- function (A,b,x0a, maxIts, tol,xa)
 }</code></pre>
 <div id="initial-5x5-a" class="section level3">
 <h3>Initial 5x5 (A)</h3>
-<pre class="r"><code>sol7&lt;- gradLS(A, a, x0a, maxIts, tol, xa)
-sol7</code></pre>
+<pre class="r"><code>solgradLSA&lt;- gradLS(A, a, x0a, maxIts, tol, xa)
+solgradLSA</code></pre>
 <pre><code>              X         X0        resid iter
 [1,] 0.04876597 0.05866985 -0.009903879 9996
 [2,] 0.14752424 0.14450011  0.003024130 9996
 [3,] 0.81504717 0.80794311  0.007104065 9996
 [4,] 0.16098630 0.16652532 -0.005539026 9996
 [5,] 0.07040319 0.06549751  0.004905672 9996</code></pre>
-<p>Huston there is a problem. This method is supposed to be faster! 325 is much faster than 9996. Maybe its the algorithm. If we adjust the residual vector maybe that will fix it.</p>
+<p>Huston there is a problem. This method is supposed to be faster, but 325 is much faster than 9996. Maybe its the algorithm. If we adjust the residual vector maybe that will fix it.</p>
 <pre class="r"><code># defines the function
 gradLS2 &lt;- function (A,b,x0a, maxIts, tol, xa)
   {
@@ -672,75 +677,41 @@ gradLS2 &lt;- function (A,b,x0a, maxIts, tol, xa)
 </div>
 <div id="same-matrix" class="section level2">
 <h2>Same Matrix</h2>
-<pre class="r"><code>sol7&lt;- gradLS2(A, a, x0a, maxIts, tol,xa)
-sol7</code></pre>
+<pre class="r"><code>solgradLS2A&lt;- gradLS2(A, a, x0a, maxIts, tol,xa)
+solgradLS2A</code></pre>
 <pre><code>              X         X0         resid iter
 [1,] 0.04876597 0.04892393 -1.579616e-04  567
 [2,] 0.14752424 0.14747914  4.510033e-05  567
 [3,] 0.81504717 0.81493841  1.087606e-04  567
 [4,] 0.16098630 0.16105485 -6.855431e-05  567
 [5,] 0.07040319 0.07032542  7.776373e-05  567</code></pre>
-<p>That’s better than the the Gradient Descent Least Square but still not better than the original Gradient Descent function. Lets test it on a few more matrices and see if this is true for them all.</p>
-<pre class="r"><code>sol8&lt;- gradLS(B, b, x0c, maxIts, tol,xb)
-sol9&lt;- gradLS(C, c, x0c, maxIts, tol,xc)
-sol10&lt;- gradLS(D, d, x0d, maxIts, tol,xd)
-sol11&lt;- gradLS2(B, b, x0c, maxIts, tol,xb)
-sol12&lt;- gradLS2(C, c, x0c, maxIts, tol,xc)
-sol13&lt;- gradLS2(D, d, x0d, maxIts, tol,xd)
-sol8</code></pre>
-<pre><code>             X        X0       resid   iter
-[1,] 0.2163319 0.2348287 -0.01849672 877346
-[2,] 0.6504235 0.6269530  0.02347044 877346
-[3,] 0.3351660 0.3021469  0.03301912 877346
-[4,] 0.5076559 0.4906793  0.01697655 877346
-[5,] 0.6528394 0.7046481 -0.05180877 877346
-[6,] 0.9655767 0.9499844  0.01559222 877346</code></pre>
-<pre class="r"><code>sol9</code></pre>
-<pre><code>             X        X0         resid   iter
-[1,] 0.6807363 0.6729057  0.0078306519 198154
-[2,] 0.1331188 0.1334402 -0.0003213818 198154
-[3,] 0.4157805 0.4167254 -0.0009448726 198154
-[4,] 0.8683657 0.8645425  0.0038231974 198154
-[5,] 0.6214230 0.6299234 -0.0085004329 198154
-[6,] 0.1328657 0.1416898 -0.0088240857 198154</code></pre>
-<pre class="r"><code>sol10</code></pre>
-<pre><code>             X        X0        resid  iter
-[1,] 0.6258299 0.6322439 -0.006413995 30014
-[2,] 0.2011419 0.2488987 -0.047756839 30014
-[3,] 0.5883483 0.6672407 -0.078892493 30014
-[4,] 0.8560448 0.7802649  0.075779870 30014
-[5,] 0.9363852 0.9571127 -0.020727566 30014
-[6,] 0.9780356 0.9283533  0.049682312 30014</code></pre>
-<pre class="r"><code>sol11</code></pre>
-<pre><code>             X        X0         resid iter
-[1,] 0.2163319 0.2164927 -0.0001607680 1431
-[2,] 0.6504235 0.6502197  0.0002037872 1431
-[3,] 0.3351660 0.3348793  0.0002867849 1431
-[4,] 0.5076559 0.5075085  0.0001473855 1431
-[5,] 0.6528394 0.6532895 -0.0004501359 1431
-[6,] 0.9655767 0.9654413  0.0001353492 1431</code></pre>
-<pre class="r"><code>sol12</code></pre>
-<pre><code>             X        X0         resid iter
-[1,] 0.6807363 0.6807517 -1.538168e-05  685
-[2,] 0.1331188 0.1330651  5.366519e-05  685
-[3,] 0.4157805 0.4158182 -3.764951e-05  685
-[4,] 0.8683657 0.8683789 -1.323665e-05  685
-[5,] 0.6214230 0.6214207  2.293070e-06  685
-[6,] 0.1328657 0.1328826 -1.685239e-05  685</code></pre>
-<pre class="r"><code>sol13</code></pre>
-<pre><code>             X        X0         resid iter
-[1,] 0.6258299 0.6258056  0.0000242890 6978
-[2,] 0.2011419 0.2010149  0.0001269961 6978
-[3,] 0.5883483 0.5881388  0.0002094314 6978
-[4,] 0.8560448 0.8562503 -0.0002054745 6978
-[5,] 0.9363852 0.9363277  0.0000575043 6978
-[6,] 0.9780356 0.9781731 -0.0001375366 6978</code></pre>
-<p>These matrices broke my theory again. Maybe the pseudo code is all wrong. Lets try another iterative method maybe the advanced Cheby Chev iterative method this method avoids the inner products of residuals.</p>
+<p>That’s better than the the Gradient Descent Least Squares but still not better than the original Gradient Descent function. Lets test it on a few more matrices and see if this is true for them all.</p>
+<pre class="r"><code>solgradLSB&lt;- gradLS(B, b, x0c, maxIts, tol,xb)
+solgradLSC&lt;- gradLS(C, c, x0c, maxIts, tol,xc)
+solgradLSD&lt;- gradLS(D, d, x0d, maxIts, tol,xd)
+solgradLSE&lt;- gradLS(E, e, x0e, maxIts, tol,xe)
+solgradLSF&lt;- gradLS(F, f, x0f, maxIts, tol,xf)
+solgradLS2B&lt;- gradLS2(B, b, x0c, maxIts, tol,xb)
+solgradLS2C&lt;- gradLS2(C, c, x0c, maxIts, tol,xc)
+solgradLS2D&lt;- gradLS2(D, d, x0d, maxIts, tol,xd)
+solgradLS2E&lt;- gradLS2(E, e, x0e, maxIts, tol,xe)
+solgradLS2F&lt;- gradLS2(F, f, x0f, maxIts, tol,xf)
+iterations &lt;- c(solgradA[1,4], solgradB[1,4],solgradC[1,4],solgradD[1,4],solgradE[1,4],solgradF[1,4])
+iterations &lt;- rbind(iterations,c(solgradLSA[1,4], solgradLSB[1,4],solgradLSC[1,4],solgradLSD[1,4],solgradLSE[1,4], solgradLSF[1,4]))
+iterations &lt;- rbind(iterations,c(solgradLS2A[1,4], solgradLS2B[1,4],solgradLS2C[1,4],solgradLS2D[1,4], solgradLS2E[1,4], solgradLS2F[1,4]))
+rownames(iterations) &lt;- c(&quot;Steep&quot;, &quot;SteepLS&quot;, &quot;(mod)SteepLS&quot;)
+colnames(iterations) &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;)
+iterations</code></pre>
+<pre><code>                A      B      C     D     E      F
+Steep         325   1781   1419  1515   322   3532
+SteepLS      9996 877346 198154 30014 10737 914619
+(mod)SteepLS  567   1431    685  6978   247    886</code></pre>
+<p>We can see that for matrix A, D, and E the Gradient Method is fastest. For B, C, and F the modded least squares method is fastest. Why though? This still doesn’t make sense from my knowledge of linear Algebra. So, lets look at another method of iteration. Maybe it will help make some more sense of this.</p>
 </div>
 </div>
 <div id="advanced-cheby-chev-iterative-method" class="section level1">
 <h1>Advanced Cheby Chev iterative method</h1>
-<p>After some research I found some pseudo code for this method.</p>
+<p>After some digging and searching I finally found some code that helped solve the solution of <span class="math inline">\(A\vec{x} = \vec{b}\)</span> using the Cheby Chev advanced iterative method. How is this different than the other methods? Well all of these methods are iterative methods but Chevy Cheb iterative method is avoids the use of a ratio of inner products. In order to avoid this ratio it has to create an elipse using the max and minimum eigen values. This means more knowledge of our original matrix must be known and this may not be as effective with larger matrices. For simplicity when creating this function I design it in a way that it solves for the max <span class="math inline">\(\lambda\)</span> and the min <span class="math inline">\(\lambda\)</span> which are our optimal values for solving this with Chevy Cheb method. If I were to work on something more large scale I would use these as inputs because I would want to seperate these computations.</p>
 <div id="the-function" class="section level2">
 <h2>The function</h2>
 <pre class="r"><code>cheby &lt;- function (A,b,x0a, maxIts, tol,xa)
@@ -797,24 +768,23 @@ sol8</code></pre>
   # prints the array
   sol
 }</code></pre>
-<p>lets see how it does?</p>
+<p>Now that the function is created lets get it running and see how it compares to the previous methods.</p>
 </div>
 <div id="x5-matrix-a" class="section level2">
 <h2>5x5 Matrix (A)</h2>
-<pre class="r"><code>sol14&lt;- cheby(A, a, x0a, maxIts, tol, xa)
-sol14</code></pre>
+<pre class="r"><code>solchebyA&lt;- cheby(A, a, x0a, maxIts, tol, xa)
+solchebyA</code></pre>
 <pre><code>              X         X0         resid iter
 [1,] 0.04876597 0.04876585  1.179932e-07  160
 [2,] 0.14752424 0.14752382  4.187338e-07  160
 [3,] 0.81504717 0.81504659  5.780416e-07  160
 [4,] 0.16098630 0.16098635 -5.878102e-08  160
 [5,] 0.07040319 0.07040275  4.342705e-07  160</code></pre>
-<p>This was faster then all the other methods it appears. Time to investigate further.</p>
 </div>
 <div id="x6-matrix-b" class="section level2">
 <h2>6x6 Matrix (B)</h2>
-<pre class="r"><code>sol15&lt;- cheby(B, b, x0b, maxIts, tol, xb)
-sol15</code></pre>
+<pre class="r"><code>solchebyB&lt;- cheby(B, b, x0b, maxIts, tol, xb)
+solchebyB</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.2163319 0.2163321 -1.541916e-07  371
 [2,] 0.6504235 0.6504236 -1.305528e-07  371
@@ -825,8 +795,8 @@ sol15</code></pre>
 </div>
 <div id="x6-matrix-c" class="section level2">
 <h2>6x6 Matrix (C)</h2>
-<pre class="r"><code>sol16&lt;- cheby(C, c, x0c, maxIts, tol, xc)
-sol16</code></pre>
+<pre class="r"><code>solchebyC&lt;- cheby(C, c, x0c, maxIts, tol, xc)
+solchebyC</code></pre>
 <pre><code>             X        X0        resid iter
 [1,] 0.6807363 0.6807361 2.473449e-07  208
 [2,] 0.1331188 0.1331185 2.458469e-07  208
@@ -837,8 +807,8 @@ sol16</code></pre>
 </div>
 <div id="x6-matrix-d" class="section level2">
 <h2>6x6 Matrix (D)</h2>
-<pre class="r"><code>sol17&lt;- cheby(D, d, x0d, maxIts, tol, xd)
-sol17</code></pre>
+<pre class="r"><code>solchebyD&lt;- cheby(D, d, x0d, maxIts, tol, xd)
+solchebyD</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.6258299 0.6258300 -1.445057e-07  393
 [2,] 0.2011419 0.2011421 -1.617106e-07  393
@@ -849,8 +819,8 @@ sol17</code></pre>
 </div>
 <div id="x6-matrix-e" class="section level2">
 <h2>6x6 Matrix (E)</h2>
-<pre class="r"><code>sol18&lt;- cheby(E, e, x0e, maxIts, tol, xe)
-sol18</code></pre>
+<pre class="r"><code>solchebyE&lt;- cheby(E, e, x0e, maxIts, tol, xe)
+solchebyE</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.4544894 0.4544895 -2.017894e-08   95
 [2,] 0.3672737 0.3672738 -1.448896e-07   95
@@ -861,8 +831,8 @@ sol18</code></pre>
 </div>
 <div id="x6-matrix-f" class="section level2">
 <h2>6x6 Matrix (F)</h2>
-<pre class="r"><code>sol18&lt;- cheby(F, f, x0f, maxIts, tol, xf)
-sol18</code></pre>
+<pre class="r"><code>solchebyF&lt;- cheby(F, f, x0f, maxIts, tol, xf)
+solchebyF</code></pre>
 <pre><code>              X        X0         resid iter
  [1,] 0.6172931 0.6172931 -4.760992e-08  325
  [2,] 0.8323071 0.8323071 -4.552779e-08  325
@@ -874,8 +844,104 @@ sol18</code></pre>
  [8,] 0.8651250 0.8651250 -4.009958e-08  325
  [9,] 0.1558820 0.1558820 -3.507980e-08  325
 [10,] 0.3583763 0.3583763 -3.911280e-08  325</code></pre>
-<p>After talking to Dr. Palmer I realized that part of the problem might be that the matrices are ill conditioned. So, lets redefine a few matrices and look at the condition numbers.</p>
-<p>Well higher condition numbers mean that the matrices are ill conditioned. We can see that matrix B is highly ill conditioned. Well lets condition a matrix and see how that affects the number of iterations. We can use the B matrix.</p>
+<pre class="r"><code>iterations &lt;- rbind(iterations,c(solchebyA[1,4], solchebyB[1,4],solchebyC[1,4],solchebyD[1,4], solchebyE[1,4], solchebyF[1,4]))
+rownames(iterations) &lt;- c(&quot;Steep&quot;, &quot;SteepLS&quot;, &quot;(mod)SteepLS&quot;, &quot;Cheby Chev&quot;)
+colnames(iterations) &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;)
+iterations</code></pre>
+<pre><code>                A      B      C     D     E      F
+Steep         325   1781   1419  1515   322   3532
+SteepLS      9996 877346 198154 30014 10737 914619
+(mod)SteepLS  567   1431    685  6978   247    886
+Cheby Chev    160    371    208   393    95    325</code></pre>
+<p>Well this method is clearly faster then all methods previously discussed. This is interesting because it is not the dominantly used method. Why though? I am to assume that on larger matrices knowledge and calculation of eigenvalues might be expensive or taxing. At this point I decided I needed to discuss this with Dr. Katrina Palmer and see why. We talked about it for a minute and her first question was about the condition number of the matrices. Time to explore condition numbers.</p>
+</div>
+</div>
+<div id="condition-numbers-of-our-matrices" class="section level1">
+<h1>Condition Numbers of our matrices</h1>
+<pre class="r"><code>condition &lt;- c(kappa(A), kappa(B), kappa(C),kappa(D), kappa(E), kappa(F))
+condition &lt;- rbind(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;), round(condition,0))
+condition</code></pre>
+<pre><code>     [,1]  [,2]   [,3]  [,4]   [,5]  [,6] 
+[1,] &quot;A&quot;   &quot;B&quot;    &quot;C&quot;   &quot;D&quot;    &quot;E&quot;   &quot;F&quot;  
+[2,] &quot;275&quot; &quot;1706&quot; &quot;434&quot; &quot;2148&quot; &quot;105&quot; &quot;675&quot;</code></pre>
+<p>Well these functions are very ill-conditioned. This means that small changes can affect the approximation greatly which explains why the modded method works better than the normal least squares method. Since this may very well be the issue lets recondition all the matrices and see if this changes our assumption on which method is better.</p>
+<div id="conditioning-the-matrices" class="section level2">
+<h2>Conditioning the matrices</h2>
+<p>To condition a matrix we simple add some multiple of the identity to the original matrix.</p>
+<pre class="r"><code>precon &lt;- diag(length(a))*5
+A &lt;- A + precon
+a &lt;- A %*% xa 
+kappa(A)</code></pre>
+<pre><code>[1] 2.283249</code></pre>
+<p>In the code chunk above, I preconditioned A then recalculated the solution vector <span class="math inline">\(\vec{a}\)</span> and printed the condition number. Now to repeat it for all of the matrices.</p>
+<pre class="r"><code>precon &lt;- diag(length(b))*5
+B &lt;- B + precon
+b &lt;- B %*% xb 
+kappa(B)</code></pre>
+<pre><code>[1] 3.9592</code></pre>
+<pre class="r"><code>precon &lt;- diag(length(c))*5
+C &lt;- C + precon
+c &lt;- C %*% xc 
+kappa(C)</code></pre>
+<pre><code>[1] 2.821978</code></pre>
+<pre class="r"><code>precon &lt;- diag(length(d))*5
+D &lt;- D + precon
+d &lt;- D %*% xd 
+kappa(D)</code></pre>
+<pre><code>[1] 3.683559</code></pre>
+<pre class="r"><code>precon &lt;- diag(length(e))*5
+E &lt;- E + precon
+e &lt;- E %*% xe 
+kappa(E)</code></pre>
+<pre><code>[1] 3.194292</code></pre>
+<pre class="r"><code>precon &lt;- diag(length(f))*5
+F &lt;- F + precon
+f &lt;- F %*% xf 
+kappa(F)</code></pre>
+<pre><code>[1] 6.47289</code></pre>
+<pre class="r"><code>condition &lt;- c(kappa(A), kappa(B), kappa(C),kappa(D), kappa(E), kappa(F))
+condition &lt;- rbind(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;), round(condition,0))
+condition</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6]
+[1,] &quot;A&quot;  &quot;B&quot;  &quot;C&quot;  &quot;D&quot;  &quot;E&quot;  &quot;F&quot; 
+[2,] &quot;2&quot;  &quot;4&quot;  &quot;3&quot;  &quot;4&quot;  &quot;3&quot;  &quot;6&quot; </code></pre>
+<p>Much better condition numbers. Time to re-run all of the functions</p>
+<pre class="r"><code>solgradA &lt;- grad(A, a, x0a, maxIts, tol, xa)
+solgradB &lt;- grad(B, b, x0b, maxIts, tol, xb)
+solgradC &lt;- grad(C, c, x0c, maxIts, tol, xc)
+solgradD &lt;- grad(D, d, x0d, maxIts, tol, xd)
+solgradE &lt;- grad(E, e, x0e, maxIts, tol, xe)
+solgradF &lt;- grad(F, f, x0f, maxIts, tol, xf)
+solgradLSA&lt;- gradLS(A, a, x0a, maxIts, tol, xa)
+solgradLSB&lt;- gradLS(B, b, x0c, maxIts, tol,xb)
+solgradLSC&lt;- gradLS(C, c, x0c, maxIts, tol,xc)
+solgradLSD&lt;- gradLS(D, d, x0d, maxIts, tol,xd)
+solgradLSE&lt;- gradLS(E, e, x0e, maxIts, tol,xe)
+solgradLSF&lt;- gradLS(F, f, x0f, maxIts, tol,xf)
+solgradLS2B&lt;- gradLS2(B, b, x0c, maxIts, tol,xb)
+solgradLS2C&lt;- gradLS2(C, c, x0c, maxIts, tol,xc)
+solgradLS2D&lt;- gradLS2(D, d, x0d, maxIts, tol,xd)
+solgradLS2E&lt;- gradLS2(E, e, x0e, maxIts, tol,xe)
+solgradLS2F&lt;- gradLS2(F, f, x0f, maxIts, tol,xf)
+solchebyA&lt;- cheby(A, a, x0a, maxIts, tol, xa)
+solchebyB&lt;- cheby(B, b, x0b, maxIts, tol, xb)
+solchebyC&lt;- cheby(C, c, x0c, maxIts, tol, xc)
+solchebyD&lt;- cheby(D, d, x0d, maxIts, tol, xd)
+solchebyE&lt;- cheby(E, e, x0e, maxIts, tol, xe)
+solchebyF&lt;- cheby(F, f, x0f, maxIts, tol, xf)
+
+iterations &lt;- c(solgradA[1,4], solgradB[1,4],solgradC[1,4],solgradD[1,4],solgradE[1,4],solgradF[1,4])
+iterations &lt;- rbind(iterations,c(solgradLSA[1,4], solgradLSB[1,4],solgradLSC[1,4],solgradLSD[1,4],solgradLSE[1,4], solgradLSF[1,4]))
+iterations &lt;- rbind(iterations,c(solgradLS2A[1,4], solgradLS2B[1,4],solgradLS2C[1,4],solgradLS2D[1,4], solgradLS2E[1,4], solgradLS2F[1,4]))
+iterations &lt;- rbind(iterations,c(solchebyA[1,4], solchebyB[1,4],solchebyC[1,4],solchebyD[1,4], solchebyE[1,4], solchebyF[1,4]))
+rownames(iterations) &lt;- c(&quot;Steep&quot;, &quot;SteepLS&quot;, &quot;(mod)SteepLS&quot;, &quot;Cheby Chev&quot;)
+colnames(iterations) &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;)
+iterations</code></pre>
+<pre><code>               A   B  C   D  E   F
+Steep         13  11 11  15 11  23
+SteepLS       22  20 22  46 26 200
+(mod)SteepLS 567 115 92 109 94 161
+Cheby Chev    11  16 13  15 12  23</code></pre>
 <p>By conditioning the matrix prior to solving using the iterative method we can see that it makes a significant difference in solving for the solution but Cheby Chev’s method is still close to the fastest method for solving these symmetric matrices. There is also a functional form that can be used for non-symmetric matrices. I want to consider using this on image processing and seeing where this takes me.</p>
 </div>
 </div>
