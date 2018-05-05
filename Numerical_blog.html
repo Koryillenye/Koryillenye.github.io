@@ -232,7 +232,7 @@ $(document).ready(function () {
 <p><span class="math inline">\(i\)</span> denotes the i-ith term</p>
 <p><span class="math inline">\(r\)</span> denotes a residual</p>
 <p><span class="math display">\[\vec{e}_i = \vec{x}_i - \vec{x}\]</span> <span class="math display">\[\vec{r}_i = \vec{b} - A\vec{x}_i = -A\vec{e}_i\]</span></p>
-<p>To determine the size, often referred to as <span class="math inline">\(\alpha\)</span>, a ratio of inner products from residuals is used. <span class="math inline">\(\vec{x}_{i+1} = \vec{x}_i - \alpha_i\nabla f(\vec{x}_i)\)</span> this minimizes <span class="math inline">\(f(\vec{x}_{i+1})\)</span>. Now, that it is understood what is needed lets define a few things. To be symmetric means <span class="math inline">\(A = A^T\)</span> where <span class="math inline">\(A^T\)</span> is the transpose of A. Positive definite means all of the matrix’s eigen values are greater than 0.</p>
+<p>To determine the size, often referred to as <span class="math inline">\(\alpha\)</span>, a ratio of inner products from residuals is used. <span class="math inline">\(\vec{x}_{i+1} = \vec{x}_i - \alpha_i\nabla f(\vec{x}_i)\)</span> this minimizes <span class="math inline">\(f(\vec{x}_{i+1})\)</span>. So lets define a few things. To be symmetric means <span class="math inline">\(A = A^T\)</span> where <span class="math inline">\(A^T\)</span> is the transpose of A. Positive definite means all of the matrix’s eigen values are greater than 0.</p>
 <div id="creating-a-positive-definite-symetric-matrix" class="section level2">
 <h2>Creating a positive definite, symetric matrix</h2>
 <p>Defining initial variables.</p>
@@ -597,7 +597,7 @@ solgradF</code></pre>
  [8,] 0.8651250 0.8651531 -2.812421e-05 3532
  [9,] 0.1558820 0.1558699  1.212071e-05 3532
 [10,] 0.3583763 0.3584488 -7.249651e-05 3532</code></pre>
-<p>At this point I wasn’t ready to actually do any analysis I was merely getting everything prepared for analysis. I decided to see how Gradient method compares to gradient method with least squares. From my understanding of Linear algebra and my explanation of least squares methods. Gradient method of least squares should be faster.</p>
+<p>At this point I wasn’t ready to actually do any analysis. I was merely getting everything prepared for analysis. I decided to see how gradient method compares to gradient method with least squares. From my understanding of linear algebra and my explanation of least squares methods. Gradient method of least squares should be faster.</p>
 </div>
 </div>
 <div id="gradient-descent-with-least-squares" class="section level1">
@@ -685,7 +685,7 @@ solgradLS2A</code></pre>
 [3,] 0.81504717 0.81493841  1.087606e-04  567
 [4,] 0.16098630 0.16105485 -6.855431e-05  567
 [5,] 0.07040319 0.07032542  7.776373e-05  567</code></pre>
-<p>That’s better than the the Gradient Descent Least Squares but still not better than the original Gradient Descent function. Lets test it on a few more matrices and see if this is true for them all.</p>
+<p>That’s better than the the gradient descent least squares but still not better than the original gradient descent function. Lets test it on a few more matrices and see if this is true for them all.</p>
 <pre class="r"><code>solgradLSB&lt;- gradLS(B, b, x0c, maxIts, tol,xb)
 solgradLSC&lt;- gradLS(C, c, x0c, maxIts, tol,xc)
 solgradLSD&lt;- gradLS(D, d, x0d, maxIts, tol,xd)
@@ -706,12 +706,12 @@ iterations</code></pre>
 Steep         325   1781   1419  1515   322   3532
 SteepLS      9996 877346 198154 30014 10737 914619
 (mod)SteepLS  567   1431    685  6978   247    886</code></pre>
-<p>We can see that for matrix A, D, and E the Gradient Method is fastest. For B, C, and F the modded least squares method is fastest. Why though? This still doesn’t make sense from my knowledge of linear Algebra. So, lets look at another method of iteration. Maybe it will help make some more sense of this.</p>
+<p>We can see that for matrix A, D, and E the gradient method is fastest. For B, C, and F the modded least squares method is fastest. Why though? This still doesn’t make sense from my knowledge of linear Algebra. So, lets look at another method of iteration. Maybe it will help make some more sense of this.</p>
 </div>
 </div>
 <div id="advanced-cheby-chev-iterative-method" class="section level1">
 <h1>Advanced Cheby Chev iterative method</h1>
-<p>After some digging and searching I finally found some code that helped solve the solution of <span class="math inline">\(A\vec{x} = \vec{b}\)</span> using the Cheby Chev advanced iterative method. How is this different than the other methods? Well all of these methods are iterative methods but Cheby Chev iterative method is avoids the use of a ratio of inner products. In order to avoid this ratio it has to create an elipse using the max and minimum eigen values. This means more knowledge of our original matrix must be known and this may not be as effective with larger matrices. For simplicity when creating this function I design it in a way that it solves for the max <span class="math inline">\(\lambda\)</span> and the min <span class="math inline">\(\lambda\)</span> which are our optimal values for solving this with Cheby Chev method. If I were to work on something more large scale I would use these as inputs because I would want to seperate these computations.</p>
+<p>After some digging and searching I finally found some code that helped solve the solution of <span class="math inline">\(A\vec{x} = \vec{b}\)</span> using the Cheby Chev advanced iterative method. How is this different than the other methods? Well all of these methods are iterative methods but Cheby Chev iterative method avoids the use of a ratio of inner products. In order to avoid this ratio it has to create an elipse using the max and minimum eigen values. This means more knowledge of our original matrix must be known and this may not be as effective with larger matrices. For simplicity when creating this function I design edit in a way that it solves for the max <span class="math inline">\(\lambda\)</span> and the min <span class="math inline">\(\lambda\)</span> which are our optimal values for solving this with Cheby Chev method. If I were to work on something more large scale I would use these as inputs because I would want to seperate these computations.</p>
 <div id="the-function" class="section level2">
 <h2>The function</h2>
 <pre class="r"><code>cheby &lt;- function (A,b,x0a, maxIts, tol,xa)
