@@ -45,8 +45,15 @@ output: html_document
 * **[Section 1.5](./Resources/MAT171blitzSectionNotes15Empty.pdf)**
 * **Section 1.6**
 
+### Homework
 
-
+* **[Section 1.2](./Resources/MAT171blitzSectionHW12.pdf)**
+* **[Section 1.3a](./Resources/MAT171blitzSectionHW13.pdf)**
+* **[Section 8.1/Section 1.3b](./Resources/MAT171blitzSectionHW81and13b.pdf)**
+* **[Section 1.4](./Resources/MAT171blitzSectionHW14.pdf)**
+* **[Section 1.7](./Resources/MAT171blitzSectionHW17.pdf)**
+* **Section 1.5**
+* **Section 1.6**
 
 
 <footer, style="padding-top : 40px;">
