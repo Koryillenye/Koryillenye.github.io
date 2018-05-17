@@ -27,6 +27,11 @@ output: html_document
 * **[Morning Class Calender](./Resources/morningCalender.pdf)**
 * **[Evening Class Calender](./Resources/eveningCalender.pdf)**
 
+### MyMathLab Registration Documents
+
+* **[Morning Class Registration Instructions](./Resources/regC30.pdf)**
+* **[Evening Class Registration Instructions](./Resources/regC36.pdf)**
+
 ### Notes - 
 
 ### Chapter 1
