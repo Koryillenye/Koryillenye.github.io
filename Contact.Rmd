@@ -26,9 +26,9 @@ output: html_document
 ### **Contact Information:**
 Office: Walker Hall, RM 307A <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M--W--F from 1:00 - 2:00 <br>
-Phone: (828) 262-2864<br>
+Phone: (828) 655-04644<br>
 Email: [illenyekd@gmail.com](mailto:illenyekd@gmail.com)<br>
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [kdillenye98@go.mcdowelltech.edu](kdillenye98@go.mcdowelltech.edu)
 
 </div>
 <br><br><br><br>
@@ -41,9 +41,5 @@ Email: [illenyekd@gmail.com](mailto:illenyekd@gmail.com)<br>
 
 -------
 
-
-[Department of Mathematics](http://mathsci.appstate.edu)
-
-Walker Hall --- 121 Bodenheimer Drive --- Boone, NC 28608
-
-[Appalachian State University](http://www.appstate.edu)
+</center>
+</footer>

@@ -195,6 +195,9 @@ $(document).ready(function () {
       <a href="Class_1.html">MAT 1110</a>
     </li>
     <li>
+      <a href="Class_3.html">MAT 171</a>
+    </li>
+    <li>
       <a href="Resources.html">Resources</a>
     </li>
     <li>
@@ -205,8 +208,20 @@ $(document).ready(function () {
 <li>
   <a href="Contact.html">Contact</a>
 </li>
-<li>
-  <a href="http://mathsci.appstate.edu">Department of Mathematical Sciences</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Schools
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="http://mathsci.appstate.edu">Appalachian State University - Department of Mathematical Sciences</a>
+    </li>
+    <li>
+      <a href="https://www.mcdowelltech.edu/">Mcdowell Technical Community College</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -788,7 +803,7 @@ solchebyB</code></pre>
 <pre><code>             X        X0         resid iter
 [1,] 0.2163319 0.2163321 -1.541916e-07  371
 [2,] 0.6504235 0.6504236 -1.305528e-07  371
-[3,] 0.3351660 0.3351661 -4.539997e-08  371
+[3,] 0.3351660 0.3351661 -4.539996e-08  371
 [4,] 0.5076559 0.5076560 -1.209017e-07  371
 [5,] 0.6528394 0.6528395 -1.691811e-07  371
 [6,] 0.9655767 0.9655768 -1.387843e-07  371</code></pre>
@@ -838,12 +853,12 @@ solchebyF</code></pre>
  [2,] 0.8323071 0.8323071 -4.552779e-08  325
  [3,] 0.5397727 0.5397727 -1.791034e-08  325
  [4,] 0.1785781 0.1785781 -3.797272e-08  325
- [5,] 0.7888260 0.7888260 -4.208400e-08  325
+ [5,] 0.7888260 0.7888260 -4.208399e-08  325
  [6,] 0.3950113 0.3950113 -2.666612e-08  325
- [7,] 0.7050482 0.7050483 -5.197652e-08  325
+ [7,] 0.7050482 0.7050483 -5.197650e-08  325
  [8,] 0.8651250 0.8651250 -4.009958e-08  325
  [9,] 0.1558820 0.1558820 -3.507980e-08  325
-[10,] 0.3583763 0.3583763 -3.911280e-08  325</code></pre>
+[10,] 0.3583763 0.3583763 -3.911279e-08  325</code></pre>
 <pre class="r"><code>iterations &lt;- rbind(iterations,c(solchebyA[1,4], solchebyB[1,4],solchebyC[1,4],solchebyD[1,4], solchebyE[1,4], solchebyF[1,4]))
 rownames(iterations) &lt;- c(&quot;Steep&quot;, &quot;SteepLS&quot;, &quot;(mod)SteepLS&quot;, &quot;Cheby Chev&quot;)
 colnames(iterations) &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;)

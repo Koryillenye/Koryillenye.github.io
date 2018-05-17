@@ -1,0 +1,60 @@
+---
+title: ""
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+<BR>
+
+# MAT 171 -   Pre-Calculus Algebra
+
+Pre-Calculus Algebra (4)
+
+**prerequisites:** Take One Set:
+
+Set 1: DMA-010, DMA-020, DMA-030, DMA-040, DMA-050, DMA-060, DMA-070, DMA-080
+
+Set 2: DMA-010, DMA-020, DMA-030, DMA-040, DMA-050, DMA-065
+
+Set 3: MAT-121
+
+**Corequisites:** None
+
+This course is designed to develop topic which are fundamental to the study of Calculus. Emphasis is placed on solving equations and inequalities, solving systems of equations and inequalities, and analysis of functions (absolute value, radical, polynomial, rational, exponential, and logarithmic) in multiple representations. Upon completion, students should be able to select and use appropriate models and techniques for finding solutions to algebra-related  problems with and without technology. *This course has been approved to satisfy the Comprehensive Articulation Agreement general education core requirement in natural sciences/mathematics.
+
+**Competencies:**
+
+**Student Learning Outcomes:**
+
+1) Use analytical, graphical, and numerical representations to solve absolute value, radical, polynomial, rational, exponential, and logarithmic equations with both real and complex solutions.
+2) Use analytical, graphical, and numerical representations to solve absolute value, polynomial and rational inequalities with real solutions.
+3) Use analytical, graphical, and numerical representations to analyze absolute value, radical, polynomial, rational, exponential and logarithmic functions with both real and complex zeros.
+4) Use multiple methods to solve problems involving systems of equations and apply to decomposing partial fractions.
+5) Construct the composition and inverse of functions.
+6) Use polynomial, exponential and logarithmic functions to model various real world situations in order to analyze, draw conclusions and make predictions.
+
+A study of limits, continuity, differentiation, applications of the derivative, the differential, the definite integral, the fundamental theorem, and applications of the definite integral.
+
+<footer, style="padding-top : 40px;">
+<center>
+
+-------
+
+</center>
+</footer>
+
+
+
+

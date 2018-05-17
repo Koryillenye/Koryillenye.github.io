@@ -15,9 +15,32 @@ output: html_document
 </style>
 <BR>
 
-# STT 2810
+# MAT 171
 
-* **[syllabus](./Resources/stt2810sprsyl.pdf)**
+### Syllabus -
+
+* **[Morning Class Syllabus](./Resources/syllabusMAT171summer2018Morning.pdf)**
+* **[Evening Class Syllabus](./Resources/syllabusMAT171summer2018Evening.pdf)**
+
+### Calender -
+
+* **[Morning Class Calender](./Resources/morningCalender.pdf)**
+* **[Evening Class Calender](./Resources/eveningCalender.pdf)**
+
+### Notes - 
+
+### Chapter 1
+
+* **[Section 1.1](./Resources/MAT171bliztSectionNotes11Empty.pdf)**
+* **[Section 1.2](./Resources/MAT171bliztSectionNotes12Empty.pdf)**
+* **[Section 1.3a](./Resources/MAT171bliztSectionNotes13aEmpty.pdf)**
+* **[Section 8.1/Section 1.3b](./Resources/MAT171bliztSectionNotes81and13bEmpty.pdf)**
+* **[Section 1.4](./Resources/MAT171bliztSectionNotes14Empty.pdf)**
+* **[Section 1.7](./Resources/MAT171bliztSectionNotes17Empty.pdf)**
+* **[Section 1.4](./Resources/MAT171bliztSectionNotes14Empty.pdf)**
+* **[Section 1.5](./Resources/MAT171bliztSectionNotes15Empty.pdf)**
+* **[Section 1.6](./Resources/MAT171bliztSectionNotes16Empty.pdf)**
+
 
 
 
@@ -26,9 +49,7 @@ output: html_document
 <center>
 
 -------
-Appalachian State University
 
-Walker Hall --- 121 Bodenheimer Drive --- Boone, NC 28608
 
 
 

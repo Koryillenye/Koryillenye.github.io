@@ -1,5 +1,5 @@
 name: my-website
-output_dir: "."
+output_dir: .
 navbar:
   title: Kory Illenye
   left:
@@ -11,14 +11,20 @@ navbar:
       href: Class_2.html
     - text: MAT 1110
       href: Class_1.html
+    - text: MAT 171
+      href: Class_3.html
     - text: Resources
       href: Resources.html
     - text: Numerical Blog
       href: Numerical_blog.html
   - text: Contact
     href: Contact.html
-  - text: Department of Mathematical Sciences
-    href: http://mathsci.appstate.edu
+  - text: Schools
+    menu:
+    - text: Appalachian State University - Department of Mathematical Sciences
+      href: http://mathsci.appstate.edu
+    - text: Mcdowell Technical Community College
+      href: https://www.mcdowelltech.edu/
 rmd_subdir: yes
 output:
   html_document:
