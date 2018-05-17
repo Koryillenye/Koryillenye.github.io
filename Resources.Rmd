@@ -36,15 +36,14 @@ output: html_document
 
 ### Chapter 1
 
-* **[Section 1.1](./Resources/MAT171bliztSectionNotes11Empty.pdf)**
-* **[Section 1.2](./Resources/MAT171bliztSectionNotes12Empty.pdf)**
-* **[Section 1.3a](./Resources/MAT171bliztSectionNotes13aEmpty.pdf)**
-* **[Section 8.1/Section 1.3b](./Resources/MAT171bliztSectionNotes81and13bEmpty.pdf)**
-* **[Section 1.4](./Resources/MAT171bliztSectionNotes14Empty.pdf)**
-* **[Section 1.7](./Resources/MAT171bliztSectionNotes17Empty.pdf)**
-* **[Section 1.4](./Resources/MAT171bliztSectionNotes14Empty.pdf)**
-* **[Section 1.5](./Resources/MAT171bliztSectionNotes15Empty.pdf)**
-* **[Section 1.6](./Resources/MAT171bliztSectionNotes16Empty.pdf)**
+* **[Section 1.1](./Resources/MAT171blitzSectionNotes11Empty.pdf)**
+* **[Section 1.2](./Resources/MAT171blitzSectionNotes12Empty.pdf)**
+* **[Section 1.3a](./Resources/MAT171blitzSectionNotes13aEmpty.pdf)**
+* **[Section 8.1/Section 1.3b](./Resources/MAT171blitzSectionNotes81and13bEmpty.pdf)**
+* **[Section 1.4](./Resources/MAT171blitzSectionNotes14Empty.pdf)**
+* **[Section 1.7](./Resources/MAT171blitzSectionNotes17Empty.pdf)**
+* **[Section 1.5](./Resources/MAT171blitzSectionNotes15Empty.pdf)**
+* **Section 1.6**
 
 
 
