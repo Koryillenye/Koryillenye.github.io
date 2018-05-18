@@ -1,0 +1,142 @@
+---
+title: "Kory Illenye - Home"
+output: html_document
+---
+
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+<BR>
+
+# MAT 171
+
+### Syllabus -
+
+* **[Morning Class Syllabus](./Resources/syllabusMAT171summer2018Morning.pdf)**
+* **[Evening Class Syllabus](./Resources/syllabusMAT171summer2018Evening.pdf)**
+
+### Calender -
+
+* **[Morning Class Calender](./Resources/morningCalender.pdf)**
+* **[Evening Class Calender](./Resources/eveningCalender.pdf)**
+
+### MyMathLab Registration Documents
+
+* **[Morning Class Registration Instructions](./Resources/regC30.pdf)**
+* **[Evening Class Registration Instructions](./Resources/regC36.pdf)**
+
+ 
+
+### Chapter 1
+### Notes -
+* **[Section 1.1](./Resources/MAT171blitzSectionNotes11Empty.pdf)**
+* **[Section 1.2](./Resources/MAT171blitzSectionNotes12Empty.pdf)**
+* **[Section 1.3a](./Resources/MAT171blitzSectionNotes13aEmpty.pdf)**
+* **[Section 8.1/Section 1.3b](./Resources/MAT171blitzSectionNotes81and13bEmpty.pdf)**
+* **[Section 1.4](./Resources/MAT171blitzSectionNotes14Empty.pdf)**
+* **[Section 1.7](./Resources/MAT171blitzSectionNotes17Empty.pdf)**
+* **[Section 1.5](./Resources/MAT171blitzSectionNotes15Empty.pdf)**
+* **[Section 1.6](./Resources/MAT171blitzSectionNotes16Empty.pdf)**
+
+### Homework
+
+* **[Section 1.2](./Resources/MAT171blitzSectionHW12.pdf)**
+* **[Section 1.3a](./Resources/MAT171blitzSectionHW13.pdf)**
+* **[Section 8.1/Section 1.3b](./Resources/MAT171blitzSectionHW81and13b.pdf)**
+* **[Section 1.4](./Resources/MAT171blitzSectionHW14.pdf)**
+* **[Section 1.7](./Resources/MAT171blitzSectionHW17.pdf)**
+* **[Section 1.5](./Resources/MAT171blitzSectionHW15.pdf)**
+* **[Section 1.6](./Resources/MAT171blitzSectionHW16.pdf)**
+
+### Chapter 2
+### Notes -
+* **[Section 2.1a/Section 2.2a](./Resources/MAT171blitzSectionNotes21and22aredo.pdf)**
+* **[Section 2.1b/Section 2.2b](./Resources/MAT171blitzSectionNotes21and22bredo.pdf)**
+* **[Section 2.3/Section 2.4](./Resources/MAT171blitzSectionNotes23and24redo.pdf)**
+* **[Section 2.5](./Resources/MAT171blitzSectionNotes25redo.pdf)**
+* **[Section 2.6](./Resources/MAT171blitzSectionNotes26redo.pdf)**
+* **[Section 2.7](./Resources/MAT171blitzSectionNotes27redo.pdf)**
+
+
+### Homework
+
+* **[Section 2.1a](./Resources/MAT171blitzSectionHW21a.pdf)**
+* **[Section 2.2a](./Resources/MAT171blitzSectionHW22a.pdf)**
+* **[Section 2.1b/Section 2.2b](./Resources/MAT171blitzSectionHW2122b.pdf)**
+* **[Section 2.3](./Resources/MAT171blitzSectionHW23.pdf)**
+* **[Section 2.4](./Resources/MAT171blitzSectionHW24.pdf)**
+* **[Section 2.5](./Resources/MAT171blitzSectionHW25.pdf)**
+* **[Section 2.6](./Resources/MAT171blitzSectionHW26.pdf)**
+* **[Section 2.7](./Resources/MAT171blitzSectionHW27.pdf)**
+
+### Chapter 3
+### Notes -
+* **[Section 3.1](./Resources/MAT171blitzSectionNotes31Empty.pdf)**
+* **[Section 3.2](./Resources/MAT171blitzSectionNotes32Empty.pdf)**
+* **[Section 3.3](./Resources/MAT171blitzSectionNotes33Empty.pdf)**
+* **[Section 3.4](./Resources/MAT171blitzSectionNotes34Empty.pdf)**
+* **[Section 3.5](./Resources/MAT171blitzSectionNotes35Empty.pdf)**
+* **[Section 3.7](./Resources/MAT171blitzSectionNotes37Empty.pdf)**
+
+### Homework
+
+* **[Section 3.1](./Resources/MAT171blitzSectionHW31.pdf)**
+* **[Section 3.2](./Resources/MAT171blitzSectionHW32.pdf)**
+* **[Section 3.3](./Resources/MAT171blitzSectionHW33.pdf)**
+* **[Section 3.4](./Resources/MAT171blitzSectionHW34.pdf)**
+* **[Section 3.5](./Resources/MAT171blitzSectionHW35.pdf)**
+* **[Section 3.7](./Resources/MAT171blitzSectionHW37.pdf)**
+
+### Chapter 4
+### Notes -
+* **[Section 4.1](./Resources/MAT171blitzSectionNotes41Empty.pdf)**
+* **[Section 4.2](./Resources/MAT171blitzSectionNotes42Empty.pdf)**
+* **[Section 4.3](./Resources/MAT171blitzSectionNotes43Empty.pdf)**
+* **[Section 4.4](./Resources/MAT171blitzSectionNotes44Empty.pdf)**
+* **[Section 4.5](./Resources/MAT171blitzSectionNotes45Empty.pdf)**
+
+
+### Homework
+
+* **[Section 4.1](./Resources/MAT171blitzSectionHW41.pdf)**
+* **[Section 4.2](./Resources/MAT171blitzSectionHW42.pdf)**
+* **[Section 4.3](./Resources/MAT171blitzSectionHW43.pdf)**
+* **[Section 4.4](./Resources/MAT171blitzSectionHW44.pdf)**
+* **[Section 4.5](./Resources/MAT171blitzSectionHW45.pdf)**
+
+### Chapter 8
+### Notes -
+
+* **[Section 8.2](./Resources/MAT171blitzSectionNotes82Empty.pdf)**
+* **[Section 8.3](./Resources/MAT171blitzSectionNotes83Empty.pdf)**
+* **[Section 8.5](./Resources/MAT171blitzSectionNotes85Empty.pdf)**
+
+
+### Homework
+
+
+* **[Section 8.2](./Resources/MAT171blitzSectionHW82.pdf)**
+* **[Section 8.3](./Resources/MAT171blitzSectionHW83.pdf)**
+* **[Section 8.5](./Resources/MAT171blitzSectionHW85.pdf)**
+
+
+<footer, style="padding-top : 40px;">
+<center>
+
+-------
+
+
+
+
+
+
+
+</center>
+</footer>

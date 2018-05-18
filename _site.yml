@@ -13,10 +13,12 @@ navbar:
       href: Class_1.html
     - text: MAT 171
       href: Class_3.html
-    - text: Resources
-      href: Resources.html
     - text: Numerical Blog
       href: Numerical_blog.html
+  - text: Resources
+    menu: 
+    - text: MAT 171
+      href: MAT171Resources.html
   - text: Contact
     href: Contact.html
   - text: Schools
