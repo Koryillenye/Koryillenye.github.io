@@ -43,7 +43,7 @@ output: html_document
 * **[Section 1.4](./Resources/MAT171blitzSectionNotes14Empty.pdf)**
 * **[Section 1.7](./Resources/MAT171blitzSectionNotes17Empty.pdf)**
 * **[Section 1.5](./Resources/MAT171blitzSectionNotes15Empty.pdf)**
-* **[Section 1.6](./Resources/MAT171blitzsectionnotes16empty.pdf)**
+* **[Section 1.6](./Resources/mat171blitzsectionnotes16empty.pdf)**
 
 ### Homework
 
