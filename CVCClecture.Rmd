@@ -1,0 +1,146 @@
+---
+title: "Statistical Inference and Hypothesis Testing for a Population Proportion"
+author: "Kory Illenye"
+date: "6/10/2018"
+output: ioslides_presentation
+---
+
+<style>
+
+body {
+  background-color: Dodgerblue;
+}
+
+body p {
+  color: blue;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 88%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+
+
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, prompt = FALSE, comment = NA, warning = FALSE)
+library(matrixcalc)
+```
+
+<div class="footer">Statistical Inference and Hypothesis Testing for Population Proportion by Kory Illenye</div>
+## Statistical Inference
+
+Statistical inference is the process in which we make conclusions of a population based on sample data.
+
+
+
+## Where is Statistical Inference used? 
+
+- Manufacturing
+- Politics
+- Education
+- Court Room
+
+## R vs. Sally Clark
+
+- 1999 Sally Clark was convicted of mudering her two sons.
+- Throughout the case many medical experts had contradictory evidence
+- Resounding statistic - Professor Sir Roy Meadow states 1 in 73 million chance of this occuring
+- 2003 Sally was release due to addition evidence that was kept from trial
+
+## Key Criteria for Hypothesis Testing for a Population Proportion
+
+- Random: Data must come from a random sample, experiment or simulation
+- Normal: The sampling distribution of $\hat{p}$ needs to be relatively normal.
+    + $n$ represents sample size and $p$ represents the population's proportion of successes. 
+    + $np \geq 10$
+    + $n(1-p) \geq 10$
+- Independence: If the sample size is less than 10% of population size then we can treat each observation as independent since removing each observation doesn't significantly change the population as it is sampled.
+
+## 5 Step Process for Testing a Hypothesis of Population Proportion
+
+Step 1: State the null hypothesis ($H_0$) and the alternate hypothesis ($H_a$).
+
+Step 2: Identify the test statistic (observered proportion)
+
+Step 3: Calculate the Rejection Region ($\alpha$-value)
+
+Step 4: State the statistical conclusion
+
+Step 5: State the English conclusion
+
+## 5 Step Process Example
+
+A report claimed that 20% of all college graduates find a job in their chosen field of study within one year of graduation. A random sample of 500 graduates found that 90 obtained work in there field within one year of graduation. On a significance level of 0.05 ($\alpha = 0.05$) is there statistical evidence to refute the claim of this report?
+
+- Step 1:
+    + $H_0 = 0.20$
+    + $H_a \neq 0.20$
+- Step 2: $\hat{p} = \frac{90}{500} = 0.18$
+
+
+## 5 Step Process Example (Continued)
+- Step 3: Compare $p$-value to $\alpha = 0.05$. The rejection region is when $p$-value is less than 0.05.
+    + sd($\hat{p}$) = $\sqrt{\frac{pq}{n}} = \sqrt{\frac{0.2*0.8}{500}} = 0.01789$
+    + $z = \frac{\hat{p}-p}{sd(\hat{p})} = \frac{0.18-.2}{0.01789} = -1.12$
+    + $p$-value = 2*P(z < -1.12) = 0.2628
+    + Verify [proportion Calculator](https://mathcracker.com/z-test-for-one-proportion.php)
+- Step 4: Since the $p$-value of 0.2628 is greater than the $\alpha$ value of 0.05 we fail to reject $H_0$
+- Step 5: There is not significant enough evidence to suggest the proportion of college graduates finding work in there chosen field is something other than 20%.
+
+## Questions
+
+- Questions?
+
+## References 
+
+De Veaux; Velleman; and Bock; *Stats: Data and Models*, Pearson Education, 2016.
+
+Ugarte, Maria D.; Militino, Ana F.; Arnholt, Alan T.; *Probability and Statistics with R, Second Edition*, CRC Press, 2016.
+
+Networked Knowledge - Law Report, *R. v. Sally Clark [2003] EWCA Crim 1020 [Part Two]*, [http://netk.net.au/UK/SallyClark2.asp](http://netk.net.au/UK/SallyClark2.asp)
+
+Z-test: One Pop. Proportion, [proportion Calculator](https://mathcracker.com/z-test-for-one-proportion.php)
