@@ -16,7 +16,7 @@ navbar:
     - text: Numerical Blog
       href: Numerical_blog.html
     - text: CVCC Lecture
-      href: CVCCLecture2.html
+      href: CVCClecture2.html
     - text: FTCC Lecture
       href: FTCCLecture.html
   - text: Resources
