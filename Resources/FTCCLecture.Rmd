@@ -2,20 +2,75 @@
 title: "Graphing Rational Functions"
 author: "Kory Illenye"
 date: "6/27/2018"
-output: 
-  beamer_presentation:
-    theme: "AnnArbor"
-    colortheme: "dolphin"
-    fonttheme: "structurebold"
+output: ioslides_presentation
 ---
 
+<style>
 
+body {
+  background-color: Dodgerblue;
+}
+
+body p {
+  color: blue;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 92%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+
+
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, prompt = FALSE, comment = NA, warning = FALSE)
 library(matrixcalc)
 ```
 
+<div class="footer">Graphing Rational Functions by Kory Illenye</div>
 ## Rational Expressions and Functions
 
 **Blitzer definitions:**
@@ -32,11 +87,9 @@ The domain of a rational function is all real numbers except those that make the
 
 Example:
 $$f(x) = \frac{x + 3}{x^2-9}$$
-When we factor the denominator we get:
-$$f(x) = \frac{x + 3}{(x+3)(x-3)}$$
 Set the denominator equal to zero and solve.
-$$(x+3)(x-3) = 0$$
-Using the zero-product principle we know that $x =\pm 3$ solves this equation. So $\pm 3$ is not in the domain.
+$$x^2 -9 = 0$$
+Using the square root property we know that $x =\pm 3$ solves this equation. So $\pm 3$ is not in the domain.
 
 Interval notation: $D = (-\infty,-3)\cup(-3,3)\cup(3,\infty)$
 
@@ -48,11 +101,11 @@ Any value that would make the denominator equal to zero is either a hole or a ve
 
 Lets look at our previous function:
 $$f(x) = \frac{x + 3}{(x+3)(x-3)}$$
-at $x = 3$ we have a vertical asymptote and at $x-3$ we have a hole. Why? can you figure it out?
+at $x = 3$ we have a vertical asymptote and at $x=-3$ we have a hole. Why? can you figure it out?
 
 ## Horizontal Asymptotes
 
-a **horizontal asymptote** is a horizontal line that the graph of a function approaches as x gets very large or very small.  The graph of a function may touch/cross its horizontal asymptote in multiple places.
+a **horizontal asymptote** is a horizontal line that the graph of a function approaches as $x$ gets very large or very small.  The graph of a function may touch/cross its horizontal asymptote in multiple places.
 
 lets define a general rational function:
 $$f(x) = \frac{a_mx^m + a_{m-1}x^{m-1}+a_{m-2}x^{m-2}+...+a_0}{b_nx^n + b_{n-1}x^{n-1}+b_{n-2}x^{n-2}+...+b_0}$$
@@ -80,6 +133,7 @@ $a$ represents the coefficients of the polynomial in numerator and $b$ denotes t
 ## Graphing a Rational Function Example
 
 $$f(x) = \frac{3x+9}{x^2-9}$$
+
 - step 1: $f(x) = \frac{3(x+3)}{(x-3)(x+3)}$
 - step 2: domain is all real numbers except 3 and -3. $D = (-\infty,-3)\cup(-3,3)\cup(3,\infty)$
 - step 3: $\frac{3}{x-3}$
@@ -103,14 +157,11 @@ abline(h=0, col="black", lwd=1)
 abline(v=3, col="blue", lty=2, lwd=2)
 abline(h=0, col="blue", lty=2, lwd =2)
 ```
+
 ## Questions
 
 \center Questions?
 
 ## References 
 
-De Veaux; Velleman; and Bock; *Stats: Data and Models*, Pearson Education, 2016.
-
-Ugarte, Maria D.; Militino, Ana F.; Arnholt, Alan T.; *Probability and Statistics with R, Second Edition*, CRC Press, 2016.
-
-Networked Knowledge - Law Report, *R. v. Sally Clark [2003] EWCA Crim 1020 [Part Two]*, [http://netk.net.au/UK/SallyClark2.asp](http://netk.net.au/UK/SallyClark2.asp)
+Blitzer, Robert, *"Algebra and Trigonometry 6th edition"*, 2018.

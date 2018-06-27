@@ -1,0 +1,180 @@
+\begin{frame}
+
+Statistical Inference and Hypothesis Testing for Population Proportion
+by Kory Illenye
+
+\end{frame}
+
+\begin{frame}{Statistical Inference}
+
+Statistical inference is the process in which we make conclusions of a
+population based on sample data.
+
+\end{frame}
+
+\begin{frame}{Where is Statistical Inference used?}
+
+\begin{itemize}
+\tightlist
+\item
+  Manufacturing
+\item
+  Politics
+\item
+  Education
+\item
+  Court Room
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{R vs.~Sally Clark}
+
+\begin{itemize}
+\tightlist
+\item
+  1999 Sally Clark was convicted of mudering her two sons.
+\item
+  Throughout the case many medical experts had contradictory evidence
+\item
+  Resounding statistic - Professor Sir Roy Meadow states 1 in 73 million
+  chance of this occuring
+\item
+  2003 Sally was release due to addition evidence that was kept from
+  trial
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Key Criteria for Hypothesis Testing for a Population
+Proportion}
+
+\begin{itemize}
+\tightlist
+\item
+  Random: Data must come from a random sample, experiment or simulation
+\item
+  Normal: The sampling distribution of \(\hat{p}\) needs to be
+  relatively normal.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(n\) represents sample size and \(p\) represents the population's
+    proportion of successes.
+  \item
+    \(np \geq 10\)
+  \item
+    \(n(1-p) \geq 10\)
+  \end{itemize}
+\item
+  Independence: If the sample size is less than 10\% of population size
+  then we can treat each observation as independent since removing each
+  observation doesn't significantly change the population as it is
+  sampled.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{5 Step Process for Testing a Hypothesis of Population
+Proportion}
+
+Step 1: State the null hypothesis (\(H_0\)) and the alternate hypothesis
+(\(H_a\)).
+
+Step 2: Identify the test statistic (observered proportion)
+
+Step 3: Calculate the Rejection Region (\(\alpha\)-value)
+
+Step 4: State the statistical conclusion
+
+Step 5: State the English conclusion
+
+\end{frame}
+
+\begin{frame}{5 Step Process Example}
+
+A report claimed that 20\% of all college graduates find a job in their
+chosen field of study within one year of graduation. A random sample of
+500 graduates found that 90 obtained work in there field within one year
+of graduation. On a significance level of 0.05 (\(\alpha = 0.05\)) is
+there statistical evidence to refute the claim of this report?
+
+\begin{itemize}
+\tightlist
+\item
+  Step 1:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(H_0 = 0.20\)
+  \item
+    \(H_a \neq 0.20\)
+  \end{itemize}
+\item
+  Step 2: \(\hat{p} = \frac{90}{500} = 0.18\)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{5 Step Process Example (Continued)}
+
+\begin{itemize}
+\tightlist
+\item
+  Step 3: Compare \(p\)-value to \(\alpha = 0.05\). The rejection region
+  is when \(p\)-value is less than 0.05.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    sd(\(\hat{p}\)) =
+    \(\sqrt{\frac{pq}{n}} = \sqrt{\frac{0.2*0.8}{500}} = 0.01789\)
+  \item
+    \(z = \frac{\hat{p}-p}{sd(\hat{p})} = \frac{0.18-.2}{0.01789} = -1.12\)
+  \item
+    \(p\)-value = 2*P(z \textless{} -1.12) = 0.2628
+  \item
+    Verify
+    \href{https://mathcracker.com/z-test-for-one-proportion.php}{proportion
+    Calculator}
+  \end{itemize}
+\item
+  Step 4: Since the \(p\)-value of 0.2628 is greater than the \(\alpha\)
+  value of 0.05 we fail to reject \(H_0\)
+\item
+  Step 5: There is not significant enough evidence to suggest the
+  proportion of college graduates finding work in there chosen field is
+  something other than 20\%.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Questions}
+
+\begin{itemize}
+\tightlist
+\item
+  Questions?
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{References}
+
+De Veaux; Velleman; and Bock; \emph{Stats: Data and Models}, Pearson
+Education, 2016.
+
+Ugarte, Maria D.; Militino, Ana F.; Arnholt, Alan T.; \emph{Probability
+and Statistics with R, Second Edition}, CRC Press, 2016.
+
+Networked Knowledge - Law Report, \emph{R. v. Sally Clark {[}2003{]}
+EWCA Crim 1020 {[}Part Two{]}},
+\url{http://netk.net.au/UK/SallyClark2.asp}
+
+Z-test: One Pop. Proportion,
+\href{https://mathcracker.com/z-test-for-one-proportion.php}{proportion
+Calculator}
+
+\end{frame}

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Kory Illenye" />
+
+
+<title>Statistical Inference and Hypothesis Testing for a Population Proportion</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="Kory.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Kory Illenye</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Class_2.html">STT 2810</a>
+    </li>
+    <li>
+      <a href="Class_1.html">MAT 1110</a>
+    </li>
+    <li>
+      <a href="Class_3.html">MAT 171</a>
+    </li>
+    <li>
+      <a href="Numerical_blog.html">Numerical Blog</a>
+    </li>
+    <li>
+      <a href="CVCClecture.html">CVCC Lecture</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Resources
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="MAT171Resources.html">MAT 171</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="Contact.html">Contact</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Schools
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="http://mathsci.appstate.edu">Appalachian State University - Department of Mathematical Sciences</a>
+    </li>
+    <li>
+      <a href="https://www.mcdowelltech.edu/">Mcdowell Technical Community College</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Statistical Inference and Hypothesis Testing for a Population Proportion</h1>
+<h4 class="author"><em>Kory Illenye</em></h4>
+<h4 class="date"><em>6/10/2018</em></h4>
+
+</div>
+
+
+<style>
+
+body {
+  background-color: Dodgerblue;
+}
+
+body p {
+  color: blue;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 88%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+
+
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+</style>
+<div class="footer">
+Statistical Inference and Hypothesis Testing for Population Proportion by Kory Illenye
+</div>
+<div id="statistical-inference" class="section level2">
+<h2>Statistical Inference</h2>
+<p>Statistical inference is the process in which we make conclusions of a population based on sample data.</p>
+</div>
+<div id="where-is-statistical-inference-used" class="section level2">
+<h2>Where is Statistical Inference used?</h2>
+<ul>
+<li>Manufacturing</li>
+<li>Politics</li>
+<li>Education</li>
+<li>Court Room</li>
+</ul>
+</div>
+<div id="r-vs.sally-clark" class="section level2">
+<h2>R vs. Sally Clark</h2>
+<ul>
+<li>1999 Sally Clark was convicted of mudering her two sons.</li>
+<li>Throughout the case many medical experts had contradictory evidence</li>
+<li>Resounding statistic - Professor Sir Roy Meadow states 1 in 73 million chance of this occuring</li>
+<li>2003 Sally was release due to addition evidence that was kept from trial</li>
+</ul>
+</div>
+<div id="key-criteria-for-hypothesis-testing-for-a-population-proportion" class="section level2">
+<h2>Key Criteria for Hypothesis Testing for a Population Proportion</h2>
+<ul>
+<li>Random: Data must come from a random sample, experiment or simulation</li>
+<li>Normal: The sampling distribution of <span class="math inline">\(\hat{p}\)</span> needs to be relatively normal.
+<ul>
+<li><span class="math inline">\(n\)</span> represents sample size and <span class="math inline">\(p\)</span> represents the population’s proportion of successes.</li>
+<li><span class="math inline">\(np \geq 10\)</span></li>
+<li><span class="math inline">\(n(1-p) \geq 10\)</span></li>
+</ul></li>
+<li>Independence: If the sample size is less than 10% of population size then we can treat each observation as independent since removing each observation doesn’t significantly change the population as it is sampled.</li>
+</ul>
+</div>
+<div id="step-process-for-testing-a-hypothesis-of-population-proportion" class="section level2">
+<h2>5 Step Process for Testing a Hypothesis of Population Proportion</h2>
+<p>Step 1: State the null hypothesis (<span class="math inline">\(H_0\)</span>) and the alternate hypothesis (<span class="math inline">\(H_a\)</span>).</p>
+<p>Step 2: Identify the test statistic (observered proportion)</p>
+<p>Step 3: Calculate the Rejection Region (<span class="math inline">\(\alpha\)</span>-value)</p>
+<p>Step 4: State the statistical conclusion</p>
+<p>Step 5: State the English conclusion</p>
+</div>
+<div id="step-process-example" class="section level2">
+<h2>5 Step Process Example</h2>
+<p>A report claimed that 20% of all college graduates find a job in their chosen field of study within one year of graduation. A random sample of 500 graduates found that 90 obtained work in there field within one year of graduation. On a significance level of 0.05 (<span class="math inline">\(\alpha = 0.05\)</span>) is there statistical evidence to refute the claim of this report?</p>
+<ul>
+<li>Step 1:
+<ul>
+<li><span class="math inline">\(H_0 = 0.20\)</span></li>
+<li><span class="math inline">\(H_a \neq 0.20\)</span></li>
+</ul></li>
+<li>Step 2: <span class="math inline">\(\hat{p} = \frac{90}{500} = 0.18\)</span></li>
+</ul>
+</div>
+<div id="step-process-example-continued" class="section level2">
+<h2>5 Step Process Example (Continued)</h2>
+<ul>
+<li>Step 3: Compare <span class="math inline">\(p\)</span>-value to <span class="math inline">\(\alpha = 0.05\)</span>. The rejection region is when <span class="math inline">\(p\)</span>-value is less than 0.05.
+<ul>
+<li>sd(<span class="math inline">\(\hat{p}\)</span>) = <span class="math inline">\(\sqrt{\frac{pq}{n}} = \sqrt{\frac{0.2*0.8}{500}} = 0.01789\)</span></li>
+<li><span class="math inline">\(z = \frac{\hat{p}-p}{sd(\hat{p})} = \frac{0.18-.2}{0.01789} = -1.12\)</span></li>
+<li><span class="math inline">\(p\)</span>-value = 2*P(z &lt; -1.12) = 0.2628</li>
+<li>Verify <a href="https://mathcracker.com/z-test-for-one-proportion.php">proportion Calculator</a></li>
+</ul></li>
+<li>Step 4: Since the <span class="math inline">\(p\)</span>-value of 0.2628 is greater than the <span class="math inline">\(\alpha\)</span> value of 0.05 we fail to reject <span class="math inline">\(H_0\)</span></li>
+<li>Step 5: There is not significant enough evidence to suggest the proportion of college graduates finding work in there chosen field is something other than 20%.</li>
+</ul>
+</div>
+<div id="questions" class="section level2">
+<h2>Questions</h2>
+<ul>
+<li>Questions?</li>
+</ul>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>De Veaux; Velleman; and Bock; <em>Stats: Data and Models</em>, Pearson Education, 2016.</p>
+<p>Ugarte, Maria D.; Militino, Ana F.; Arnholt, Alan T.; <em>Probability and Statistics with R, Second Edition</em>, CRC Press, 2016.</p>
+<p>Networked Knowledge - Law Report, <em>R. v. Sally Clark [2003] EWCA Crim 1020 [Part Two]</em>, <a href="http://netk.net.au/UK/SallyClark2.asp" class="uri">http://netk.net.au/UK/SallyClark2.asp</a></p>
+<p>Z-test: One Pop. Proportion, <a href="https://mathcracker.com/z-test-for-one-proportion.php">proportion Calculator</a></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
