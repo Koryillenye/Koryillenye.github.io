@@ -32,7 +32,7 @@ output: html_document
 * **[Morning Class Registration Instructions](./Resources/regC30.pdf)**
 * **[Evening Class Registration Instructions](./Resources/regC36.pdf)**
 
- 
+
 
 ### Chapter 1
 ### Notes -
@@ -85,6 +85,10 @@ output: html_document
 * **[Section 3.5](./Resources/MAT171blitzSectionNotes35Empty.pdf)**
 * **[Section 3.7](./Resources/MAT171blitzSectionNotes37Empty.pdf)**
 
+### Take Home Test
+
+* **[Take Home Test 3](./Resources/Test3.pdf)**
+
 ### Homework
 
 * **[Section 3.1](./Resources/MAT171blitzSectionHW31.pdf)**
@@ -93,6 +97,10 @@ output: html_document
 * **[Section 3.4](./Resources/MAT171blitzSectionHW34.pdf)**
 * **[Section 3.5](./Resources/MAT171blitzSectionHW35.pdf)**
 * **[Section 3.7](./Resources/MAT171blitzSectionHW37.pdf)**
+
+### Take Home Test
+
+* **[Take Home Test 4](./Resources/mat171stuff.pdf)**
 
 ### Chapter 4
 ### Notes -
