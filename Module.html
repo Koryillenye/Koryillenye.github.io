@@ -190,17 +190,17 @@ slides > slide.backdrop {
 
 <slide class=""><hgroup><h2>Yogi Berra says, “You can see a lot just by observing.”</h2></hgroup><article  id="yogi-berra-says-you-can-see-a-lot-just-by-observing.">
 
-<H3>
+<H4>
 
 <font color="blue">The data explored here examines daily average temperature data collected from January 1, 1955 to August 13, 2010 at a weather stations located at Raleigh, North Carolina, McGuire Airforce Base, Fairbanks AK, and . These slide will walk through an approach for deciding how to view a relatively large amount of data containing seasonality and high day-to-day variability.</font>
 
-</H3>
+</H4>
 
 </article></slide><slide class=""><hgroup><h2>Has it gotten warmer at the four sites or not?</h2></hgroup><article  id="has-it-gotten-warmer-at-the-four-sites-or-not">
 
 <H4>
 
-<font color="blue">A good place to start is just plotting the data. A plot of the average temperature (in degrees Fahrenheit) at the four locations by day is given here.</font>
+<font color="blue">A good place to start is just plotting the data. Below are plots of the average daily temperatures (in degrees Fahrenheit) for all four locations.</font>
 
 </H4>
 
@@ -245,15 +245,27 @@ Figure 1: Plots of Average daily temperature
 
 </article></slide><slide class=""><hgroup><h2>Intro to time series</h2></hgroup><article  id="intro-to-time-series">
 
-<p>Another way to remove seasonality from data in a series through time is to compare points that should be the same with respect to seasonal effects. For instance, there should be no seasonal effect if you plot only the temperature readings taken on January 1 of each year or only those taken on August 17. This is another plot that you can try, but note that you would have 365 separate data sets. Let’s look for a more holistic approach.</p>
+<H6>
 
-<p>The temperature readings are a sequence of observations in time, or a <strong>time series</strong>. A characteristic property of a time series is that the observations are not independent over time. Seasonality is one example of this lack of independence – you would expect the temperature on August 17, 2010 to be more like the temperature on August 17, 1955, than to the temperature on February 15, 2010. A simple model of data in a time series is to view each observation as being the realization of a random variable made up of a trend through time, (one or more) seasonal effects, and remaining effects that are not a function of time.</p>
+<font color = "blue"> Another way to remove seasonality from data in a series through time is to compare points that should be the same with respect to seasonal effects. For instance, there should be no seasonal effect if you plot only the temperature readings taken on January 1 of each year or only those taken on August 17. This is another plot that you can try, but note that you would have 365 separate data sets. Let’s look for a more holistic approach.</font>
 
-<p>The temperature data has a seasonal component with a period of 365 days. Letting \(T_t\) denote the temperature reading at time \(t\), the following differences remove the seasonal component:</p>
+</H6>
 
-<p>\[D_t = T_t - T_{t-365}, (for t = 366, ..., 20309)\]</p>
+<p><br><br></p>
 
-<p>These differences are plotted in here. The red line through the plot just shows the zero value.</p>
+<!-- The temperature readings are a sequence of observations in time, or a **time series**. A characteristic property of a time series is that the observations are not independent over time. Seasonality is one example of this lack of independence – you would expect the temperature on August 17, 2010 to be more like the temperature on August 17, 1955, than to the temperature on February 15, 2010. A simple model of data in a time series is to view each observation as being the realization of a random variable made up of a trend through time, (one or more) seasonal effects, and remaining effects that are not a function of time. -->
+
+<H6>
+
+<font color = "blue">The temperature data has a seasonal component with a period of 365 days. Letting \(T_t\) denote the temperature reading at time \(t\), the following differences remove the seasonal component: </font>
+
+</H6>
+
+<p><br><br></p>
+
+<p>\[\LARGE D_t = T_t - T_{t-365}\]</p>
+
+<!-- These differences are plotted in here. The red line through the plot just shows the zero value. -->
 
 </article></slide><slide class=""><hgroup><h2>Time Series</h2></hgroup><article  id="time-series">
 
