@@ -30,7 +30,7 @@
       // Author information
       presenters: [
             {
-        name:  'Tamra Carpenter Jon' ,
+        name:  'Tamra Carpenter' ,
         company: '',
         gplus: '',
         twitter: '',
@@ -38,7 +38,7 @@
         github: ''
       },
             {
-        name:  'Kettenring Robert' ,
+        name:  'Jon Kettenring' ,
         company: '',
         gplus: '',
         twitter: '',
@@ -46,7 +46,7 @@
         github: ''
       },
             {
-        name:  'Vanderbei' ,
+        name:  'Robert Vanderbei' ,
         company: '',
         gplus: '',
         twitter: '',
@@ -117,7 +117,7 @@
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">Jul 19, 2018</p>
+            <p style="margin-top: 6px; margin-left: -2px;">Jul 20, 2018</p>
           </hgroup>
   </slide>
 
@@ -200,7 +200,7 @@ slides > slide.backdrop {
 
 <H4>
 
-<font color="blue">A good place to start is just plotting the data. Below are plots of the average daily temperatures (in degrees Fahrenheit) for all four locations.</font>
+<font color="blue">A good place to start is just plotting the data. Below are plots of the average daily temperatures (in degrees Fahrenheit) for all four locations. What do these plots indicate?</font>
 
 </H4>
 
@@ -214,6 +214,14 @@ Figure 1: Plots of Average daily temperature
 </p></div>
 
 </article></slide><slide class=""><hgroup><h2>Comparing Two different Years</h2></hgroup><article  id="comparing-two-different-years">
+
+<H4>
+
+<font color="blue">The next slide has an applet that lets you change the years to compare the daily temperature between two years. Can you find two years that would indicate tempuratures are rising? Can you find two years that would indicate the tempuratures are falling? Is one year obviously warmer or cooler than another? Or other observations?Discuss any observations.</font>
+
+</H4>
+
+</article></slide><slide class=""><hgroup><h2>Comparing Two different Years</h2></hgroup><article  id="comparing-two-different-years-1">
 
 <iframe src="https://illenyekd.shinyapps.io/TwoYears/?showcase=0" width="720" height="300px">
 
@@ -239,17 +247,63 @@ Figure 1: Plots of Average daily temperature
 
 </article></slide><slide class=""><hgroup><h2>Boxplots</h2></hgroup><article  id="boxplots">
 
+<H4>
+
+<font color="blue">The next slide has an applet that displays boxplots. You can choose yearly, monthly or daily. For example, if you choose yearly, this creates a boxplot for each year while if you choose monthly this creates 12 boxplot; one for each month.</font>
+
+</H4>
+
+<p><br><br></p>
+
+<H4>
+
+<font color="blue">Look at all three (yearly, monthly and daily) and discuss your observations.</font>
+
+</H4>
+
+</article></slide><slide class=""><hgroup><h2>Boxplots</h2></hgroup><article  id="boxplots-1">
+
 <iframe src="https://illenyekd.shinyapps.io/boxplots/?showcase=0" width="720" height="300px">
+
+</iframe>
+
+</article></slide><slide class=""><hgroup><h2>Seasonality</h2></hgroup><article  id="seasonality">
+
+<H4>
+
+<font color="blue">It can be difficult to see changes over time because of the seasonal effect. One way to eliminate this is to plot the temperature for one day each year. The next slide has an applet that lets you pick date and plots the temperture for that one date from 1955 to 2010. The monthly option plots the average temperature for the month that you selected rather than the particular day.</font>
+
+</H4>
+
+<p><br><br></p>
+
+<H4>
+
+<font color="blue">Pick a day in the winter and one in the summer. What do you notice about the variablity? Does this make sense?</font>
+
+</H4>
+
+<p><br><br></p>
+
+<H4>
+
+<font color="blue">Is there more or less variabilty between the daily and monthly option? Why?</font>
+
+</H4>
+
+</article></slide><slide class=""><hgroup><h2>Seasonality</h2></hgroup><article  id="seasonality-1">
+
+<iframe src="https://illenyekd.shinyapps.io/twoDays/?showcase=0" width="720" height="300px">
 
 </iframe>
 
 </article></slide><slide class=""><hgroup><h2>Intro to time series</h2></hgroup><article  id="intro-to-time-series">
 
-<H6>
+<H5>
 
-<font color = "blue"> Another way to remove seasonality from data in a series through time is to compare points that should be the same with respect to seasonal effects. For instance, there should be no seasonal effect if you plot only the temperature readings taken on January 1 of each year or only those taken on August 17. This is another plot that you can try, but note that you would have 365 separate data sets. Let’s look for a more holistic approach.</font>
+<font color = "blue"> Another way to remove seasonality from data in a series through time is to compare points that should be the same with respect to seasonal effects. For instance, there should be no seasonal effect if you plot only the temperature readings taken on January 1 of each year or only those taken on August 17 - which you just played with. Let’s look for a more holistic approach.</font>
 
-</H6>
+</H5>
 
 <p><br><br></p>
 
@@ -280,11 +334,15 @@ Figure 1: Plots of Average daily temperature
 <!-- - Do you see evidence of a trend in Figure 5?
 - Why might you not be able to see a trend in Figure 5, even if one exists? -->
 
-<!--## Average Temperatures
-
-<H3><font color = "blue">We are searching for a small signal (in this case a temperature change), if any, within data that are very noisy (due to day to day variations). One way to smooth out some of this variability is to use averaging. Figure 6 plots yearly average temperature over time. (The red +’s are the annual average values.)</font><H3> -->
-
 </article></slide><slide class=""><hgroup><h2>Average Temperatures</h2></hgroup><article  id="average-temperatures">
+
+<H3>
+
+<font color = "blue">We are searching for a small signal (in this case a temperature change), if any, within data that are very noisy (due to day to day variations). One way to smooth out some of this variability is to use averaging. The next app plots yearly average temperature over time. </font>
+
+<H3>
+
+</article></slide><slide class=""><hgroup><h2>Average Temperatures</h2></hgroup><article  id="average-temperatures-1">
 
 <iframe src="https://illenyekd.shinyapps.io/annualAVG/?showcase=0" width="720" height="300px">
 
