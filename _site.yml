@@ -17,8 +17,8 @@ navbar:
       href: Numerical_blog.html
     - text: CVCC Lecture
       href: CVCClecture2.html
-    - text: FTCC Lecture
-      href: FTCCLecture.html
+    - text: Research
+      href: slides.html
   - text: Resources
     menu: 
     - text: MAT 171
