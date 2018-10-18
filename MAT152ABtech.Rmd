@@ -1,0 +1,42 @@
+---
+title: "Kory Illenye - Home"
+output: html_document
+---
+
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+<BR>
+
+# MAT 152
+
+### Syllabus -
+
+* **[Class Syllabus](./Resources/MAT152FallSyllabus2018.pdf)**
+
+
+### Chapter 1 -
+
+* **[Slides](https://koryillenye.github.io/MAT152ABTECHchapter1.html)**
+
+
+<footer, style="padding-top : 40px;">
+<center>
+
+-------
+
+
+
+
+
+
+
+</center>
+</footer>

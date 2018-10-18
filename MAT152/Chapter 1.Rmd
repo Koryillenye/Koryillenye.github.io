@@ -120,7 +120,7 @@ knitr::opts_chunk$set(echo = FALSE)
 - More on this topic in section 3:
 - Voluntary Response samples incur bias
 
-<H3><font color="black">Statistical VS. Practical Significance</font></H3>
+<H3><font color="black">**Statistical VS. Practical Significance**</font></H3>
 
 - **Statistical Significance** - A result is achieved that is very unlikely to occur by chance. A likeliness of less than 5%.
 - **Practical Significance** - A result or finding that is effective but common sense suggests that the finding does not make enough of a difference to be practical
