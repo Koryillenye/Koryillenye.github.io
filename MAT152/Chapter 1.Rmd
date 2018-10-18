@@ -1,0 +1,178 @@
+---
+title: "Elementary Statistics using Excel"
+author: 
+- "Kory Illenye"
+- "MAT 152 - Statistical Methods I"
+
+date: '`r format(Sys.time(), "%b %d, %Y")`'
+output: ioslides_presentation
+---
+
+<style>
+
+body {
+  background-color: #000029;
+}
+
+body p {
+  color: blue;
+  font-size: 15px;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 88%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Chapter 1 Section 1 Objectives
+
+<H3><font color="black">Statistical and Critical Thinking</font></H3>
+<br>
+
+
+- Analyze sample data relative to context, source, and sampling method
+- Understand the difference between statistical significance and practical significance
+- Define and identify voluntary response sample and know conclusions based on data from such a sample are generally invalid.
+
+## Definitions
+
+- **Statistics** - The science of planning studies and experiments; obtaining data; and organizing, summarizing, presenting, analyzing, and interpreting those data and then drawing conclusions.
+- **Data** - Collections of observations.
+- **Population** - The complete collection of all measurements or data that are being considered.
+- **Census** - Collection of data from every member of a population.
+- **Sample** - a sub collection of members selected from a population.
+
+## Statsical Process
+
+<H3><font color="blue">**Prepare** $\rightarrow$ **Analyze** $\rightarrow$ **Conclude**</font></H3>
+
+<H3><font color="black">**Prepare:**</font></H3>
+
+- Context
+    + Represent
+    + Goal
+- Source of the Data
+- Sampling method
+    + Bias
+    
+## Statsical Process
+
+<H3><font color="black">**Analyze:**</font></H3>
+- Graph the data
+- Explore the data
+- Apply Statistical Methods
+
+<H3><font color="black">**Conclude:**</font></H3>
+
+- Significance
+
+## Highlighted Topics
+
+<H3><font color="black">**Sampling Method**</font></H3>
+
+- More on this topic in section 3:
+- Voluntary Response samples incur bias
+
+<H3><font color="black">Statistical VS. Practical Significance</font></H3>
+
+- **Statistical Significance** - A result is achieved that is very unlikely to occur by chance. A likeliness of less than 5%.
+- **Practical Significance** - A result or finding that is effective but common sense suggests that the finding does not make enough of a difference to be practical
+
+## Chapter 1 Section 2 Objectives
+
+- Distinguish between a parameter and statistic
+- Distinguish between quantitative data and categorical data.
+- Distinguish between Discrete and Continuous data
+- Determine whether basic statistical calculations are appropriate for a data set.
+
+## Parameter Vs. Statistic
+
+- **Parameter** - a numerical measurement describing some characteristic of a population. (Note: Population and parameter both begin with p.)
+- **Statistic** - a numerical measurement describing some characteristic of a sample. (Note: sample and statistic both begin with s.)
+
+## Quantitative Vs. Categorical Data
+
+- **Quantitative (numerical) data** - data that consists of numbers representing counts or measurements.
+    + Ratio - No natural zero starting point; can be arranged in order; Differences can be found meaningful
+    + Interval - No natural zero starting point; can be arranged in order;, differences can be found meaningful
+- **Categorical (qualitative) data** - data that consists of names or labels.
+    + Nominal - data that consists of names, labels or categories only.
+    + Ordinal - can be arranged in some order but differences between data values either can not be determined or are meaningless
+
+## Discrete Vs. Continuous Data
+
+- **Discrete data** - data values are quantitative and the number of values is finite, or countable.
+- **Continuous Data** - infinitely many possible quantitative values where the values are not countable.
+
+## Chapter 1 Section 3 Objectives
+
+- Define and Identify simple random sample
+- Understand the importance of sound sampling methods and the importance of good design of experiments.
+
+## Types of Observational Studies
+
+- **Cross Sectional Study** - Data are observed, measured, and collected at one point in time, not over a period of time.
+- **Retrospective study** - Also known as case control. Data collected from a past period by going back in time.
+- **Prospective study** - data are collected in the future from groups that share common factors.
+
+## Experiments
+
+- **Confounding** - Identify and effect but can not find a factor that caused it.
+- **Completely randomized design** - assign groups to different treatment groups through random selection.
+- **Randomized Blocking** - Form blocks, then randomly assign treatment to subjects in the block.
+    + **Block** - a group of subjects that are similar.
+- **Matched Pairs Design** - Compare two treatment groups by using subjects matched in pairs that are some how related or similar characteristics.
+- **Rigorously Controlled Design** - carefully assign subjects to different treatment groups, so that those given treatment are similar in the ways that are important to the experiment.
+
+## Sampling Errors
+
+- **Random sampling error** - sample has been selected witha ranom method, but there is a discrepancy between sample result and the true population result.
+- **Nonsampling error** - human error.
+- **Nonrandom sampling error** - occurse from a sample obtained by a method that is not random.
