@@ -21,6 +21,10 @@ output: html_document
 
 * **[Class Syllabus](./Resources/MAT152FallSyllabus2018.pdf)**
 
+### Final Project Information
+
+* **[Final Project Overview](./Resources/MAT152FinalProjOverview.pdf)**
+* **[Final Project Rubric](./Resources/MAT152FinalProjectRubric.pdf)**
 
 ### Chapter 1 -
 

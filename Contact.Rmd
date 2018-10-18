@@ -25,9 +25,11 @@ output: html_document
 
 ### **Contact Information:**
 Office: Walker Hall, RM 307A <br>
-Phone: (828) 655-04644<br>
+Phone: (828) 655-0464 <br>
 Email: [illenyekd@gmail.com](mailto:illenyekd@gmail.com)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [kdillenye98@go.mcdowelltech.edu](kdillenye98@go.mcdowelltech.edu)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [kdillenye98@go.mcdowelltech.edu](kdillenye98@go.mcdowelltech.edu)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [korydillenye@ABTech.edu](korydillenye@abtech.edu)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [illenyekd@appstate.edu](illenyekd@appstate.edu)
 
 </div>
 <br><br><br><br>
