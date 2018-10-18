@@ -23,6 +23,8 @@ navbar:
     menu: 
     - text: MAT 171
       href: MAT171Resources.html
+    - text: MAT 152 (ABTech)
+      href: MAT152ABtech.html
   - text: Contact
     href: Contact.html
   - text: Schools
