@@ -266,7 +266,7 @@ pie(slices,labels = lbls, col=rainbow(length(lbls)),
 - Develop the ability to measure the center of data by finding the mean, median, mode and midrange
 - Determine whether an outlier has a substantial effect on the mean and median
 
-# Definititions
+## Definititions
 
 - **Measure of Center** - Value at the center or middle of the data set.
 - **Mean** - Measure of center found by adding all the data values together and dividing by the total number of data values.
