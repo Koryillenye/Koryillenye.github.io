@@ -173,6 +173,6 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Sampling Errors
 
-- **Random sampling error** - sample has been selected witha ranom method, but there is a discrepancy between sample result and the true population result.
+- **Random sampling error** - sample has been selected with a random method, but there is a discrepancy between sample result and the true population result.
 - **Nonsampling error** - human error.
-- **Nonrandom sampling error** - occurse from a sample obtained by a method that is not random.
+- **Nonrandom sampling error** - occurs from a sample obtained by a method that is not random.

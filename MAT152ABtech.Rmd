@@ -30,7 +30,9 @@ output: html_document
 
 * **[Slides](https://koryillenye.github.io/MAT152ABTECHchapter1.html)**
 
+### Chapter 2, Chapter 3.1 -
 
+* **[Slides](https://koryillenye.github.io/MAT152ABTECHchapter2.html)**
 <footer, style="padding-top : 40px;">
 <center>
 
