@@ -1,0 +1,199 @@
+---
+title: "Elementary Statistics using Excel"
+author: 
+- "Kory Illenye"
+- "MAT 152 - Statistical Methods I"
+- "Chapter 3.2,3.3"
+
+date: '`r format(Sys.time(), "%b %d, %Y")`'
+output: ioslides_presentation
+---
+
+<style>
+
+body {
+  background-color: #000029;
+}
+
+body p {
+  color: blue;
+  font-size: 15px;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 88%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(dplyr)
+library(qcc)
+```
+
+## Chapter 3 Section 2 Objectives
+
+<H3><font color="black">Measures of Variation</font></H3>
+<br>
+
+
+- Develop an ability to measure variation in a set of sample data by finding values of range, variance, and standard deviation
+- Develop the ability to interpret values of the standard deviation by applying the range rule of thumb to determine whether a particular value is significantly low or high
+
+## Definitions
+
+- **Range** - The difference between the Maximum data value and the minimum data value.
+- **Standard Deviation** - Denoted by $s$. The measure of how much data values deviate away from the mean.
+- **Variance** - Denote by $s^2$. The measure of variation equal to the square of the standard deviation. 
+- **Coefficient of Variation** - Set must be non-negative and expressed as a percentage. Describes the standard deviation relative to the mean.
+
+## Range
+
+<H3><font color = "blue">Properties of Range</font></H3>
+
+- The Range uses only the minimum and maximum data values, it is easy to compute. Not Resistant.
+- Since the range does not use every value in the data set it is not a true reflection of the variation.
+- Calculated by the following:
+
+
+$$ \textrm{Range} = (\textrm{Max Data Value} - \textrm{Min Data Value})$$
+
+## Standard Deviation
+
+<H3><font color = "blue">Properties of Standard Deviation</font></H3>
+
+- Measure of how much the data values of a set deviate away from the mean.
+- Standard deviation is never negative
+- Larger values of $s$ indicate greater amounts of variation.
+- Standard deviation can dramatically increase with one or more outliers.
+- Units of standard deviations are the same unites of the original data.
+- Standard deviation is a biased estimator of the population standard deviation. Which means the values of $s$ do not center around the value of $\sigma$ (Populaiton Standard Deviation).
+- Calculated by the following formula:
+
+$$s = \sqrt{\frac{\Sigma(x-\bar{x})^2}{n-1}}$$
+
+## Rule of thumb for understanding standard deviation
+
+- **Significantly low** - Values smaller than $\mu - 2\sigma$.
+
+- **Significantly high** - Values larger than $\mu + 2\sigma$.
+
+- Anything between these values are not significant.
+
+<H3><font color = "blue"> Empyrical Rule</font></H3>
+- According to the empyrical rule 68% of data values should fall within 1 standard deviation of the mean.
+- 95% should fall within 2 standard deviations fo the mean.
+- 99.7% should fall within 3 standard deviations of the mean.
+
+## Variance
+
+<H3><font color = "blue">Properties of Variance</font></H3>
+
+- Units of variance are the squared units of the original data values.
+- Not Resistant
+- Variance is never negative.
+- variance is an unbiased estimator of population variance. $s^2$ usually centers around $\sigma^2$
+- Calculated by the following formula:
+
+$$s^ = \frac{\Sigma(x-\bar{x})^2}{n-1}$$
+
+## Coefficient of Variation
+
+Found by $ CV = \frac{s}{\bar{x}}*100$
+
+Example:
+
+A water treatment company wanted to know how much water they were treating per minute through the plant. They took 100 measurments throught out the day. Found the average gallons per minute to be 170.3 gallons per minute and the standard devaitions to be 8.43 gallons perminute. Compare it to the 25.3% Coefficient of variation of earth quake magnitudes from example 8 in your book for Chapter 3 section 2.
+
+
+## Chapter 3 Section 3 Objectives
+
+<H3><font color="black">Measures of Relative Standing and Boxplots</font></H3>
+<br>
+
+- Develop the ability to compute a z-score and use the result to determine whether a given value x is significantly low or high
+- Identify percentile values and quartile values from a set of data
+- Develop the ability to construct a box plot from a set of data
+
+## Definitions
+
+- **z-score** - The number of standard devaitions that a given point is from the mean.
+- **percentiles** - are a measure of location, denoted by $P_1, P_2, ..., P_{99}$ which divide at set into 100 groups.
+- **quartiles** - divides the data set into 4 groups.
+- **Five Number Summary** - Minimum, First Quartile, Median, Third quartile, Maximum
+- **Boxplot** - a of the data that consist of a line extending from the minimum value to max value, a box drawn at the first quartile to third quartile and a line to represent the median.
+
+## Z-score
+
+$$z = \frac{x -\bar{x}}{s}$$
+
+Example:
+
+Given a standard deviation of $1.7^\circ$, a mean of $98.6 ^\circ$ and a value of 96.9 find the z-score.
+
+## Percentiles 
+
+$$ \textrm{Percentile} = \frac{\textrm{number of values less than x}}{\textrm{total number of values}} * 100$$
+
+## Five number summary
+
+- Minimum Value
+- First Quartile 
+- Median
+- Third Quartile
+- Maximum
+
+## Using Five number summary to construct a Box plot
+
+```{r}
+summary(mtcars$mpg)
+boxplot(mtcars$mpg, horizontal = TRUE)
+```
+
+
+
+

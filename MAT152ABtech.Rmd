@@ -35,6 +35,10 @@ output: html_document
 * **[Slides](https://koryillenye.github.io/MAT152ABTECHchapter2.html)**
 * **[Statistical Methods I Lab #1](./Resources/MAT152ABTECHLab1.pdf)**
 
+### Chapter 3.2,3.3 -
+
+* **[Slides](https://koryillenye.github.io/MAT152ABTECHchapter3.html)**
+
 <footer, style="padding-top : 40px;">
 <center>
 
