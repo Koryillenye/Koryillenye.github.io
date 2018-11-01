@@ -1,0 +1,152 @@
+---
+title: "Elementary Statistics using Excel"
+author: 
+- "Kory Illenye"
+- "MAT 152 - Statistical Methods I"
+- "Chapter 4.1,4.2"
+
+date: '`r format(Sys.time(), "%b %d, %Y")`'
+output: ioslides_presentation
+---
+
+<style>
+
+body {
+  background-color: #000029;
+}
+
+body p {
+  color: blue;
+  font-size: 15px;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 88%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(dplyr)
+library(qcc)
+```
+
+## Chapter 4 Section 1 Objectives
+
+<H3><font color="black">Basic Concepts of Probability</font></H3>
+<br>
+
+
+- Identify probabilities as values between 0 and 1, and interpret those values as expressions of likelihood of events.
+- Develop the ability to calculate probabilities of events.
+- Define the compliment of an event and calculate the probabitlity of that compliment.
+
+## Definitions
+
+- **Event** - any collection of results or outcomes from a procedure
+- **Simple Event** - outcome or event that can not further be broken down into simpler components
+- **Sample Space** - all possible simple events.
+- **Law of Large Numbers** - As a procedure is repeated again and again, the relative frequency probability of an event tends to approach the actual probability.
+- **Complement** - denoted by placing a bar over the Event symbol. For example the compliment of event $A$ would be $\bar{A}$. The compliment consists of all the outcomes in which event $A$ does not occur.
+- **Actual Odds Against** - $\frac{P(\bar{A})}{P(A)}$ often expressed as $A:B$.
+- **Actual Odds in Favor** - $\frac{P(A)}{P(\bar{A})}$ often express as $B:A$
+- **Payoff Odds** - (Profit if you win):(Amount Bet)
+
+
+## Simple Events
+
+- Lets toss a coin in the air! What events can occur from this? The coin can land on heads or the coin can land on tails. These are both simple events.
+- Lets make this bit more complicated! Toss the coin up in the air, record its status, do this three times. What are the possible outcomes? {HHH, HHT,HTH, THH, HTT,THT,TTH, TTT} Each of these occurences are simple events.
+- Lets roll a die! Is the outcome of odd number a simple event? Why or why not?
+
+## Probability
+
+$$P(A) = \frac{\textrm{# of times Event } A \textrm{ occured}}{\textrm{ # of times the procedure was repeated}}$$
+
+- Subjective probabilities:
+    + Relative Frequency Approach - Using previous data to determine a ratio of events.
+    + Classical Approach - Everything has equal probability of occurence.
+    + Subjective probability - Assign a subjective probability that relates to the occurence of the event.
+
+Probability can also be understood from simulations. (RANDBETWEEN EXCEL)
+
+## Lets Talk
+
+- **Complement** - denoted by placing a bar over the Event symbol. For example the compliment of event $A$ would be $\bar{A}$. The compliment consists of all the outcomes in which event $A$ does not occur.
+- **Actual Odds Against** - $\frac{P(\bar{A})}{P(A)}$ often expressed as $A:B$.
+- **Actual Odds in Favor** - $\frac{P(A)}{P(\bar{A})}$ often express as $B:A$
+- **Payoff Odds** - (Profit if you win):(Amount Bet)
+
+
+## Chapter 4 Section 2 Objectives
+
+<H3><font color="black">BAddition Rule and Multiplication Rule</font></H3>
+<br>
+
+
+- Develop the ability to calculate the probability that in a single trial, some event  A occurs or some event be occurs or they both occur. Apply the addition rule by correctly adjusting for events that are not disjoint.
+
+- Develop the ability to calculate the probability of an event A in a first trial and an event B occuring in the second trial. Apply the multiplication rule by adjusting for the events that are not independent.
+
+- Distinguish between independent events and dependent events.
+
+## Definitions
+
+- **Compound Event** - any event combining 2 or more simple events.
+- **Disjoint** - Can not occur at the same time.
+- **Independent** - the occurence of one event does not affect the probability of the occurence of the other.
+- **Dependent** - If Event $A$ and $B$ are not independent.
+
+
+## Addition Rule
+
+$$P(A \textrm{ or } B) = P(A) + P(B)- P(A \textrm{ and } B)$$
+
+## Mulitplication Rule
+
+$$P(A \textrm{ and } B) = P(A)\cdot P(A|B)$$
+
