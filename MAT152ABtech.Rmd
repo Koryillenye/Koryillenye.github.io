@@ -42,7 +42,7 @@ output: html_document
 ### Chapter 4.1,4.2 -
 
 * **[Slides](https://koryillenye.github.io/MAT152ABTECHchapter4.html)**
-* **[Statistical Methods I Lab #1](./Resources/MAT152ABTECHLab2.pdf)**
+* **[Statistical Methods I Lab #1](./Resources/MAT152ABTechLab2.pdf)**
 
 <footer, style="padding-top : 40px;">
 <center>
