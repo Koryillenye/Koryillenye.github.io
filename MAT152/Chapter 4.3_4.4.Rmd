@@ -1,0 +1,178 @@
+---
+title: "Elementary Statistics using Excel"
+author: 
+- "Kory Illenye"
+- "MAT 152 - Statistical Methods I"
+- "Chapter 4.3,4.4"
+
+date: '`r format(Sys.time(), "%b %d, %Y")`'
+output: ioslides_presentation
+---
+
+<style>
+
+body {
+  background-color: #000029;
+}
+
+body p {
+  color: blue;
+  font-size: 15px;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 88%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+ol {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(dplyr)
+library(qcc)
+```
+
+## Chapter 4 Section 3 Objectives
+
+<H3><font color="black">Compliments, conditional Probability, and Bayes' Theorem</font></H3>
+<br>
+
+
+- Compute the probability of "at least one" occurrence of an event A
+- Apply the multiplication rule by computing the probability of some event, given that some other event has already occurred
+
+
+## Definitions
+
+- **Conditional Probability** - A probability obtained with the additional information that some other event has already occurred.
+- **Prior Probability** - Initial probability value originally obtained before any additional information is obtained.
+- **Posterior Probability** - Probability value that has been revised by using additional information that is later obtained. 
+
+## Probability of "At Least One"
+
+- "At Least One" is the same as saying "One or More".
+- The compliment of "At Least One" is that you get no Occurrences.
+
+<br>
+<br>
+
+1) Let $A$ = getting at least one of some event.
+2) Then $\bar{A}$ = getting none of the event.
+3) Find $P(\bar{A})$.
+4) $P(\textrm{at least one}) = 1 - P(\textrm{no occurrence})$
+
+## Conditional Probability
+
+- The probability of event B given that event A occurred.
+- denoted by $P(B|A)$
+
+$$P(B|A) = \frac{P(A \textrm{ and } B)}{P(A)}$$
+
+If 1 of 555 test subjects is randomly select, find the probability that the subject had a positive test result, given the subject actually uses drugs. P(positive test| subject uses drugs).
+
+Then find P(Uses drugs | positive test result)
+
+
+
+
+|           | Positive test     | Negative Test     | 
+|-----------|-------------------|-------------------|
+| Drug User |  45               | 5                 |
+| No Drug Use| 25               | 480               |
+
+## Bayes Theorem
+
+- There is a good example of Bayes theorem application on page 185 of your book.
+
+$$P(A|B) = \frac{P(A)\cdot P(B|A)}{\lbrace P(A) \cdot P(B|A)\rbrace + \lbrace P(\bar{A}\cdot P(B|\bar{A}))}$$
+
+
+
+## Chapter 4 Section 4 Objectives
+
+<H3><font color="black">Counting</font></H3>
+<br>
+
+
+- Develop the ability to apply the fundamental counting rule, factorial rule, permutations rule, and combinations rule
+- Distinguish between circumstances requiring the permutation rule and those requiring the combination rule.
+
+## Definitions
+
+- **Permutations** - Arrangements in which different sequences of the same items are counted separately.
+- **Combinations** - Arrangements in which different sequences of the same items are counted as being the same.
+
+## Permutations Rule
+
+When $n$ different items are available and $r$ of them are selected without replacement, the number of different permutations is given by:
+
+$$_nP_r = \frac{n!}{(n-r)!}$$
+
+1) There are 20 different people running for 3 different county offices. How many different ways can these candidates be put into office?
+
+## Permutation Rule when some items are identical
+
+$$\frac{n!}{n_1!\cdot n_2!\cdot n_3! \cdot n_4! ... n_k}$$
+
+## Combinations
+
+When $n$ different items are available, but only $r$ of them are selected without replacement, the number of different combinations is found by:
+
+$$_nC_r = \frac{n!}{(n-r)!\cdot r!}$$
+
+
