@@ -1,0 +1,195 @@
+---
+title: "Elementary Statistics using Excel"
+author: 
+- "Kory Illenye"
+- "MAT 152 - Statistical Methods I"
+- "Chapter 5.1,5.2"
+
+date: '`r format(Sys.time(), "%b %d, %Y")`'
+output: ioslides_presentation
+---
+
+<style>
+
+body {
+  background-color: #000029;
+}
+
+body p {
+  color: blue;
+  font-size: 15px;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 88%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+ol {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(dplyr)
+library(qcc)
+library(ggplot2)
+```
+
+## Chapter 5 Section 1 Objectives
+
+<H3><font color="black">Probability Distributions</font></H3>
+<br>
+
+
+- Define random variable and probability distributions
+- Determine When a potential probability distribution actually satisfies the necessary requirements.
+- Given a probability distribution, compute the mean and standard deviation, then use those results to determine whether the results are significantly low or significantly high.
+
+## Definitions
+
+- **random variable** - a variable (generally $x$) that has a sngle numerical value, determined by chance, for each outcome of a procedure.
+- **probability distribution** a description that gives the probability for each value of the random variable. It is often expressed in the format of a table, formula, or graph.
+- **discrete randome variable** - a collection of values that is finite or countable. (Coin Flips)
+- **continuous random variable** - Infinitely many values, and the collection is not countable. (Body Temp)
+- **expected value** - the mean value of a dsicrete random variable. Often denoted as $E$.
+
+## Requirements for Probability Distributions
+
+1) There is a numerical random variable $x$ and its number values are associated with corresponding probability values.
+3) $0 \leq P(x) \leq 1$ for every value of the random varaible $x$.
+
+## Sum of two random Dice Rolls
+
+| Sum of dice | Die roll Possibilities        | $P(x)$|Sum of dice    | Die roll Possibilities  | $P(x)$| 
+|-------------|-------------------------------|-------|---------------|-------------------------|-------|
+| 2           | (1,1)                         | 1/36  | 8             |(2,6)(3,5)(4,4)(5,3)(6,2)| 5/36  |
+| 3           | (1,2)(2,1)                    | 2/36  | 9             |(3,6)(4,5)(5,4)(6,3)     | 4/36  |
+| 4           | (1,3)(2,2)(3,1)               | 3/36  | 10            |(4,6)(5,5)(6,4)          | 3/36  |
+| 5           | (1,4)(2,3)(3,2)(4,1)          | 4/36  | 11            |(5,6)(6,5)               | 2/36  |
+| 6           | (1,5)(2,4)(3,3)(4,2)(5,1)     | 5/36  | 12            |(6,6)                    | 1/36  |
+| 7           | (1,6)(2,5)(3,4)(4,3)(5,2)(6,1)| 6/36  |               |                         |       |
+
+## Do the die rolls meet the criteria?
+
+1) The variable $x$ is a numerical random variable and its values are associated with the previous table.
+2) $\Sigma P(x) = \frac{1}{36} + \frac{2}{36} + \frac{3}{36} + \frac{4}{36} + \frac{5}{36} + \frac{6}{36} + \frac{5}{36} + \frac{4}{36} + \frac{3}{36} + \frac{2}{36} + \frac{1}{36} = 1$
+3) Each value of $P(x)$ is between 0 and 1.
+
+## Histogram
+
+```{r}
+x <- c(2,3,3,4,4,4,5,5,5,5,6,6,6,6,6,7,7,7,7,7,7,8,8,8,8,8,9,9,9,9,10,10,10,11,11,12)
+#hist(x, freq = FALSE, xlab = "Sum of Two Dice", ylab = "Probability", main = "Histrogram of Sum of two dice", breaks = 11)
+qplot(x,y=..density.., geom = "histogram", bins = 11,fill=I("blue"),col=I("black"))+ labs(x = "Sum of Two Dice", y = "Probability", title= "Histogram of the sum of two dice")
+```
+
+## Parameters of Probability Distribution
+
+- $\mu = \Sigma [ x \cdot P(x)]$ also known as $E[x]$
+- $\sigma^2 = \Sigma [x-\mu^2] \cdot P(x)$ 
+- $E[x^2] = \Sigma [x^2 \cdot P(x)]$
+- $\sigma^2 = E[x^2] - (E[x])^2$
+- $\sigma = \sqrt{E[x^2] - (E[x])^2}$
+
+## Significance
+
+- Significantly Low - Falls below or equal to $\mu - 2 \cdot \sigma$
+- Significantly High - Falls above or equal to $\mu + 2 \cdot \sigma$
+- Not significant - Falls between $\mu - 2 \cdot \sigma$ and $\mu + 2 \cdot \sigma$.
+
+
+
+## Chapter 5 Section 2 Objectives
+
+<H3><font color="black">Binomial Probability Distributions</font></H3>
+<br>
+
+- Describe a binomial probability distribution and find the probability values for a binomial distribution.
+- Compute the mean and standard deviation for a binomial distribution, then use those results to determine whether the results are significantly low or significantly high.
+
+## Definitions
+
+- **binomial probability distribution** - results from a procedure that meets the following:
+    + The procedure has a fixed number of trials.
+    + The trials must be independent.
+    + Each trial must have all outcomes classified into exactly 2 categories. (Bernoulli)
+    + The probability of remains the same on all trials.
+    
+## Binomial Probability Distributions
+
+- $P(S) = p$, $p$ is the probability of success
+- $P(F) = 1 - p = q$, $q$ is the probability of failure
+- $n$ is a fixed number of trials
+- $x$ is a specific number of success in $n$ trials.
+- $P(x)$ is the probability of getting exactly $x$ successes in $n$ trials
+
+## Binomial Formula
+
+$$ P(x) = \binom{n}{x} \cdot p^x \cdot q^{n-x}$$ 
+$$ \textrm{for }x = 1,2,3,....,n$$
+
+## Using Excel
+
+- BINOM.DIST
+    + =BINOM.DIST(x,n,p,0)
+    + the last 0 means you want the the probability of $x$ of success. 
+    + Change the last 0 to a 1 and it will give you the cummalitve proability to $x$ success. So the probability of getting x and fewer successes.
+    
+## Mean, Variance and Standard deviation of Binomial Distribution
+
+- $\mu = np$
+- $\sigma^2 = npq$
+- $\sigma = \sqrt{npq}$
