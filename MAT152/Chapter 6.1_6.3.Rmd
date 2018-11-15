@@ -3,7 +3,7 @@ title: "Elementary Statistics using Excel"
 author: 
 - "Kory Illenye"
 - "MAT 152 - Statistical Methods I"
-- "Chapter 5.1,5.2"
+- "Chapter 6.1,6.2,6.3"
 
 date: '`r format(Sys.time(), "%b %d, %Y")`'
 output: ioslides_presentation
