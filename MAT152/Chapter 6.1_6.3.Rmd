@@ -1,0 +1,268 @@
+---
+title: "Elementary Statistics using Excel"
+author: 
+- "Kory Illenye"
+- "MAT 152 - Statistical Methods I"
+- "Chapter 5.1,5.2"
+
+date: '`r format(Sys.time(), "%b %d, %Y")`'
+output: ioslides_presentation
+---
+
+<style>
+
+body {
+  background-color: #000029;
+}
+
+body p {
+  color: blue;
+  font-size: 15px;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 88%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+ol {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(dplyr)
+library(qcc)
+library(ggplot2)
+```
+
+## Chapter 6 Section 1 Objectives
+
+<H3><font color="black">The Standard Normal Distribution</font></H3>
+<br>
+
+
+- Describe the characteristics of a standard normal distribution
+- Find the probability of some range of z-values in a standard normal distribution
+- Find z scores to regions under the curve representing a standard normal distribution
+
+## Definitions 6.1
+
+- **Normal distribution** - a continuous random variable has a distribution with a graph that is symmetric and bell-shaped.
+- **Uniform distribution** - a continuous random variable has an even spread over a range of possibilities. 
+- **Density Curve** - A graph of any continuous probability distribution. It must have a total area under the curve is exactly 1.
+- **Standard Normal Distribution** - a normal distribution with the parameters of $\mu = 0$ and $\sigma = 1$. The total area under the curve is equal to 1.
+- **Critical Value** - a z-score that is on the borderline that separates the z-scores that are significantly high or low
+
+## Normal Distribution
+
+$$ y = \frac{e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}}{\sigma\sqrt{2\pi}}$$
+```{r}
+x <- seq(-4, 4, length=100)
+hx <- dnorm(x)
+plot(x, hx, type="l", lty=2, xlab="x value",
+  ylab="Density", main="Standard Normal Distribution", col = "blue")
+```
+
+
+## Uniform Distribution
+
+- Whats the area under the curve?
+
+```{r}
+curve(dunif(x, min = 2, max = 6), 0, 8, ylim = c(0,0.5), ylab = "f( x )" , main = "Uniform Density f( x )", lty = 2, col = "blue")
+
+```
+
+## Finding Probabilities when given a *z*-score
+
+- Table A-2 in your book.
+- Each value represents the area under the curve to the left of the *z*-score
+- Using Excel
+    + use **NORM.DIST**
+    + =**NORM.DIST**(x, mean, standard_deviation, cumulative)
+    + x is the *z*-score
+    + mean (for standard normal the mean is 0)
+    + standard deviation (for standard normal the standard deviation is 1)
+    + cumulative tells if you wan the area to the left up to the *z*-score1
+    
+## An Example
+
+- A randomly selected adult undergoes a bone density test. Find the probability that this person has a bone density test score of less than 1.73. The test scores for bone density have a mean of 0 and a standard deviation of 1.
+    - What do you get from Table A-2?
+    - What do you get from excel?
+    - Are they similar? 
+    - What about a score greater than 1.73?
+
+## Finding the area between two values
+
+```{r}
+mean=0; sd=1
+lb=-1.23; ub=1.73
+
+x <- seq(-4,4,length=100)*sd + mean
+hx <- dnorm(x,mean,sd)
+
+plot(x, hx, type="n", xlab="IQ Values", ylab="",
+  main="Normal Distribution", axes=FALSE)
+
+i <- x >= lb & x <= ub
+lines(x, hx)
+polygon(c(lb,x[i],ub), c(0,hx[i],0), col="blue") 
+
+area <- pnorm(ub, mean, sd) - pnorm(lb, mean, sd)
+result <- paste("P(",lb,"< IQ <",ub,") =",
+   signif(area, digits=3))
+mtext(result,3)
+axis(1, at=seq(-3, 3, 1), pos=0)
+```
+
+## Finding a *z*-score from known area
+
+- Use table A-2
+- Use Excel NORM.INV
+    + =NORM.INV(p, mean, standard deviation)
+    + p is the probability area
+    + mean use 0 if you are looking for a *z*-score
+    + standard deviation use 1 if you are looking for a *z*-score
+
+## Chapter 6 Section 2 Objectives
+
+<H3><font color="black">Real Applications of Normal Distributions</font></H3>
+<br>
+
+- Develop the ability to describe a normal distribution
+- Find the probability of some range of values in a normal distribution
+- Find x scores corresponding to regions under the curve representing a normal distribution
+
+## *z*-score formula
+
+$$ z = \frac{x-\mu}{\sigma}$$
+
+- The *z*-score formula can allow you to use the table A-2 on non-standard normal distributions.
+- The mean body temperature is 98.6 degrees Fahrenheit with a standard deviation of 0.73 degree Fahrenheit according to the University of Wisconson - madison. 
+- What is the probability that a person has a body temperature of 97.2 degrees Fahrenheit?
+    - Table A-2?
+    - Excel?
+    
+## Airforce Height of pilots
+
+- In the airfore pilots are required to be 64 to 77 in. and women have an average height of 63.7 in. with a standard deviation of 2.9 in.. What percent of women meet the height requirement?
+
+```{r}
+mean=63.7; sd=2.9
+lb=64; ub=77
+
+x <- seq(-4,4,length=100)*sd + mean
+hx <- dnorm(x,mean,sd)
+
+plot(x, hx, type="n", xlab="Height", ylab="",
+  main="Normal Distribution", axes=FALSE)
+
+i <- x >= lb & x <= ub
+lines(x, hx)
+abline(v = mean, lty = 2, col ="red")
+polygon(c(lb,x[i],ub), c(0,hx[i],0), col="blue") 
+
+area <- pnorm(ub, mean, sd) - pnorm(lb, mean, sd)
+result <- paste("P(",lb,"< Height <",ub,")")
+mtext(result,3)
+axis(1, at=seq(50, 77, 1), pos=0)
+```
+
+
+
+## Chapter 6 Section 3 Objectives
+
+<H3><font color="black">Sampling Distributions and Estimators</font></H3>
+<br>
+
+- Develop the ability to describe a sampling distribution of a statistic
+- Determine whether a statistic serves as a good estimator of the corresponding population parameter
+
+## Definitions 6.3
+
+- **Sampling distribution of a statistic** - The distribution o fall values of the statistic when all possible samples of the same size *n* are taken from a the same population.
+- **Sampling distribution of a sample proportion** - The distribution of sample proportions with all samples having the same sample size *n* taken from the same population.
+- **Sampling distribution of the sample mean** - The distribution of all possible sample means with all samples having the same sample size *n* taken from the same population.
+- **Sampling distribution of the sample variance** - The distribution of all possible sample variances with all samples having the same sample size *n* taken from the same population.
+- **Estimator** - Statistic used to estimate a population parameter
+- **Unbiased estimator** - Statistic that targets the value of the corresponding population parameter in the sense that the sampling distribution of the statistic has a mean that is equal to the correspond population parameter.
+
+## Behavior of sample proportions
+
+- Sample proportions tend to be normally dsitributed
+- The mean of sample proportions is the same as the population proportion
+
+## Behavior of sample means
+
+- Sample means tend to be normally distributed
+- Sample means target the population mean
+
+## Behavior of sample variances
+
+- Sample variances tend to be skewed right
+- Sample variances target teh population variance
+
+## Unbiased vs. Biased estimators
+
+
+| Unbiased                          | Biased                                  | 
+|-----------------------------------|-----------------------------------------|
+| Proportion ($\hat{p}$)            | Median                                  | 
+| Mean ($\bar{x}$)                  | Range                                   |
+| Variance ($s^2$)                  | Standard Deviation                      |
+| *Target the population parmeter*  | *Does not target population parameter*  |
+
