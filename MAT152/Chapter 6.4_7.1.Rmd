@@ -1,0 +1,218 @@
+---
+title: "Elementary Statistics using Excel"
+author: 
+- "Kory Illenye"
+- "MAT 152 - Statistical Methods I"
+- "Chapter 6.4,7.1"
+
+date: '`r format(Sys.time(), "%b %d, %Y")`'
+output: ioslides_presentation
+---
+
+<style>
+
+body {
+  background-color: #000029;
+}
+
+body p {
+  color: blue;
+  font-size: 15px;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 88%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+ol {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(dplyr)
+library(qcc)
+library(ggplot2)
+```
+
+## Chapter 6 Section 4 Objectives
+
+<H3><font color="black">The Central Limit Theorem</font></H3>
+<br>
+
+
+- Describe what the central limit theorem states
+- Apply the central limit theorem by finding the probability that a sample mean falls within some specified range of values
+- Identify conditions for which it is appropriate to use a normal distribution for the distribution of sample means.
+
+## Central Limit Theorem
+
+- For all samples of the same size *n* with *n* > 30, the sampling distribution of $\bar{x}$ can be approximated by a normal distribution with mean $\mu$ and standard deviation $\frac{\sigma}{\sqrt{n}}$
+
+
+<br><br><br>
+
+- [online CLT demonstration](http://www.ltcconline.net/greenl/java/Statistics/clt/cltsimulation.html)
+
+## Requirements for Central Limit Theorem
+
+1) Given a population (with any distribution) has mean $\mu$ and standard deviation $\sigma$.
+2) Simple random samples all of the same size *n* are selected from the population.
+
+- Rules:
+    + Population must have a normal distribution or $n > 30$
+          + Mean value of $\bar{x}$:  $\hspace{6cm} \mu_{\bar{x}} = \mu$
+          + Standard deviation of all values of $\bar{x}$: $\hspace{1cm}\sigma_{\bar{x}} = \frac{\sigma}{\sqrt{n}}$
+          + $z$-score conversion of $\bar{x}$:$\hspace{4.25cm} z = \frac{\bar{x}-\mu}{\frac{\sigma}{\sqrt{n}}}$
+- Original Population not normally distributed and $n \leq 30$:
+    + The distribution of $\bar{x}$ cannot be approximated well by a normal distribution and the methods of this section do not apply.
+    
+## THE PLANE!
+
+- There is a small tourism plane for flights over the island volcano that has states it has a maximum capacity of 40 passengers or 6240 lb. This gives an average passenger weight of 156 lb. Lets use a worst-case scenario, lets fill the plane with 40 adult males. Based on the data set from Appendix B in the book, adult males have a mean of 189 lb. and a standard deviation of 39 lb..
+    + Find the probability that 1 randomly selected adult male has a weight greater than 156 lb.
+    + Find the probability that 40 randomly selected adult males has a mean weight greater than 156 lb.
+
+## The Solutions
+
+- Find the probability that 1 randomly selected adult male has a weight greater than 156 lb.
+    + Use excel:
+        - =NORM.DIST(156, 189, 39,1); This gives you the probability of less than 156 or equal to.
+        - The compliment is greater than 156 lb. 
+        - 1 - =NORM.DIST(156, 189, 39,1)
+- Find the probability that 40 randomly selected adult males has a mean weight greater than 156 lb.
+    + $\mu_\bar{x} = \mu = 189$
+    + $\sigma _\bar{x} = \frac{39}{\sqrt{40}} = 6.166$
+    + use excel =NORM.DIST(156, 189, 6.166,1); This gives you the probability of less than 156 or equal to for 40 randomly selected adult males.
+    + 1 - =NORM.DIST(156, 189, 6.166,1); 
+
+## Introduction to Hypothesis Testing
+
+- If under a given assumption (usually referred to as the Null Hypothesis($H_0$)), the probability of a particular observed event is very small and the observed event occurs significantly less than or significantly greater than what we typically expect with that assumption, we conclude that the assumption is probably not correct.
+
+## Body Temperature Example
+
+- Assume the population of the human body temperatures has a mean of $98.6^\circ$F, as is commonly believe. Also assume that the population standard deviation is $0.62^\circ$F. If a sample of size $n = 106$ is randomly selected, find the probability of getting a mean of $98.2^\circ$F was actually obtained or lower.
+    + Assuming that $H_0$ is true and is $\mu = 98.6^\circ$F
+    + Do we meet the requirements to use central limit theorem?
+        - Normally distributed?
+        - $n > 30$ ?
+    + $\mu_\bar{x} = \mu = 98.6$ by assumption
+    + $\sigma_\bar{x} = \frac{\sigma}{\sqrt{n}} = \frac{0.62}{\sqrt{106}} = 0.0602197$
+    + Use excel: =NORM.DIST(98.2, 98.6, 0.0602197, 1)
+
+## Finite Population Correction
+
+- When Sampling without replacement and the sample size is greater than 5\% of the finite population size $N$ (that is, $n > 0.05N$), adjust the standard deviation of sample means $\sigma_\bar{x}$ by multiplying by the finite population correction factor:
+
+<br><br><br><br>
+$$\sqrt{\frac{N-n}{N-1}}$$
+
+## Chapter 7 Section 1 Objectives
+
+<H3><font color="black">Estimating a population proportion</font></H3>
+<br>
+
+
+- Construct a confidence interval estimate of a population proportion and interpret such confidence interval estimates.
+- Identify the requirements necessary for the procedure that is used and determine whether those requirements are satisfied.
+- Develop the ability to determine the sample size necessary to estimate a population proportion.
+
+## Definitions
+
+- **Point estimate** - A single value use to estimate a population parameter.
+- **Confidence interval** - A range of values used to estimate the true value of a population parameter. Often abbreviated as **CI**.
+- **Confidence level** - The probability $1-\alpha$ that the confidence interval actually contains the population parameter, assuming that the estimation process is repeated a large number of times. (Known also as degree of confidence and confidence coefficient).
+- **Critical value** - The number on the borderline separating sample statistics that are significantly high or low from those that are not significant. The number $z_{\frac{\alpha}{2}}$is a critical value that is a *z*-score with the property that is at the border that separates an area of $\frac{\alpha}{2}$ in the right tail of a standard normal distribution.
+- **Margin of error** - The maximum difference between $\hat{p}$ and $p$. Found by multiplying the critical value by $\sigma_\bar{x}$.
+
+## Confidence Intervals
+
+- Confidence intervals give a better sense of how good a point estimate is
+
+| Most Common Confidence levels    | Corresponding levels of $\alpha$        | 
+|-----------------------------------|-----------------------------------------|
+| 90\% (0.90) confidence level      | $\alpha = 0.10$                         | 
+| 95\% (0.95) confidence level      | $\alpha = 0.05$                         |
+| 99\% (0.99) confidence level      | $\alpha = 0.01$                         |
+
+## Interpreting a confidence interval
+
+- There is a 95\% confidence interval estimate of the population proportion $p$ is $0.405 < p < 0.455$.
+- How to interpret:
+    + We are 95\% confident that the interval of 0.405 to 0.455 contains the true population proportion of $p$.
+
+
+
+## Constructing a confidence interval
+
+| Most Common Confidence levels    | Corresponding levels of $\alpha$        | Critical $z_{\frac{\alpha}{2}}$|
+|-----------------------------------|-----------------------------------------|--------------------------------|
+| 90\% (0.90) confidence level      | $\alpha = 0.10$                         |  1.645                         |
+| 95\% (0.95) confidence level      | $\alpha = 0.05$                         |  1.96                          |
+| 99\% (0.99) confidence level      | $\alpha = 0.01$                         |  2.575                         |
+
+$$ E = z_{\frac{\alpha}{2}} * \sqrt{\frac{\hat{p}\hat{q}}{n}}$$
+
+$$ CI = \hat{p} \pm E$$
+
+## Required Sample Size
+
+- Solve the following for n
+
+$$ E = z_{\frac{\alpha}{2}} * \sqrt{\frac{\hat{p}\hat{q}}{n}}$$
+
+

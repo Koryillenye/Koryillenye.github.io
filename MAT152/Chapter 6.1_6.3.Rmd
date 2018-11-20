@@ -192,14 +192,14 @@ axis(1, at=seq(-3, 3, 1), pos=0)
 $$ z = \frac{x-\mu}{\sigma}$$
 
 - The *z*-score formula can allow you to use the table A-2 on non-standard normal distributions.
-- The mean body temperature is 98.6 degrees Fahrenheit with a standard deviation of 0.73 degree Fahrenheit according to the University of Wisconson - madison. 
+- The mean body temperature is 98.6 degrees Fahrenheit with a standard deviation of 0.73 degree Fahrenheit according to the University of Wisconsin - Madison. 
 - What is the probability that a person has a body temperature of 97.2 degrees Fahrenheit?
     - Table A-2?
     - Excel?
     
 ## Airforce Height of pilots
 
-- In the airfore pilots are required to be 64 to 77 in. and women have an average height of 63.7 in. with a standard deviation of 2.9 in.. What percent of women meet the height requirement?
+- In the Air Force pilots are required to be 64 to 77 in. and women have an average height of 63.7 in. with a standard deviation of 2.9 in.. What percent of women meet the height requirement?
 
 ```{r}
 mean=63.7; sd=2.9
@@ -243,7 +243,7 @@ axis(1, at=seq(50, 77, 1), pos=0)
 
 ## Behavior of sample proportions
 
-- Sample proportions tend to be normally dsitributed
+- Sample proportions tend to be normally distributed
 - The mean of sample proportions is the same as the population proportion
 
 ## Behavior of sample means
@@ -254,7 +254,7 @@ axis(1, at=seq(50, 77, 1), pos=0)
 ## Behavior of sample variances
 
 - Sample variances tend to be skewed right
-- Sample variances target teh population variance
+- Sample variances target the population variance
 
 ## Unbiased vs. Biased estimators
 

@@ -56,6 +56,10 @@ output: html_document
 
 * **[Slides](https://koryillenye.github.io/MAT152ABTECHchapter6.html)**
 
+### Chapter 6.4,7.1 -
+
+* **[Slides](https://koryillenye.github.io/MAT152ABTECHchapter67.html)**
+
 <footer, style="padding-top : 40px;">
 <center>
 
