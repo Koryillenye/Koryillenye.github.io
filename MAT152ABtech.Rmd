@@ -58,7 +58,7 @@ output: html_document
 
 ### Chapter 6.4,7.1 -
 
-* **[Slides](https://koryillenye.github.io/MAT152ABTECHchapter67.html)**
+* **[Slides](./MAT152/Chapter_6.4_7.1.html)**
 
 <footer, style="padding-top : 40px;">
 <center>
