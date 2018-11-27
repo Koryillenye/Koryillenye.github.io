@@ -60,6 +60,10 @@ output: html_document
 
 * **[Slides](./MAT152/Chapter_6.4_7.1.html)**
 
+### Chapter 7.2,7.3 -
+
+* **[Slides](./MAT152/Chapter_7.2_7.3.html)**
+
 <footer, style="padding-top : 40px;">
 <center>
 

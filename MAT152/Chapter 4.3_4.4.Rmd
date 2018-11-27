@@ -121,7 +121,7 @@ library(qcc)
 - The probability of event B given that event A occurred.
 - denoted by $P(B|A)$
 
-$$P(B|A) = \frac{P(A \textrm{ and } B)}{P(A)}$$
+$$\Huge P(B|A) = \frac{P(A \textrm{ and } B)}{P(A)}$$
 
 If 1 of 555 test subjects is randomly select, find the probability that the subject had a positive test result, given the subject actually uses drugs. P(positive test| subject uses drugs).
 
@@ -139,7 +139,7 @@ Then find P(Uses drugs | positive test result)
 
 - There is a good example of Bayes theorem application on page 185 of your book.
 
-$$P(A|B) = \frac{P(A)\cdot P(B|A)}{\lbrace P(A) \cdot P(B|A)\rbrace + \lbrace P(\bar{A}\cdot P(B|\bar{A}))}$$
+$$\Large P(A|B) = \frac{P(A)\cdot P(B|A)}{\lbrace P(A) \cdot P(B|A)\rbrace + \lbrace P(\bar{A}\cdot P(B|\bar{A}))}$$
 
 
 
@@ -159,20 +159,20 @@ $$P(A|B) = \frac{P(A)\cdot P(B|A)}{\lbrace P(A) \cdot P(B|A)\rbrace + \lbrace P(
 
 ## Permutations Rule
 
-When $n$ different items are available and $r$ of them are selected without replacement, the number of different permutations is given by:
+- When $n$ different items are available and $r$ of them are selected without replacement, the number of different permutations is given by:
 
-$$_nP_r = \frac{n!}{(n-r)!}$$
+$$\Huge _nP_r = \frac{n!}{(n-r)!}$$
 
 1) There are 20 different people running for 3 different county offices. How many different ways can these candidates be put into office?
 
 ## Permutation Rule when some items are identical
 
-$$\frac{n!}{n_1!\cdot n_2!\cdot n_3! \cdot n_4! ... n_k}$$
+$$\Huge \frac{n!}{n_1!\cdot n_2!\cdot n_3! \cdot n_4! ... n_k}$$
 
 ## Combinations
 
-When $n$ different items are available, but only $r$ of them are selected without replacement, the number of different combinations is found by:
+- When $n$ different items are available, but only $r$ of them are selected without replacement, the number of different combinations is found by:
 
-$$_nC_r = \frac{n!}{(n-r)!\cdot r!}$$
+$$\Huge _nC_r = \frac{n!}{(n-r)!\cdot r!}$$
 
 

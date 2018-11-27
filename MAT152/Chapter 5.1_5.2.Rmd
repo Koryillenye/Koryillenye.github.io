@@ -178,8 +178,8 @@ qplot(x,y=..density.., geom = "histogram", bins = 11,fill=I("blue"),col=I("black
 
 ## Binomial Formula
 
-$$ P(x) = \binom{n}{x} \cdot p^x \cdot q^{n-x}$$ 
-$$ \textrm{for }x = 1,2,3,....,n$$
+$$\Huge P(x) = \binom{n}{x} \cdot p^x \cdot q^{n-x}$$ 
+$$\Large \textrm{for }x = 1,2,3,....,n$$
 
 ## Using Excel
 

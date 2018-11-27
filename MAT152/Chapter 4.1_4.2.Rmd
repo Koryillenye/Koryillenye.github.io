@@ -144,9 +144,9 @@ Probability can also be understood from simulations. (RANDBETWEEN EXCEL)
 
 ## Addition Rule
 
-$$P(A \textrm{ or } B) = P(A) + P(B)- P(A \textrm{ and } B)$$
+$$\Large (A \textrm{ or } B) = P(A) + P(B)- P(A \textrm{ and } B)$$
 
 ## Mulitplication Rule
 
-$$P(A \textrm{ and } B) = P(A)\cdot P(A|B)$$
+$$\Large P(A \textrm{ and } B) = P(A)\cdot P(A|B)$$
 
