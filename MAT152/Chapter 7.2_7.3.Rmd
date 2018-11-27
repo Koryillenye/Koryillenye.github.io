@@ -196,9 +196,7 @@ $$\Huge E = z_\frac{\alpha}{2}\cdot\frac{\sigma}{\sqrt{n}}$$
 
 ## Chi-Square Method of estimating variance
 
-- $s^2$ is the best point estimate for $\sigma^2$
-
-$$\Huge \chi^2 = \frac{(n-1)\cdot s^2}{\sigma^2}$$
+$$\large \chi^2 = \frac{(n-1)\cdot s^2}{\sigma^2}$$
 
 ```{r}
 colors = c("black", "red")
@@ -214,9 +212,9 @@ ggplot(data.frame(x = c(0, 20)), aes(x = x)) +
 - CHISQ.INV ($\chi^2_L$) and CHISQ.INV.RT ($\chi^2_R$)
 
 
-$$\Huge (\sigma^2 - \frac{(n-1)\cdots^2}{\chi^2_R}, \sigma^2 + \frac{(n-1)\cdots^2}{\chi^2_L})$$
+$$\Huge (\frac{(n-1)\cdot s^2}{\chi^2_R},\frac{(n-1)\cdot s^2}{\chi^2_L})$$
 
-$$\Huge (\sigma - \sqrt{\frac{(n-1)\cdots^2}{\chi^2_R}}, \sigma + \sqrt{\frac{(n-1)\cdots^2}{\chi^2_L}})$$
+$$\Huge ( \sqrt{\frac{(n-1)\cdot s^2}{\chi^2_R}},  \sqrt{\frac{(n-1)\cdot s^2}{\chi^2_L}})$$
 
 
 ## For determining sample size of $\chi^2$ distribution
