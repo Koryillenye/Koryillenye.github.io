@@ -1,0 +1,327 @@
+---
+title: "Elementary Statistics using Excel"
+author: 
+- "Kory Illenye"
+- "MAT 152 - Statistical Methods I"
+- "Chapter 8"
+
+date: '`r format(Sys.time(), "%b %d, %Y")`'
+output: ioslides_presentation
+---
+
+<style>
+
+body {
+  background-color: #000029;
+}
+
+body p {
+  color: blue;
+  font-size: 15px;
+}
+
+body hgroup h2 {
+  color: black;
+}
+.footer {
+    color: White;
+    background: Dodgerblue;
+    position: fixed;
+    top: 88%;
+    text-align: center;
+    width: 100%;
+}
+
+ul {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+ol {
+  display: block;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  color: blue;
+}
+
+slides > slide.title-slide p {
+  color: blue;
+  font-size: 15px;
+}
+
+
+
+slides > slide.title-slide hgroup h1 {
+  color: black;
+  font-size: 40px;
+  letter-spacing: 0;
+}
+
+
+
+slides > slide.{
+  background: none !important;
+  background-color: #444444 !important;
+}
+
+slides > slide.backdrop {
+  background: white;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(dplyr)
+library(qcc)
+library(ggplot2)
+```
+
+## Chapter 8 Section 1 Objectives
+
+<H3><font color="black">Basics of Hypothesis Testing</font></H3>
+<br>
+
+
+- Develop the ability to identify the null and alternative hypotheses when given some claim about a population parameter.
+- Develop the ability to calculate a test statistic, find critical values, calculate P-values, and state a final conclusion that addresses the original claim.
+    + Statements of the null and alternative hypotheses expressed in symbolic form.
+    + Value of the test statistic.
+    + Selection of the sampling distribution to be used for the hypothesis.
+    + Identification of a P-value and/or critical values.
+    + Statement of a conclusion rejection the null hypothesis or failing to reject the null hypothesis.
+    + Statement of a final conclusion that uses simple and nontechnical terms to address the original claim.
+
+## Definitions
+
+- **Hypothesis** - is a claim or statement about a property of a population.
+- **Hypothesis test** - (also know as significance test or test of significance) procedure for testing a claim or property of a population.
+- **Null Hypothesis** - ($H_0$) Statement that the value of a population parameter is equal to some claimed value.
+- **Alternative hypothesis** - ($H_A$, $H_1$, $H_a$) Statement that the parameter has a value that some how differs from the null hypothesis.
+- **Significance level $\alpha$** - Hypothesis test is the probability value used as the cutoff for determining when the sample evidence constitutes significant evidence against the null hypothesis. **Signficance level $\alpha$ = $P$(Rejection $H_0$ when $H_0$ is true)**
+- **test statistic** - value used in making a decision about the null hypothesis. Found by converting the sample statistic to a score ($z$, $t$, $\chi^2$) with the assumption that the null hypothesis is true.
+- **Critical region** - (**rejection region**) - the area corresponding to all values of the test statistic that cause a rejection of the null hypothesis.
+
+## Definitions (continued)
+- **P-value** - probability of getting a value of the test statistic that is at least as extreme as the test statistic obtained from the sample data, assuming the null hypothesis is true.
+- **$\alpha$** - $P$(type I error) = $P$(rejecting $H_0$ when $H_0$ is true)
+- **$\beta$** - $P$(type II error) = $P$(failing to reject $H_0$ when $H_0$ is false)
+- **power** - ($1 - \beta$) or $P$(rejection false null hypothesis)
+
+## 8 step process
+
+1) Identify the claim
+2) Give symbolic form
+3) Identify null and alternative hypothesis
+4) Select significance level
+5) Identify the test statistic
+6) Find test statistic (p-value or critical value)
+7) Make a decision
+8) Restate decision in terms of the alternate hypothesis
+
+## Step 1,2,3
+
+- Some unknown research company makes a claim that the average body temperature is greater than $98.6 ^\circ F$. The based this off a random sample that gave a mean body temperature of $99.1^\circ F$. The $98.6^\circ F$ is the accepted mean with a standard deviation of $0.62^\circ F$.
+
+1) Step 1: Identify claim to be tested. $\mu > 98.6^\circ F$
+2) Step 2: Give symbolic form. If $\mu \leq 98.6^\circ F$ is false then $\mu > 98.6^\circ F$ must be true.
+3) Step 3:
+    $$H_{0}: \mu = 98.6^\circ F$$  
+    $$H_{A}: \mu > 98.6^\circ F$$
+
+## Step 4: Select a significance level
+
+- Significance level is the accepted probability of making a type I error. 
+- Common significance levels are 0.1,0.05, and 0.01. Although significance level is determined by the agency conducting the research.
+
+## Step 5: identify the test statistic
+
+| Parameter       | Sampling Distribution | Requirements                                | Test Statistic                                  |
+|-----------------|-----------------------|---------------------------------------------|-------------------------------------------------|
+| proportion $p$  | Normal ($z$)          | $np \geq 5$ and $nq \geq 5$                 | $z = \frac{\hat{p}-p}{\sqrt{\frac{pq}{n}}}$     |
+| Mean $\mu$      | t-dist ($t$)          | $\sigma$ unknown, Norm.Dist, or $n \geq 30$ | $t =\frac{\bar{x}-\mu}{\frac{s}{\sqrt{n}}}$     |
+| Mean $\mu$      | Normal ($z$)          | $\sigma$ known, Norm.Dist, or $n \geq 30$   | $z =\frac{\bar{x}-\mu}{\frac{\sigma}{\sqrt{n}}}$|
+| st.dev $\sigma$ | $\chi^2$              | Must have Norm.Dist                         | $\chi^2 = \frac{(n-1)s^2}{\sigma^2}$            |           
+| var $\sigma^2$  | $\chi^2$              | Must have Norm.Dist                         | $\chi^2 = \frac{(n-1)s^2}{\sigma^2}$            |
+
+## Step 6: Find the P-value or Critical value
+
+1) determine if the test is left tailed(<), right tailed(>), or two tailed($\neq$).
+2) Find the area beyond the test statistic
+
+- Critical regions 
+    + left tail: P-value = area to the left of the test statistic
+    + left tail: critical value = z-score of ($\alpha$)
+    + right tail: P-value = area to the right of the test statistic
+    + right tail: critical value = z-score of ($1-\alpha$)
+    + two-tail: P-value = twice the area in the tail beyond the test statistic.
+    + two-tail: critical value = left is z-score of ($\frac{\alpha}{2}$), right is ($\frac{1-\alpha}{2}$)
+
+## Step 7: make a decision to either reject $H_0$ or fail to reject $H_0$
+
+- P-value is less than $\alpha$ value, reject $H_0$
+- P-value is greater than $\alpha$ value, fail to reject $H_0$
+- Test statistic is in the critical region, reject $H_0$
+- Test statistic is not in the critical region, fail to reject $H_0$
+
+## Step 8: Restate the decision using simple nontechnical terms
+
+| Condition | Conclusion |
+|-----------|------------|
+| Original claim does not include equality, and you reject $H_0$ | "There is sufficient evidence to support the claim that ... (original claim)." |
+| Original claim does not include equality, and you fail to reject $H_0$ | "There is not sufficient evidence to support the claim that ... (original claim)." |
+| Original claim does include equality, and you reject $H_0$ | "There is sufficient evidence to warrant rejection of the claim that ... (original claim)." |
+| Original claim does include equality, and you fail to reject $H_0$ | "There is not sufficient evidence to warrant rejection of the claim that ... (original claim)." |  
+
+## Power
+
+- Calculating power is difficult
+- Step 1: Calculate the critical value
+    + example from page 396, 13 of 14 births were girls. lets calculate power as if the true mean was 0.7
+    + given an alpha value of 0.05, we know this is a right tail test. So, use excel "*=NORM.S.INV(0.95)*" we get 1.644853627
+    + we know that $z = \frac{\hat{p}-p}{\sqrt{\frac{pq}{n}}}$we know $z$, $n$, $p$, $q$ lets solve for $\hat{p}$
+    + we get $\hat{p} = z\cdot \sqrt{\frac{pq}{n}} + p$, $\hat{p} = 1.644853627 \cdot \sqrt{\frac{0.5\cdot 0.5}{14}} + 0.5 = 0.719802812$
+
+## Power (Continued)
+
+- Step 1: Calculate the critical value (continued)
+    + Now to calculate the critical region assuming $0.7$ is the true mean $\hat{p} = 0.719802812$, $p = 0.7$, $n = 14$, $q = 0.3$
+    + $\beta = z = \frac{0.719802812 - 0.7}{\sqrt{\frac{0.7\cdot 0.3}{14}}} = 0.161689279$ "*=NORM.DIST(0.161689279, TRUE)*" = 0.564224726
+    + Power = $(1 - \beta) = (1 - 0.564224726) =  0.43577527$
+
+## Chapter 8 Section 2 Objectives
+
+<H3><font color="black">Testing a claim about a proportion</font></H3>
+<br>
+
+
+- Develop the ability to use sample data to conduct a formal hypothesis test of a claim about a population proportion.
+
+## Requirements for hypothesis testing of a population proportion
+
+- Sample observations are a simple random sample
+- Conditions of a binomial distribution are satisfied
+    + fixed number of trials
+    + trials are independent
+    + each trial is Bernoulli
+    + probability of success remains the same in all trials
+- $np \geq 5$ and $nq \geq 5$
+
+## Example 1
+
+- Pitney Bowes survey in which 1009 consumers were asked if they are comfortable with having drones deliver there purchases, and 54 percent or 545 if them responded with "no". Use these results to test the claim that most consumers are uncomfortable with drone deliveries. Most means greater than ) 0.5
+
+## Step 1, 2, 3, 4
+
+1) Step 1: Identify claim to be tested. $p > 0.5$
+2) Step 2: Give symbolic form. If $p \leq 0.5$ is false then $p > 0.5$ must be true.
+3) Step 3:
+    $$H_{0}: p \leq 0.5$$
+        $$H_{A}: p > 0.5$$
+4) Step 4: Select a level of significance, since it was not explicitly specified we will refer to an $\alpha = 0.05$.
+
+## Step 5
+
+- Identify the test statistic
+- From the table in section 8-1 on page 389 we see that the test statistic is a $z$ value for proportions
+$$ z = \frac{\hat{p}-p}{\sqrt{\frac{pq}{n}}}$$
+- $\hat{p} =$ sample observation ($0.54$)
+- $p =$ Population statistic ($0.5$)
+- $n =$ number of observations ($1009$)
+- $q = 1 - p$ ($0.5$)
+
+## Step 6 - $p$-value method
+
+ $$z = \frac{\frac{545}{1009} - 0.5}{\sqrt{\frac{0.5\cdot 0.5}{1009}}} = 2.549995628$$
+
+- determine if the test is left tailed(<), right tailed(>), or two tailed($\neq$). $H_A: p > 0.5$, This is a right tail test
+- in Excel use "*=1 - NORM.S.DIST(2.549995628, TRUE)*" = 0.005386214 = $p$-value
+
+## Step 6 - Critical Value method
+
+ $$z = \frac{\frac{545}{1009} - 0.5}{\sqrt{\frac{0.5\cdot 0.5}{1009}}} = 2.549995628$$
+
+- Since this is a right tail test we need the $z$ value of 5 percent in the right tail
+- in excel "*=NORM.S.INV(0.95)*" = 1.644853627 
+
+
+
+
+## Step 7, 8
+
+7) $p$-value: Because the $p$-value of 0.005386214 is less than or equal to the $\alpha$ value of 0.05 we reject the null hypothesis
+7) critical value: Because the $z$-score of 2.549995628 is greater than or equal to the critical value of 1.644853627, and falls in the rejection region, we reject the null hypothesis
+8) *Because we reject the $H_0: p = 0.5$, we support the alternative hypothesis $p > 0.5$.* "We conclude that there is sufficient enough evidence to support the claim that more than half of the consumers are uncomfortable with drone deliveries."
+
+## Exact Method
+
+- Sometimes $np < 5$ Then the only way to conduct a hypothesis test when this occurs is with an exact method
+- 10 randomly selected couples are treated with a method of gender selection, they each have a baby, 9 of the babies are girls. Use a 0.05 significance level to test the claim that with this method, the probability of a baby girl is greater than 0.75.
+
+1) STEP 1,2,3:
+$$ H_0: p = 0.75$$
+$$ H_A: p > 0.75$$
+2) Step 4,5,6: Instead of using a z score we use the binomial distribution to find the probability "*=BINOM.DIST(num_success, num_trials, p, TRUE)", so, =BINOM.DIST(8,10,0.75,TRUE) = 0.75597477
+- This is the probability of having 8 girls or less.So the probability of having 9 or more is $1 - 0.75597477 = 0.24402523$
+
+## Exact Method (Continued)
+
+3) Step 7: Since $0.24402523 > 0.05$ we fail to reject $H_0$
+4) Step 8: There is not sufficient enough evidence to support the claim that with the gender selection method, the probability of a girl is greater than 0.75.
+
+
+
+## Chapter 8 Section 3 Objectives
+
+<H3><font color="black">Testing a claim about a mean</font></H3>
+<br>
+
+
+- Develop the ability to use sample data to conduct a formal hypothesis test of a claim about a population mean.
+
+## Requirements for testing claims about a population mean
+
+1) Sample is a simple random sample
+2) the population is normally distributed or $n \geq 30$
+
+## The test statistic
+
+- if $\sigma$ is known use a $z$ score
+- if $\sigma$ is unknown use a $t$ score
+
+## Example
+
+- A simple random sample of 12 adults were part of a sleep study, $\bar{x} = 6.833333333$ hours, $s = 1.99240984$ hours. The common recommendation for adults is to sleep between 7 to 9 hours each night. Use the p-value method with a significance level of 0.05 to test the clam that the mean amount of sleep for adults is less than 7 hours.
+
+## Steps 1,2,3,4
+
+- Steps 1,2,3:
+$$ H_0: \mu = 7 \textrm{hours} $$
+$$ H_A: \mu < 7 \textrm{hours} $$
+
+- Step 4: $\alpha = 0.05$
+
+## Step 5, 6
+
+- Is $\sigma$ known?
+
+$$\frac{6.833333333 - 7}{\frac{1.99240984}{\sqrt{12}}} = -0.289774854$$
+
+- in excel "=T.DIST(-0.289774854, 11,TRUE)" = 0.388688846
+
+## Step 7, 8
+
+- Since the p-value of 0.388688846 is greater than the $\alpha$ value of 0.05 we fail to reject the null hypothesis
+- We conclude that there is not sufficient evidence to support the claim that the mean amount of adult sleep is less than 7 hours.
+
