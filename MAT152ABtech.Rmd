@@ -19,7 +19,7 @@ output: html_document
 
 ### Syllabus -
 
-* **[Class Syllabus](./Resources/MAT152FallSyllabus2018.pdf)**
+* **[Class Syllabus](./Resources/MAT152SummerSyllabus2019.pdf)**
 
 ### Final Project Information
 
