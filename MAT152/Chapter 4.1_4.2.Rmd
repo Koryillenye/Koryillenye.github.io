@@ -124,7 +124,7 @@ Probability can also be understood from simulations. (RANDBETWEEN EXCEL)
 
 ## Chapter 4 Section 2 Objectives
 
-<H3><font color="black">BAddition Rule and Multiplication Rule</font></H3>
+<H3><font color="black">Addition Rule and Multiplication Rule</font></H3>
 <br>
 
 
